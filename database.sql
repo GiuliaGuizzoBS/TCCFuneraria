@@ -24,3 +24,11 @@ CREATE TABLE produtos (
     categoria INT NOT NULL,
     FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
+
+CREATE TABLE imagens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+   url VARCHAR(255) NOT NULL,
+    descricao TEXT NOT NULL,
+    categoria INT NOT NULL,
+    FOREIGN KEY (categoria) REFERENCES categorias(id)
+);
