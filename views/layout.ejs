@@ -9,11 +9,11 @@
        
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f3df;
+            background-color: #d9c8b8;
         }
         .jumbotron {
-            background-color: #ffffcf;
-            color: #685700;
+            background-color: #fff8eb;
+            color: #57330f;
             padding: 2rem 1rem;
             margin-bottom: 2rem;
             border-radius: 0.5rem;
@@ -23,7 +23,7 @@
             font-weight: bold;
         }
         .btn-custom {
-            background-color: #685700;
+            background-color: #57330f;
             color: white;
             border-radius: 25px;
             padding: 0.75rem 1.5rem;
@@ -32,7 +32,7 @@
             transition: background-color 0.3s ease;
         }
         .btn-custom:hover {
-            background-color: #4a3d00; /* marrom mais escuro */
+            background-color: #291605; /* marrom mais escuro */
             color: white;
             
         }
@@ -41,7 +41,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 1.5rem;
             padding: 1.5rem;
-            background-color:#ffffcf;
+            background-color:#fff8eb;
             text-align: center;
         }
         .feature-card h3 {
@@ -54,39 +54,68 @@
             font-weight: bold;
         }
         .btn-marrom {
-        background-color: #685700; /* marrom escuro */
+        background-color: #57330f; /* marrom escuro */
         color: white;
         border: none;
         }
 
         .btn-marrom:hover {
-        background-color: #4a3d00; /* marrom mais escuro */
+        background-color: #291605; /* marrom mais escuro */
         color: white;
         }
-        .bg-amarelo-claro {
-         background-color: #f2f3df; /* tom de amarelo bem clarinho */
+        .bg-marrom-claro {
+         background-color: #d9c8b8; /* tom de amarelo bem clarinho */
+         }
+
+        .bg-marrom-clarinho {
+         background-color: #fff8eb; /* tom de amarelo bem clarinho */
+         color:#57330f
+         }
+        .texto-marrom {
+         color: #57330f; /* marrom suave */
          }
 
          .navbar-nav .nav-link {
-         color: #685700 !important; /* marrom suave */
+         color: #57330f !important; /* marrom suave */
          }
 
         .navbar-nav .nav-link:hover {
-         color: #4a3d00 !important; /* marrom mais forte ao passar o mouse */
+         color: #291605 !important; /* marrom mais forte ao passar o mouse */
          }
+
+        .carrinho {  
+            margin-right: 20px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+         }
+
+          .carrinho:hover {
+        background-color: #57330f; /* marrom mais escuro */
+        color: white;
+        transition: background-color 0.3s ease;
+        }
+
+        #navbarNav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <%- include('partials/navbar') %>
         <%- body %>
+    </div>
 
-    <!-- <footer class="footer mt-auto py-3 bg-light text-center">
-        <div class="container">
-           <span class="text-muted">&copy; 2025 MENINO DEUS</span>
+    <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
+        <div class="container bg-marrom-claro">
+           <h7 class="texto-marrom">&copy; 2025 MENINO DEUS</h7>
       </div>
     </footer>
--->  
+  
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
