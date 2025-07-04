@@ -1,3 +1,22 @@
+<head>
+    <style>
+        .button-group {
+         display: flex;
+         justify-content: flex-end;
+         gap: 0.3rem;
+        }
+
+        .button-group .btn,
+        .button-group button {
+          width: 80px;      /* ✅ define o tamanho máximo */
+          text-align: center;
+          padding: 0.4rem 0.5rem;
+          white-space: nowrap;
+        }
+
+    </style>
+</head>
+
 <h1>Lista de categorias</h1>
 <table class="table">
     <thead>
@@ -12,12 +31,15 @@
                 <td><%= categoria.id %></td>
                 <td><%= categoria.nome %></td>
                 <td>
-                    <a href="/categorias/<%= categoria.id %>" class="btn btn-primary">View</a>
-                    <a href="/categorias/<%= categoria.id %>/edit" class="btn btn-warning">Edit</a>
-                    <form action="/categorias/<%= categoria.id %>?_method=DELETE" method="POST" style="display: inline;">
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                  <div class="button-group">
+                  <a href="/categorias/<%= categoria.id %>" class="btn btn-marrom">View</a>
+                  <a href="/categorias/<%= categoria.id %>/edit" class="btn btn-marrom">Edit</a>
+                   <form action="/categorias/<%= categoria.id %>?_method=DELETE" method="POST" style="display:inline;">
+                   <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
-                </td>
+             </div>
+</td>
+
             </tr>
         <% }) %>
     </tbody>

@@ -1,0 +1,55 @@
+<div class="produto-card">
+  <h2><%= produto.nome %></h2>
+  <p><strong>R$ <%= produto.preco ? Number(produto.preco).toFixed(2) : '0.00' %></strong></p>
+  <p><%= produto.descricao %></p>
+  <p>Quantidade: <%= produto.quantidade %></p>
+</div>
+
+<style>
+  .produto-card {
+    background-color: #fff8eb; /* igual ao jumbotron e feature-card */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #57330f; /* marrom suave */
+    text-align: center;
+}
+
+.produto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.produto-card h4 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #57330f;
+}
+
+.produto-card p {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+    color: #57330f;
+}
+
+.produto-card .btn-detalhes {
+    margin-top: 1rem;
+    background-color: #57330f;
+    color: white;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.produto-card .btn-detalhes:hover {
+    background-color: #291605;
+    color: white;
+}
+
+</style>

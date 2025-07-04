@@ -1,3 +1,21 @@
+<head>
+    <style>
+    .button-group {
+     display: flex;
+     justify-content: flex-end; /* ✅ alinha os botões à direita */
+     gap: 0.3rem;
+    }
+
+    .button-group .btn,
+    .button-group button {
+     width: 80px;    /* define largura mínima */
+     text-align: center; /* centraliza texto */
+     padding: 0.4rem 0.5rem;
+     white-space: nowrap; /* evita quebra de linha em botões */
+    }
+</style>
+</head>
+
 <h1>Lista de usuários</h1>
 
 <form id="searchForm" method="GET" action="/users">
@@ -13,7 +31,6 @@
             <th>ID</th>
             <th>Nome</th>
             <th>Regra</th>
-            <th>Ação</th>
         </tr>
     </thead>
     <tbody id="userTableBody">
@@ -23,11 +40,13 @@
                 <td><%= user.username %></td>
                 <td><%= user.role %></td>
                 <td>
-                    <a href="/users/<%= user.id %>" class="btn btn-primary">View</a>
-                    <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Edit</a>
+                    <div class="button-group">
+                    <a href="/users/<%= user.id %>" class="btn btn-marrom">View</a>
+                    <a href="/users/<%= user.id %>/edit" class="btn btn-marrom">Edit</a>
                     <form action="/users/<%= user.id %>?_method=DELETE" method="POST" style="display: inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
+                    </div>
                 </td>
             </tr>
         <% }) %>

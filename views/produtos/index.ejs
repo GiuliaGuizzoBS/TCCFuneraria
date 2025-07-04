@@ -1,3 +1,22 @@
+<head>
+    <style>
+    .button-group {
+     display: flex;
+     justify-content: flex-end; /* ✅ alinha os botões à direita */
+     gap: 0.3rem;
+    }
+
+    .button-group .btn,
+    .button-group button {
+     width: 80px;    /* define largura mínima */
+     text-align: center; /* centraliza texto */
+     padding: 0.4rem 0.5rem;
+     white-space: nowrap; /* evita quebra de linha em botões */
+    }
+</style>
+</head>
+
+
 <h1>Lista de produtos</h1>
 
 <!-- Formulário de filtro por categoria -->
@@ -11,7 +30,7 @@
             <% }) %>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Filtrar</button>
+    <button type="submit" class="btn btn-marrom">Filtrar</button>
 </form>
 
 <table class="table">
@@ -36,11 +55,14 @@
                 <td><%= produto.quantidade %></td>
                 <td><%= produto.categoria_nome %></td>
                 <td>
-                    <a href="/produtos/<%= produto.id %>" class="btn btn-primary">View</a>
-                    <a href="/produtos/<%= produto.id %>/edit" class="btn btn-warning">Edit</a>
-                    <form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST" style="display: inline;">
+                    <div class="button-group">
+                         <a href="/produtos/<%= produto.id %>" class="btn btn-marrom">View</a>
+                        <a href="/produtos/<%= produto.id %>/edit" class="btn btn-marrom">Edit</a>
+                        <form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST" style="display: inline;">
                         <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                     </form>
+                    </div>
+
                 </td>
             </tr>
         <% }) %>

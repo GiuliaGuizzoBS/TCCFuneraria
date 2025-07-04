@@ -3,7 +3,6 @@
     <p class="lead">Gerencie seus usuários e produtos sem esforço.</p>
     <a href="/users" class="btn btn-custom">Gerenciar usuários</a>
     <a href="/produtos" class="btn btn-custom ml-2">Gerenciar produtos</a>
-
 </div>
 
 <div class="row">
@@ -21,6 +20,20 @@
             <a href="/produtos" class="btn btn-marrom">Ir para produtos</a>
         </div>
     </div>
+</div>
 
-</div>
-</div>
+<hr>
+
+<h2 class="mt-4 titulo-centralizado"><strong>Produtos disponíveis</strong></h2>
+
+<% if (!produtos || produtos.length === 0) { %>
+    <p>Nenhum produto cadastrado.</p>
+<% } else { %>
+    <div class="row">
+        <% produtos.forEach(produto => { %>
+            <div class="col-md-4">
+                <%- include('partials/produtoCard', { produto: produto }) %>
+            </div>
+        <% }); %>
+    </div>
+<% } %>
