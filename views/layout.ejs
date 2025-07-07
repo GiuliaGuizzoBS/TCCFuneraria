@@ -8,10 +8,23 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 
     <style>
+        
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+ 
+
         body {
             font-family: Arial, sans-serif;
             background-color: #d9c8b8;
         }
+        .carousel-inner {
+                height: 300px;            
+
+        }
+
         .jumbotron {
             background-color: #fff8eb;
             color: #57330f;
@@ -109,13 +122,25 @@
             margin-top: 2rem;
             margin-bottom: 2rem;
         }
+
+        .carrinho-texto {
+            color: #4b2e1e; /* marrom elegante */
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .carrinho-texto:hover {
+         color: #2d1a10; /* tom mais escuro ao passar o mouse */
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <%- include('partials/navbar') %>
+   <!-- <div class="container"> -->
+      
         <%- body %>
-    </div>
+   <!-- </div> -->
 
     <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
         <div class="container bg-marrom-claro">

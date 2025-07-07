@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-marrom-claro">
+  <a class="navbar-brand" href="/inicio">
+    <img src="imagens/pombabrancalogo.png" alt="Pomba Branca" width="80" height="40" class="d-inline-block align-top">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav w-100">
+      <li class="nav-item">
+        <a class="nav-link" href="/inicio">Inicio</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/servicos">Serviços</a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="/contato">Contato</a>
+      </li>
+     
+      <li class="nav-item">
+        <a class="nav-link" href="/sobre">Sobre</a>
+      </li>
+ 
+
+      <!-- Carrinho dentro do menu (aparece só em telas pequenas) -->
+      <li class="nav-item d-lg-none">
+        <a class="nav-link bg-marrom-clarinho" href="/pedidos">Pedidos</a>
+      </li>
+    </ul>
+
+    <!-- Carrinho fora do menu (aparece só em telas grandes) -->
+      <a class="nav-link carrinho-texto ms-auto" href="/login">login</a>
+      <a class="nav-link bg-marrom-clarinho carrinho d-none d-lg-block ms-auto" href="/pedidos">Pedidos</a>
+   
+
+  </div>
+</nav>
+
+<script>
+  $(document).ready(function() {
+    $('.navbar-collapse a').click(function(){
+      $('.navbar-collapse').collapse('hide');
+    });
+  });
+</script>
