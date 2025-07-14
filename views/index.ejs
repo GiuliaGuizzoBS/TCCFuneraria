@@ -1,41 +1,117 @@
-<%- include('partials/navbar') %>
+<!DOCTYPE html>
+<%- include('partials/navbarCliente') %>
+<html>
+<head>
+  <title><%= title %></title>
+  
+</head>
+<body>
 
-<div class="jumbotron text-center">
-    <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
-    <p class="lead">Gerencie seus usuários e produtos sem esforço.</p>
-    <a href="/users" class="btn btn-custom">Gerenciar usuários</a>
-    <a href="/produtos" class="btn btn-custom ml-2">Gerenciar produtos</a>
+  <article class="article p-0 text-white">
+
+  <!-- Carousel -->
+  <div id="carrossel-inicial" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="2"></button>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="carousel-inner">
+
+      <div class="carousel-item active position-relative">
+        <img src="imagens/tapaburaco1.png" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
+         <!-- overlay preto com transparência -->
+      <div class="carousel-overlay"></div>
+
+        <!-- Texto sobreposto -->
+        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+          <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
+          <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
+        </div>
+      </div>
+
+      <div class="carousel-item position-relative">
+        <img src="imagens/tapaburaco2.png" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
+         <!-- overlay preto com transparência -->
+      <div class="carousel-overlay"></div>
+
+        <!-- Texto sobreposto -->
+        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+          <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
+          <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
+        </div>
+      </div>
+
+      <div class="carousel-item position-relative">
+        <img src="imagens/tapaburaco3.png" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
+         <!-- overlay preto com transparência -->
+      <div class="carousel-overlay"></div>
+
+        <!-- Texto sobreposto -->
+        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+          <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
+          <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-inicial" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carrossel-inicial" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+
+  </div>
+
+</article>
+
+
+    <!-- Nossos Serviços -->
+<div class="articletitle text-center mb-4">
+  <h2 class="mt-4 titulo-centralizado"><strong>Nossos Serviços</strong></h2>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
-        <div class="feature-card">
-            <h3>Gerenciamento de usuários</h3>
-            <p>Adicione, edite e exclua usuários facilmente.</p>
-            <a href="/users" class="btn btn-marrom">Ir para usuários</a>
-        </div>
+  <div class="col-md-4">
+    <div class="feature-card-servicos card1">
+      <div class="card-img-overlay"></div>
+      <div class="card-content">
+        <h3>Serviços Funerários</h3>
+        <p>Organização completa de velórios e sepultamentos com dignidade, respeito e cuidado aos detalhes.</p>
+        <a href="/funerais" class="btn btn-marrom">Detalhes</a>
+      </div>
     </div>
-    <div class="col-md-6">
-        <div class="feature-card">
-            <h3>Gerenciamento de produtos</h3>
-            <p>Acompanhe seus produtos e seus detalhes perfeitamente.</p>
-            <a href="/produtos" class="btn btn-marrom">Ir para produtos</a>
-        </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="feature-card-servicos card2">
+      <div class="card-img-overlay"></div>
+      <div class="card-content">
+        <h3>Arranjos Florais</h3>
+        <p>Flores naturais e artificiais para homenagens, coroas e ornamentos sob medida.</p>
+        <a href="/flores" class="btn btn-marrom">Detalhes</a>
+      </div>
     </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="feature-card-servicos card3">
+      <div class="card-img-overlay"></div>
+      <div class="card-content">
+        <h3>Homenagens Especiais</h3>
+        <p>Momentos personalizados com música, mensagens e rituais simbólicos que celebram a memória.</p>
+        <a href="/produtos" class="btn btn-marrom">Detalhes</a>
+      </div>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<h2 class="mt-4 titulo-centralizado"><strong>Produtos disponíveis</strong></h2>
-
-<% if (!produtos || produtos.length === 0) { %>
-    <p>Nenhum produto cadastrado.</p>
-<% } else { %>
-    <div class="row">
-        <% produtos.forEach(produto => { %>
-            <div class="col-md-4">
-                <%- include('partials/produtoCard', { produto: produto }) %>
-            </div>
-        <% }); %>
-    </div>
-<% } %>
+</body>
+</html>

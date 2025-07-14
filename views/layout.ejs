@@ -71,9 +71,20 @@
   object-fit: cover; /* faz a imagem preencher sem distorcer */
 }
 
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55); /* preto 55% transparente */
+  z-index: 1;
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5); /* fundo escuro semi-transparente para as setas */
+ /* background-color: rgba(0, 0, 0, 0.5);  fundo escuro semi-transparente para as setas */
+  color: #ffeede;
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
@@ -184,6 +195,8 @@
 .card3 {
   background-image: url('/imagens/tapaburaco3.png');
 }
+
+
         .navbar-brand {
             font-size: 1.5rem;
             font-weight: bold;
@@ -264,9 +277,16 @@
    <!-- </div> -->
 
     <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
+      <hr>
         <div class="container bg-marrom-claro">
-           <h7 class="texto-marrom">&copy; 2025 MENINO DEUS</h7>
-      </div>
+           <p class="texto-marrom mb-1 small">&copy;2025 FUNERÁRIA MENINO DEUS</p>
+           <p class="texto-marrom mb-1 small">Desenvolvido por Eloá Brizeis Costa Santana e Giulia Guizzo Baladão Santos</p>
+           <p class="texto-marrom small">
+            <a href="https://github.com/GiuliaGuizzoBS/TCCFuneraria.git" target="_blank" class="texto-marrom">
+            Clique aqui
+            </a> para acessar o repositório do GitHub
+            </p>
+        </div>
     </footer>
   
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

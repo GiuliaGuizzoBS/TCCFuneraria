@@ -1,15 +1,15 @@
-var express = require('express');
-var router = express.Router();
-const Produto = require('../models/produtoModel'); // importe o seu model de produtos
+const express = require('express');
+const router = express.Router();
+const Produto = require('../models/produtoModel'); // usa o mesmo model, se necessário
 
-/* GET home page com produtos */
-router.get('/', function(req, res, next) {
+// GET página inicial para o usuário
+router.get('/', (req, res) => {
   Produto.getAll(null, (err, produtos) => {
     if (err) {
       console.error(err);
-      return res.status(500).send('Erro ao carregar produtos.');
+      return res.status(500).send('Erro ao carregar produtos para o usuário.');
     }
-    res.render('index', { produtos, title: 'Página Inicial' }); // envia os produtos e o título para a view
+    res.render('index', { produtos, title: 'Bem-vindo à Loja' }); // renderiza a view 'index.ejs'
   });
 });
 
