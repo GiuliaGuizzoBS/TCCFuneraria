@@ -2,32 +2,53 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
+
 const indexRoutes = require('./routes/indexRoutes');
 const gerenciadorRoutes = require('./routes/gerenciadorRoutes');
 const userRoutes = require('./routes/userRoutes');
 const produtoRoutes = require('./routes/produtoRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
 const servicosRoutes = require('./routes/servicosRoutes');
+const contatoRoutes = require('./routes/contatoRoutes');
+const floresRoutes = require('./routes/floresRoutes');
+const homenagensRoutes = require('./routes/homenagensRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configurações
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(expressLayouts);
 
+// Middlewares globais
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+// ✅ Inicialize sessões ANTES das rotas
+app.use(session({
+  secret: 'seuSegredoSeguro',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Rotas
 app.use('/gerenciador', gerenciadorRoutes);
 app.use('/users', userRoutes);
 app.use('/produtos', produtoRoutes);
 app.use('/categorias', categoriaRoutes);
-app.use('/', indexRoutes);
 app.use('/servicos', servicosRoutes);
+app.use('/contato', contatoRoutes);
+app.use('/flores', floresRoutes);
+app.use('/homenagens', homenagensRoutes);
+app.use('/login', loginRoutes);         // Rota para login
+app.use('/', indexRoutes);              // Deve ser a ÚLTIMA
 
+// Inicia servidor
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
