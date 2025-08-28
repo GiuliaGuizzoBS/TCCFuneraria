@@ -13,6 +13,7 @@ const servicosRoutes = require('./routes/servicosRoutes');
 const contatoRoutes = require('./routes/contatoRoutes');
 const floresRoutes = require('./routes/floresRoutes');
 const homenagensRoutes = require('./routes/homenagensRoutes');
+const sobreRoutes = require('./routes/sobreRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 
 const app = express();
@@ -29,7 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
-// ✅ Inicialize sessões ANTES das rotas
+// Sessão
 app.use(session({
   secret: 'seuSegredoSeguro',
   resave: false,
@@ -45,10 +46,11 @@ app.use('/servicos', servicosRoutes);
 app.use('/contato', contatoRoutes);
 app.use('/flores', floresRoutes);
 app.use('/homenagens', homenagensRoutes);
-app.use('/login', loginRoutes);         // Rota para login
-app.use('/', indexRoutes);              // Deve ser a ÚLTIMA
+app.use('/sobre', sobreRoutes);       
+app.use('/login', loginRoutes);         
+app.use('/', indexRoutes);              
 
-// Inicia servidor
+// Servidor
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
