@@ -1,247 +1,91 @@
-Claro! Aqui estão vários exemplos de código JavaScript que cobrem assuntos básicos e intermediários que costumam cair em provas, principalmente em cursos de Análise e Desenvolvimento de Sistemas, como o seu. Cada exemplo está comentado para facilitar o entendimento.
+Sistema de Gerenciamento Administrativo da Funerária Menino Deus
+Sobre o Projeto
 
-1. Declaração de Variáveis e Tipos
-javascript
-Copiar
-Editar
-let nome = "Maria";       // String
-const idade = 25;         // Number
-let ativo = true;         // Boolean
-2. Condicional if / else
-javascript
-Copiar
-Editar
-let nota = 7;
+Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) com o objetivo de propor e implementar um sistema web para auxiliar na gestão administrativa da Funerária Menino Deus. A proposta busca otimizar os processos internos, melhorar a organização e tornar o atendimento aos clientes mais eficiente e ágil.
 
-if (nota >= 6) {
-  console.log("Aprovado");
-} else {
-  console.log("Reprovado");
-}
-3. Laço for
-javascript
-Copiar
-Editar
-for (let i = 1; i <= 5; i++) {
-  console.log("Contagem:", i);
-}
-4. Laço while
-javascript
-Copiar
-Editar
-let contador = 0;
+Objetivos
 
-while (contador < 3) {
-  console.log("Tentativa", contador + 1);
-  contador++;
-}
-5. Função Simples
-javascript
-Copiar
-Editar
-function saudacao(nome) {
-  return "Olá, " + nome + "!";
-}
+Digitalizar e organizar os processos de atendimento funerário.
 
-console.log(saudacao("João"));
-6. Arrow Function
-javascript
-Copiar
-Editar
-const dobrar = (n) => n * 2;
+Permitir o cadastro e gerenciamento de falecidos, clientes e serviços contratados.
 
-console.log(dobrar(5)); // 10
-7. Array e Percorrer com forEach
-javascript
-Copiar
-Editar
-let frutas = ["maçã", "banana", "uva"];
+Disponibilizar um painel administrativo para controle interno da empresa.
 
-frutas.forEach(function(fruta) {
-  console.log(fruta);
-});
-8. Array com map
-javascript
-Copiar
-Editar
-let numeros = [1, 2, 3];
+Garantir usabilidade e responsividade em diferentes dispositivos.
 
-let quadrados = numeros.map(n => n * n);
+Tecnologias Utilizadas
 
-console.log(quadrados); // [1, 4, 9]
-9. Objeto Literal
-javascript
-Copiar
-Editar
-let pessoa = {
-  nome: "Ana",
-  idade: 30,
-  falar: function() {
-    console.log("Olá, meu nome é " + this.nome);
-  }
-};
+Frontend: HTML, CSS e JavaScript
 
-pessoa.falar();
-10. Switch Case
-javascript
-Copiar
-Editar
-let dia = 3;
+Backend: Node.js com Express
 
-switch(dia) {
-  case 1:
-    console.log("Domingo");
-    break;
-  case 2:
-    console.log("Segunda");
-    break;
-  case 3:
-    console.log("Terça");
-    break;
-  default:
-    console.log("Outro dia");
-}
-11. Manipulação do DOM (básica)
-html
-Copiar
-Editar
-<!-- HTML -->
-<button onclick="clicar()">Clique aqui</button>
-<p id="mensagem"></p>
+Banco de Dados: MySQL
 
-<script>
-function clicar() {
-  document.getElementById("mensagem").textContent = "Você clicou no botão!";
-}
-</script>
-12. Evento de Click com JavaScript
-html
-Copiar
-Editar
-<!-- HTML -->
-<button id="botao">Clique</button>
-<p id="texto"></p>
+Template Engine: EJS
 
-<script>
-document.getElementById("botao").addEventListener("click", function() {
-  document.getElementById("texto").textContent = "Clicou!";
-});
-</script>
-13. Função Recursiva (fatorial)
-javascript
-Copiar
-Editar
-function fatorial(n) {
-  if (n <= 1) return 1;
-  return n * fatorial(n - 1);
-}
+Estrutura do Projeto
+funeraria-menino-deus
+ ┣ config         # Configurações do banco de dados
+ ┣ models         # Modelos do banco (usuários, clientes, falecidos, serviços)
+ ┣ routes         # Rotas da aplicação
+ ┣ controllers    # Regras de negócio e lógica
+ ┣ views          # Arquivos EJS para renderização
+ ┣ public         # Arquivos estáticos (CSS, JS, imagens)
+ ┣ server.js      # Arquivo principal do servidor
+ ┣ package.json   # Dependências e scripts do projeto
+ ┗ README.md      # Documentação
 
-console.log(fatorial(5)); // 120
-14. Validação de Formulário Simples
-html
-Copiar
-Editar
-<form onsubmit="return validar()">
-  <input id="nome" type="text" placeholder="Nome">
-  <button type="submit">Enviar</button>
-</form>
+Como Executar o Projeto
 
-<script>
-function validar() {
-  let nome = document.getElementById("nome").value;
-  if (nome === "") {
-    alert("Nome obrigatório");
-    return false;
-  }
-  return true;
-}
-</script>
-15. JSON - Converter Objeto para String e Voltar
-javascript
-Copiar
-Editar
-let pessoa = { nome: "Carlos", idade: 22 };
+Clonar o repositório:
 
-let json = JSON.stringify(pessoa); // para string
-let obj = JSON.parse(json); // para objeto de novo
-
-console.log(json); // {"nome":"Carlos","idade":22}
-console.log(obj.nome); // Carlos
-Se quiser, posso te mandar um simulado de prova com questões baseadas nesses códigos, ou montar uma lista com possíveis perguntas teóricas.
-
-Quer?
+git clone https://github.com/seu-usuario/funeraria-menino-deus.git
 
 
+Acessar a pasta do projeto:
+
+cd funeraria-menino-deus
 
 
+Instalar as dependências:
 
-✅ 1. if, else if, else
-javascript
-Copiar
-Editar
-let nota = 8;
+npm install
 
-if (nota >= 9) {
-  console.log("Excelente");
-} else if (nota >= 6) {
-  console.log("Aprovado");
-} else {
-  console.log("Reprovado");
-}
-✅ 2. switch
-javascript
-Copiar
-Editar
-let dia = "quarta";
 
-switch (dia) {
-  case "segunda":
-    console.log("Começo da semana");
-    break;
-  case "quarta":
-    console.log("Meio da semana");
-    break;
-  case "sexta":
-    console.log("Final da semana");
-    break;
-  default:
-    console.log("Dia comum");
-}
-✅ 3. Operador Ternário (? :)
-javascript
-Copiar
-Editar
-let idade = 17;
-let podeVotar = idade >= 18 ? "Pode votar" : "Não pode votar";
+Configurar o banco de dados:
 
-console.log(podeVotar); // Não pode votar
-✅ 4. while
-javascript
-Copiar
-Editar
-let i = 0;
+Criar um banco de dados no MySQL.
 
-while (i < 3) {
-  console.log("Contando: " + i);
-  i++;
-}
-✅ 5. do...while
-javascript
-Copiar
-Editar
-let senha = "";
+Editar o arquivo config/db.js com as credenciais de acesso.
 
-do {
-  senha = prompt("Digite sua senha:");
-} while (senha !== "1234");
+Iniciar o servidor:
 
-console.log("Senha correta!");
-O bloco será executado ao menos uma vez, mesmo que a condição seja falsa no início.
+npm start
 
-✅ 6. for
-javascript
-Copiar
-Editar
-for (let i = 1; i <= 5; i++) {
-  console.log("Número: " + i);
-}
+
+Acessar no navegador:
+
+http://localhost:3000
+
+Autenticação e Níveis de Acesso
+
+Administrador: possui acesso completo ao sistema, incluindo a gestão de usuários e serviços.
+
+Funcionário: possui acesso restrito às funções de cadastro e atendimento.
+
+Funcionalidades
+
+Sistema de login com autenticação e diferentes níveis de acesso.
+
+Cadastro e gerenciamento de clientes e falecidos.
+
+Registro e acompanhamento de serviços contratados.
+
+Painel administrativo responsivo e de fácil utilização.
+
+Integração com banco de dados MySQL.
+
+Autores
+Eloá Brizeis Costa Santana e Giulia Guizzo Baladão Santos
+Trabalho de Conclusão de Curso – Instituto Federal Catarinense 
+Sombrio – SC, 2025
