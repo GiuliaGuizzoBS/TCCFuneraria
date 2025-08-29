@@ -1,7 +1,11 @@
 const express = require('express');
 const categoriaController = require('../controllers/categoriaController');
+const { verificarAdmin } = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
+// 🔒 todas as rotas de produtos só admin acessa
+router.use(verificarAdmin);
 router.get('/', categoriaController.getAllCategorias);
 router.get('/new', categoriaController.renderCreateForm);
 router.post('/', categoriaController.createCategoria);

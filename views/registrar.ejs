@@ -4,7 +4,7 @@
     <div class="text-center">
       <img src="imagens/pombabrancalogo.png" alt="Pomba Branca" width="80" height="40" class="d-inline-block align-top">
     </div>
-    <h2 class="mb-4 text-center texto-marrom">Entrar no Sistema</h2>
+    <h2 class="mb-4 text-center texto-marrom">Criar Conta</h2>
 
     <% if (erro) { %>
       <div class="alert alert-danger text-center">
@@ -12,7 +12,13 @@
       </div>
     <% } %>
 
-    <form action="/login" method="POST">
+    <% if (sucesso) { %>
+      <div class="alert alert-success text-center">
+        <%= sucesso %>
+      </div>
+    <% } %>
+
+    <form action="/registrar" method="POST">
       <div class="form-group">
         <label for="username" class="texto-marrom">Usuário</label>
         <input type="text" name="username" id="username" class="form-control" placeholder="Digite seu usuário" required>
@@ -21,12 +27,12 @@
         <input type="password" name="password" id="password" class="form-control" placeholder="Digite sua senha" required>
       </div>
 
-      <button type="submit" class="btn btn-marrom w-100 mt-4">Entrar</button>
+      <button type="submit" class="btn btn-marrom w-100 mt-4">Registrar</button>
     </form>
 
     <div class="text-center mt-3">
-      <p class="texto-marrom">Não tem uma conta?</p>
-    <a href="/registrar" class="btn btn-outline-marrom w-100">Criar Conta</a>
+      <p class="texto-marrom">Já tem uma conta?</p>
+      <a href="/login" class="btn btn-outline-marrom w-100">Entrar</a>
     </div>
   </div>
 </main>

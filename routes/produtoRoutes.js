@@ -1,6 +1,11 @@
 const express = require('express');
 const produtoController = require('../controllers/produtoController');
+const { verificarAdmin } = require('../middlewares/authMiddleware');
+
 const router = express.Router();
+
+// 🔒 todas as rotas de produtos só admin acessa
+router.use(verificarAdmin);
 
 router.get('/', produtoController.getAllProdutos);
 router.get('/new', produtoController.renderCreateForm);

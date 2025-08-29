@@ -15,6 +15,8 @@ const floresRoutes = require('./routes/floresRoutes');
 const homenagensRoutes = require('./routes/homenagensRoutes');
 const sobreRoutes = require('./routes/sobreRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const registrarRoutes = require('./routes/registrarRoutes');
+const funeraisRoutes = require('./routes/funeraisRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -47,7 +49,9 @@ app.use('/contato', contatoRoutes);
 app.use('/flores', floresRoutes);
 app.use('/homenagens', homenagensRoutes);
 app.use('/sobre', sobreRoutes);       
-app.use('/login', loginRoutes);         
+app.use('/login', loginRoutes); 
+app.use('/registrar', registrarRoutes);
+app.use('/funerais', funeraisRoutes);
 app.use('/', indexRoutes);              
 
 // Servidor
