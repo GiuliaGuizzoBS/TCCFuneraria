@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const { verificarLogin } = require('../middlewares/authMiddleware');
 const Produto = require('../models/produtoModel');
+
+router.use(verificarLogin);
 
 router.get('/', (req, res) => {
   Produto.getAll(7, (err, produtos) => {
