@@ -20,7 +20,15 @@
             font-family: Arial, sans-serif;
             background-color: #d9c8b8;
             color: #4b2e1e;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
+        main, .container-body {
+            flex: 1; /* ocupa o espaço restante */
+        }
+
         .carousel-inner {
                 height: 300px;            
 
@@ -278,10 +286,9 @@
     </style>
 </head>
 <body>
-   <!-- <div class="container"> -->
-      
+   <main class="container-body">
         <%- body %>
-   <!-- </div> -->
+    </main>
 
     <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
       <hr>
