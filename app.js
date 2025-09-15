@@ -17,6 +17,7 @@ const sobreRoutes = require('./routes/sobreRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 const registrarRoutes = require('./routes/registrarRoutes');
 const funeraisRoutes = require('./routes/funeraisRoutes');
+const pedidosRoutes = require('./routes/pedidosRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -52,6 +53,7 @@ app.use('/sobre', sobreRoutes);
 app.use('/login', loginRoutes); 
 app.use('/registrar', registrarRoutes);
 app.use('/funerais', funeraisRoutes);
+app.use('/pedidos', pedidosRoutes);
 app.use('/', indexRoutes);              
 
 // Servidor
