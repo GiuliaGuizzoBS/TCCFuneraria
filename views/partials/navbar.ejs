@@ -49,7 +49,7 @@
           <a class="dropdown-item bg-marrom-clarinho" href="/produtos">Listar Produtos</a>
         </div>
       </li>
-
+      
       <!-- Carrinho dentro do menu (aparece só em telas pequenas) -->
       <li class="nav-item d-lg-none">
         <a class="nav-link bg-marrom-clarinho" href="/pedidos">Pedidos</a>
@@ -58,9 +58,15 @@
 
     <!-- Carrinho fora do menu (aparece só em telas grandes) -->
     <a class="nav-link bg-marrom-clarinho carrinho d-none d-lg-block ms-auto" href="/pedidos">Pedidos</a>
+
+    <!-- Botão Login/Logout -->
+    <% if (session && session.user) { %>
+      <a class="nav-link carrinho-texto ms-3" href="/logout">Logout</a>
+    <% } else { %>
+      <a class="nav-link carrinho-texto ms-3" href="/login">Login</a>
+    <% } %>
   </div>
 </nav>
-
 
 <script>
   $(document).ready(function() {

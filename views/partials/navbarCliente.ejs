@@ -33,11 +33,14 @@
         <a class="nav-link bg-marrom-clarinho" href="/pedidos">Pedidos</a>
       </li>
     </ul>
+<!-- Carrinho fora do menu (aparece só em telas grandes) -->
+<% if (session && session.user) { %>
+  <a class="nav-link carrinho-texto ms-auto" href="/logout">Logout</a>
+<% } else { %>
+  <a class="nav-link carrinho-texto ms-auto" href="/login">Login</a>
+<% } %>
 
-    <!-- Carrinho fora do menu (aparece só em telas grandes) -->
-      <a class="nav-link carrinho-texto ms-auto" href="/login">login</a>
-      <a class="nav-link bg-marrom-clarinho carrinho d-none d-lg-block ms-auto" href="/pedidos">Pedidos</a>
-   
+<a class="nav-link bg-marrom-clarinho carrinho d-none d-lg-block ms-auto" href="/pedidos">Pedidos</a>
 
   </div>
 </nav>

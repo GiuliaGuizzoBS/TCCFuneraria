@@ -4,6 +4,7 @@ const methodOverride = require('method-override');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 
+// Rotas
 const indexRoutes = require('./routes/indexRoutes');
 const gerenciadorRoutes = require('./routes/gerenciadorRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -18,6 +19,8 @@ const loginRoutes = require('./routes/loginRoutes');
 const registrarRoutes = require('./routes/registrarRoutes');
 const funeraisRoutes = require('./routes/funeraisRoutes');
 const pedidosRoutes = require('./routes/pedidosRoutes');
+const logoutRoutes = require('./routes/logoutRoutes');
+const formularioRoutes = require('./routes/formularioRoutes'); // 🔹 ADICIONADO
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +43,12 @@ app.use(session({
   saveUninitialized: true
 }));
 
+// 🔹 Middleware para expor a sessão às views
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
 // Rotas
 app.use('/gerenciador', gerenciadorRoutes);
 app.use('/users', userRoutes);
@@ -49,12 +58,14 @@ app.use('/servicos', servicosRoutes);
 app.use('/contato', contatoRoutes);
 app.use('/flores', floresRoutes);
 app.use('/homenagens', homenagensRoutes);
-app.use('/sobre', sobreRoutes);       
-app.use('/login', loginRoutes); 
+app.use('/sobre', sobreRoutes);
+app.use('/login', loginRoutes);
 app.use('/registrar', registrarRoutes);
 app.use('/funerais', funeraisRoutes);
 app.use('/pedidos', pedidosRoutes);
-app.use('/', indexRoutes);              
+app.use('/logout', logoutRoutes);
+app.use('/formulario', formularioRoutes); // 🔹 ADICIONADO
+app.use('/', indexRoutes);
 
 // Servidor
 app.listen(PORT, () => {
