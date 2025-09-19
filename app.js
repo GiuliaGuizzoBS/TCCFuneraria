@@ -67,6 +67,11 @@ app.use('/logout', logoutRoutes);
 app.use('/formulario', formularioRoutes); // 🔹 ADICIONADO
 app.use('/', indexRoutes);
 
+// 🔹 Captura qualquer rota não encontrada e redireciona para "/"
+app.use((req, res) => {
+  res.redirect('/');
+});
+
 // Servidor
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
