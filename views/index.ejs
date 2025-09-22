@@ -1,23 +1,84 @@
 <!DOCTYPE html>
-<%- include('partials/navbarCliente') %>
 <html>
 <head>
   <title><%= title %></title>
-  
+<style> 
+     .carousel {
+  width: 100%;       /* ocupa 100% da largura do elemento pai */
+  max-width: 100vw;  /* não ultrapassa a largura da tela */
+  margin: 0;         /* remove margens que podem limitar */
+  padding: 0;        /* remove paddings */
+  box-sizing: border-box; /* garante que padding/borda não aumentem a largura */
+  min-height: 200px; /* garante altura mínima sem precisar de valor fixo */
+}
+
+
+.carousel-item {
+  height: 100%;
+}
+
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* faz a imagem preencher sem distorcer */
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55); /* preto 55% transparente */
+  z-index: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+ /* background-color: rgba(0, 0, 0, 0.5);  fundo escuro semi-transparente para as setas */
+  color: #ffeede;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background: none !important;    /* remove o fundo */
+  border: none;                   /* remove borda */
+  outline: none;                  /* remove outline ao focar */
+  box-shadow: none;               /* remove qualquer sombra */
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    height: 200px; /* mantém altura reduzida em mobile */
+    margin-bottom: 2rem; /* espaço abaixo para não sobrepor o título */
+  }
+  .articletitle {
+    margin-top: 8rem; /* espaço acima para não sobrepor o título */
+  }
+}
+
+.carousel-fade .carousel-item {
+   transition: opacity 1s ease-in-out; /* 1s é a duração da transição */ 
+  } 
+.carousel-fade .carousel-item img {
+   width: 100%; height: 300px; object-fit: cover; 
+}  
+
+</style>
+
 </head>
 <body>
-
+  <%- include('partials/navbarCliente') %>
   <article class="article p-0 text-white">
 
   <!-- Carousel -->
-  <div id="carrossel-inicial" class="carousel slide" data-bs-ride="carousel">
+  <div id="carrossel-inicial" class="carousel slide carousel-fade" data-bs-ride="carousel">
 
-    <!-- Indicators/dots -->
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#carrossel-inicial" data-bs-slide-to="2"></button>
-    </div>
 
     <!-- Slideshow -->
     <div class="carousel-inner">
@@ -28,7 +89,7 @@
       <div class="carousel-overlay"></div>
 
         <!-- Texto sobreposto -->
-        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+        <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
         </div>
@@ -40,7 +101,7 @@
       <div class="carousel-overlay"></div>
 
         <!-- Texto sobreposto -->
-        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+        <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
         </div>
@@ -52,7 +113,7 @@
       <div class="carousel-overlay"></div>
 
         <!-- Texto sobreposto -->
-        <div class="carousel-caption d-none d-md-block text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
+        <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
         </div>

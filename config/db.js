@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 const dotenv = require('dotenv');
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('crud', 'root', 'aguirre2709', {
+const sequelize = new Sequelize('crud', 'root', '1808', {
   host: 'localhost',
   dialect: 'mysql'
 });

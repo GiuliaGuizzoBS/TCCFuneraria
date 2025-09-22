@@ -40,7 +40,8 @@ router.post('/', (req, res) => {
         return res.render('registrar', { erro: 'Erro ao criar conta.', sucesso: null });
       }
 
-      return res.render('registrar', { erro: null, sucesso: 'Conta criada com sucesso! Faça login.' });
+      return res.redirect('/login?sucesso=1');
+
     });
   });
 });

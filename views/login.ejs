@@ -6,6 +6,12 @@
     </div>
     <h2 class="mb-4 text-center texto-marrom">Entrar no Sistema</h2>
 
+    <% if (sucesso) { %>
+      <div class="alert alert-success text-center">
+        Conta criada com sucesso! Faça login.
+      </div>
+    <% } %>
+
     <% if (erro) { %>
       <div class="alert alert-danger text-center">
         <%= erro %>

@@ -1,46 +1,223 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
+
 <html lang="pt-br">
 <head>
-  <title><%= title %></title></head>
-   <%- include('partials/navbarCliente') %>
-   <body>
-   <div class="articletitle text-center mb-4">
-     <h2 class="mt-4 titulo-centralizado"><strong>Nossos Serviços</strong></h2>
-      <p>Oferecemos serviços completos para atender você em um momento delicado com cuidado e excelência.</p>
-    </div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #d9c8b8;
+      /* bg-marrom-claro */
+      margin: 0;
+      padding: 0;
+    }
+
+    .servico-section {
+      text-align: center;
+    }
+
+    .caracteristicas-section .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #fff8eb;
+      /* bg-marrom-clarinho */
+      border: 2px solid #57330f; /* adiciona a borda */
+    }
+
+    .caracteristicas-section .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .caracteristicas-section h5 {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .caracteristicas-section p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+
+    .servico-card {
+      display: flex;
+      flex-wrap: nowrap;
+      width: 100vw;
+      /* ocupa a largura total da tela */
+      align-items: center;
+      /*margin-bottom: 0.25rem;*/
+      /*border: 2px solid #291605;*/
+      background-color: #fff8eb;
+      /* bg-marrom-clarinho */
+
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Efeito hover nos serviços */
+.servico-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.servico-card:hover {
+  transform: scaleY(1.10); /* aumenta verticalmente 3% */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+    .servico-card img {
+      width: 50%;
+      height: 400px;
+      /* tamanho fixo */
+      object-fit: cover;
+    }
+
+    .servico-content {
+      width: 50%;
+      padding: 3rem;
+      color: #57330f;
+    }
+
+    .servico-content h3 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .servico-content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-marrom {
+      background-color: #57330f;
+      color: white;
+      border: none;
+    }
+
+    .btn-marrom:hover {
+      background-color: #291605;
+      color: white;
+    }
+
+    .cardservico-invertido {
+      background-color: #291605;
+    }
+
+    .servico-content-invertido {
+      color:#d9c8b8;
+    }
+
+    .btn-marromclaro {
+      background-color: #d9c8b8;
+      color: #291605;
+    }
+
+    .btn-marromclaro:hover {
+      background-color: #ad8d6f;
+      color: #291605;
+    } 
    
-    <div class="row">
-  <div class="col-md-4">
-    <div class="feature-card-servicos card1">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
+    @media (max-width: 768px) {
+      .servico-card {
+        flex-direction: column !important;
+      }
+
+      .servico-card img,
+      .servico-content {
+        width: 100%;
+      }
+
+      .servico-card img {
+        height: 250px;
+      }
+
+      .servico-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+    <%- include('partials/navbarCliente') %>
+    <section class="servico-section mb-5">
+      <h2 class="titulo-centralizado mb-3"><strong>Nossos Serviços</strong></h2>
+    </section>
+
+    <section class="caracteristicas-section text-center mb-5">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-md-4">
+            <div class="card h-100 bg-marrom-clarinho text-start p-3">
+              <h5 class="texto-marrom">Preços Justos</h5>
+              <p class="texto-marrom">Oferecemos serviços de qualidade com valores acessíveis e transparentes, sem
+                surpresas.</p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="col-md-4">
+            <div class="card h-100 bg-marrom-clarinho text-start p-3">
+              <h5 class="texto-marrom">Equipe Qualificada</h5>
+              <p class="texto-marrom">Profissionais experientes e capacitados, garantindo atendimento eficiente e
+                humanizado.</p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="col-md-4">
+            <div class="card h-100 bg-marrom-clarinho text-start p-3">
+              <h5 class="texto-marrom">Trabalho com Respeito</h5>
+              <p class="texto-marrom">Cada detalhe do serviço é realizado com dignidade, cuidado e empatia para as
+                famílias.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serviço 1: imagem à direita -->
+    <div class="servico-card flex-row-reverse">
+      <img src="/imagens/tapaburaco1.png" alt="Serviços Funerários">
+      <div class="servico-content text-start">
         <h3>Serviços Funerários</h3>
-        <p>Organização completa de velórios e sepultamentos com dignidade, respeito e cuidado aos detalhes.</p>
+        <p>Organização completa de velórios e sepultamentos com dignidade, respeito e cuidado aos detalhes. Equipe
+          especializada para apoio emocional e logístico.</p>
         <a href="/funerais" class="btn btn-marrom">Detalhes</a>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="feature-card-servicos card2">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
+    <!-- Serviço 2: imagem à esquerda -->
+    <div class="servico-card flex-row cardservico-invertido">
+      <img src="/imagens/tapaburaco2.png" alt="Arranjos Florais">
+      <div class="servico-content servico-content-invertido text-start">
         <h3>Arranjos Florais</h3>
-        <p>Flores naturais e artificiais para homenagens, coroas e ornamentos sob medida.</p>
-        <a href="/flores" class="btn btn-marrom">Detalhes</a>
+        <p>Flores naturais e artificiais para homenagens, coroas e ornamentos sob medida, garantindo um tributo
+          elegante e personalizado.</p>
+        <a href="/flores" class="btn btn-marromclaro">Detalhes</a>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="feature-card-servicos card3">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
+    <!-- Serviço 3: imagem à direita -->
+    <div class="servico-card flex-row-reverse">
+      <img src="/imagens/tapaburaco3.png" alt="Homenagens Especiais">
+      <div class="servico-content text-start">
         <h3>Homenagens Especiais</h3>
-        <p>Momentos personalizados com música, mensagens e rituais simbólicos que celebram a memória.</p>
+        <p>Momentos personalizados com música, mensagens e rituais simbólicos que celebram a memória de quem se foi,
+          de forma única e significativa.</p>
         <a href="/homenagens" class="btn btn-marrom">Detalhes</a>
       </div>
     </div>
-  </div>
-</div>
-</body></html>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+    <link href="views/layout.ejs" rel="stylesheet">
+  <link href="stylesheets/style.css" rel="stylesheet">
+</html>

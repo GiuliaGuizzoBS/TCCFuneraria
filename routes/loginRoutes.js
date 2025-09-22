@@ -3,19 +3,22 @@ const User = require('../models/userModel');
 
 const router = express.Router();
 
+// Página de login
 router.get('/', (req, res) => {
-  res.render('login', { erro: null });
+  const sucesso = req.query.sucesso; // pega da URL (ex: /login?sucesso=1)
+  res.render('login', { erro: null, sucesso });
 });
 
+// Ação de login
 router.post('/', (req, res) => {
   const { username, password } = req.body;
 
   User.findByUsername(username, (err, user) => {
-    if (err) return res.render('login', { erro: 'Erro no servidor' });
-    if (!user) return res.render('login', { erro: 'Usuário ou senha inválidos' });
+    if (err) return res.render('login', { erro: 'Erro no servidor', sucesso: null });
+    if (!user) return res.render('login', { erro: 'Usuário ou senha inválidos', sucesso: null });
 
     const senhaValida = password === user.password;
-    if (!senhaValida) return res.render('login', { erro: 'Usuário ou senha inválidos' });
+    if (!senhaValida) return res.render('login', { erro: 'Usuário ou senha inválidos', sucesso: null });
 
     // Salva dados corretos na sessão
     req.session.user = {

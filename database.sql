@@ -14,7 +14,7 @@ CREATE TABLE categorias (
     nome VARCHAR(255) NOT NULL
 );
 
-//crie a tabela produtos com os campos id, nome, descricao e preco
+
 CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -32,8 +32,6 @@ CREATE TABLE imagens (
     categoria INT NOT NULL,
     FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
-
-use crud;
 
 -- MIGA LIA AS QUE EU COLOQUEI TÃO AQUI BJ LINDA
 
@@ -114,4 +112,21 @@ CREATE TABLE contrata (
     cliente INT,
     FOREIGN KEY (forma_de_pagamento) REFERENCES forma_de_pagamento(id),
     FOREIGN KEY (cliente) REFERENCES users(id)
+);
+
+
+CREATE TABLE pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  status VARCHAR(20) DEFAULT 'aberto',
+  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE pedido_produtos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  pedido_id INT NOT NULL,
+  produto_id INT NOT NULL,
+  quantidade INT DEFAULT 1,
+  FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+  FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
