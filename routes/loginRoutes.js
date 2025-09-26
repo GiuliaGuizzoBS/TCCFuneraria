@@ -1,11 +1,12 @@
 const express = require('express');
 const User = require('../models/userModel');
+const Pedido = require('../models/pedidosModel');
 
 const router = express.Router();
 
 // Página de login
 router.get('/', (req, res) => {
-  const sucesso = req.query.sucesso; // pega da URL (ex: /login?sucesso=1)
+  const sucesso = req.query.sucesso;
   res.render('login', { erro: null, sucesso });
 });
 
@@ -24,15 +25,22 @@ router.post('/', (req, res) => {
     req.session.user = {
       id: user.id,
       username: user.username,
-      role: user.role.toLowerCase() // garante minúsculo
+      role: user.role.toLowerCase()
     };
 
-    // Redireciona por role
-    if (user.role.toLowerCase() === 'admin') {
-      return res.redirect('/gerenciador');
-    } else {
-      return res.redirect('/'); // usuário comum
-    }
+    // Recupera pedido em aberto (se existir)
+    Pedido.getPedidoAberto(user.id, (err, pedido) => {
+      if (!err && pedido) {
+        req.session.pedido_id = pedido.id;
+      }
+
+      // Redireciona por role
+      if (user.role.toLowerCase() === 'admin') {
+        return res.redirect('/gerenciador');
+      } else {
+        return res.redirect('/');
+      }
+    });
   });
 });
 
