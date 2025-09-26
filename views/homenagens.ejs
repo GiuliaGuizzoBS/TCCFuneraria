@@ -12,7 +12,11 @@
               <p class="card-text text-muted"><%= produto.descricao %></p>
               <p class="card-text fw-bold texto-marrom">R$ <%= Number(produto.preco).toFixed(2) %></p>
             </div>
-            <a href="#" class="btn btn-marrom mt-3 w-100">Comprar</a>
+            <form action="/pedidos/adicionar" method="POST">
+              <input type="hidden" name="produto_id" value="<%= produto.id %>">
+              <input type="hidden" name="quantidade" value="1">
+              <button type="submit" class="btn btn-marrom mt-3 w-100">Adicionar ao pedido</button>
+            </form>
           </div>
         </div>
       <% }); %>
