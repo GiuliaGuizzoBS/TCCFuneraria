@@ -5,9 +5,9 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 
 router.use(verificarLogin);
 
-// Mostrar produtos do pedido (carrinho)
+// Mostrar produtos do pedido
 router.get('/', (req, res) => {
-  const pedidoId = req.session.pedido_id; // assumindo que o pedido do usuário está na sessão
+  const pedidoId = req.session.pedido_id;
   if (!pedidoId) return res.render('pedidos', { produtos: [] });
 
   Pedido.getProdutos(pedidoId, (err, produtos) => {
@@ -16,14 +16,14 @@ router.get('/', (req, res) => {
   });
 });
 
-// Adicionar produto ao pedido
+// Adicionar produto
 router.post('/adicionar', (req, res) => {
   const { produto_id, quantidade } = req.body;
   let pedidoId = req.session.pedido_id;
 
   if (!pedidoId) {
-    // cria um pedido novo
-    Pedido.create({ usuario_id: req.session.usuario_id }, (err, id) => {
+    // cria um pedido novo para o usuário logado
+    Pedido.create({ usuario_id: req.session.user.id }, (err, id) => {
       if (err) return res.status(500).send(err);
       req.session.pedido_id = id;
       Pedido.addProduto(id, produto_id, quantidade || 1, (err2) => {
@@ -39,7 +39,7 @@ router.post('/adicionar', (req, res) => {
   }
 });
 
-// Remover produto do pedido
+// Remover produto
 router.post('/remover', (req, res) => {
   const { produto_id } = req.body;
   const pedidoId = req.session.pedido_id;

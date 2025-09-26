@@ -8,16 +8,24 @@
       <div class="produto-card mb-3">
         <h5 class="texto-marrom"><%= produto.nome %></h5>
         <p><%= produto.descricao %></p>
-        <p class="fw-bold texto-marrom">R$ <%= Number(produto.preco).toFixed(2) %> x <%= produto.quantidade %></p>
+        <p class="fw-bold texto-marrom">
+          R$ <%= Number(produto.preco).toFixed(2) %> x <%= produto.quantidade %>
+        </p>
         <form action="/pedidos/remover" method="POST">
           <input type="hidden" name="produto_id" value="<%= produto.id %>">
           <button type="submit" class="btn btn-marrom btn-sm mt-2">Remover</button>
         </form>
       </div>
     <% }); %>
-    <form action="/pedidos/finalizar" method="POST">
-      <button type="submit" class="btn btn-custom w-100 mt-3">Finalizar Pedido</button>
-    </form>
+
+    <div class="d-flex gap-2 mt-3">
+      <form action="/pedidos/finalizar" method="POST">
+        <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+      </form>
+
+      <a href="/servicos" class="btn btn-secondary">Continuar Comprando</a>
+    </div>
+
   <% } else { %>
     <p class="text-center fw-bold mt-4">Nenhum produto no seu carrinho.</p>
   <% } %>

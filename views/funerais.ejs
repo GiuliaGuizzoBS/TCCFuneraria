@@ -1,4 +1,4 @@
-<%- include('partials/navbarCliente') %>
+<%- include('partials/navbarCliente') %> 
 <h2 class="mt-4 titulo-centralizado"><strong>Funerais</strong></h2>
 
 <div class="container mt-4">
@@ -30,7 +30,13 @@
               <% } %>
               <p class="card-text fw-bold texto-marrom">R$ <%= getPreco(produto).toFixed(2).replace('.', ',') %></p>
             </div>
-            <a href="#" class="btn btn-marrom mt-3 w-100">Comprar</a>
+
+            <!-- Form para adicionar ao carrinho -->
+            <form action="/pedidos/adicionar" method="POST" class="mt-3 w-100">
+              <input type="hidden" name="produto_id" value="<%= produto.id %>">
+              <input type="hidden" name="quantidade" value="1">
+              <button type="submit" class="btn btn-marrom w-100">Adicionar ao carrinho</button>
+            </form>
           </div>
         </div>
       <% }) %>
