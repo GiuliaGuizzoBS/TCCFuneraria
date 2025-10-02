@@ -27,7 +27,12 @@
       background-color: #fff8eb;
       /* bg-marrom-clarinho */
       border: 2px solid #57330f; /* adiciona a borda */
+      
     }
+
+    .caracteristicas-section .col-md-4 {
+  margin-bottom: 1.5rem;
+}
 
     .caracteristicas-section .card:hover {
       transform: translateY(-5px);
@@ -48,16 +53,17 @@
     .servico-card {
       display: flex;
       flex-wrap: nowrap;
-      width: 100vw;
-      /* ocupa a largura total da tela */
+      width: auto; /* ou 100%, mas geralmente auto funciona melhor aqui */
+  max-width: 100%; /* para evitar overflow */
+  margin: 1rem; /* funciona normalmente */
       align-items: center;
       /*margin-bottom: 0.25rem;*/
       /*border: 2px solid #291605;*/
       background-color: #fff8eb;
       /* bg-marrom-clarinho */
-
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       border-radius: 15px; /* valor que você preferir */
     }
 
     /* Efeito hover nos serviços */

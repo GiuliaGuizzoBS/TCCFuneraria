@@ -28,11 +28,30 @@ router.post('/', (req, res) => {
     }
 
     // Cria novo usuário → role padrão = 'user'
-    const newUser = {
-      username,
-      password, // ⚠️ por enquanto texto puro (depois podemos usar bcrypt)
-      role: 'user'
-    };
+    const bcrypt = require('bcrypt');
+
+bcrypt.hash(password, 10, (err, hash) => {
+  if (err) {
+    console.error(err);
+    return res.render('registrar', { erro: 'Erro ao processar senha.', sucesso: null });
+  }
+
+  const newUser = {
+    username,
+    password: hash, // ✔️ senha criptografada
+    role: 'user'
+  };
+
+  User.create(newUser, (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.render('registrar', { erro: 'Erro ao criar conta.', sucesso: null });
+    }
+
+    return res.redirect('/login?sucesso=1');
+  });
+});
+
 
     User.create(newUser, (err, result) => {
       if (err) {

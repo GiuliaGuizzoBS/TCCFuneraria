@@ -1,21 +1,19 @@
-CREATE DATABASE CRUD;
-
+CREATE DATABASE IF NOT EXISTS CRUD;
 USE CRUD;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL
 );
 
-CREATE TABLE categorias (
+CREATE TABLE IF NOT EXISTS categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL
 );
 
-
-CREATE TABLE produtos (
+CREATE TABLE IF NOT EXISTS produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     descricao TEXT NOT NULL,
@@ -25,19 +23,15 @@ CREATE TABLE produtos (
     FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
 
-CREATE TABLE imagens (
+CREATE TABLE IF NOT EXISTS imagens (
     id INT AUTO_INCREMENT PRIMARY KEY,
-   url VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
     descricao TEXT NOT NULL,
     categoria INT NOT NULL,
     FOREIGN KEY (categoria) REFERENCES categorias(id)
 );
 
--- MIGA LIA AS QUE EU COLOQUEI TÃO AQUI BJ LINDA
-
-
-
-CREATE TABLE cama_ardente (
+CREATE TABLE IF NOT EXISTS cama_ardente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cortina BOOLEAN,
     tapete BOOLEAN,
@@ -48,8 +42,7 @@ CREATE TABLE cama_ardente (
     cavalete BOOLEAN
 );
 
-
-CREATE TABLE necromaquiagem (
+CREATE TABLE IF NOT EXISTS necromaquiagem (
     id INT AUTO_INCREMENT PRIMARY KEY,
     roupa VARCHAR(100),
     r_intimas BOOLEAN,
@@ -60,8 +53,7 @@ CREATE TABLE necromaquiagem (
     cabelo INT
 );
 
-
-CREATE TABLE laboratorio (
+CREATE TABLE IF NOT EXISTS laboratorio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     embacamento BOOLEAN,
     tanatopraxia BOOLEAN,
@@ -71,7 +63,7 @@ CREATE TABLE laboratorio (
     higienizacao BOOLEAN
 );
 
-CREATE TABLE endereco (
+CREATE TABLE IF NOT EXISTS endereco (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT,
     rua VARCHAR(40),
@@ -81,14 +73,12 @@ CREATE TABLE endereco (
     pais VARCHAR(15)
 );
 
-
-CREATE TABLE forma_de_pagamento (
+CREATE TABLE IF NOT EXISTS forma_de_pagamento (
     id INT AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(10)
 );
 
-
-CREATE TABLE formulario (
+CREATE TABLE IF NOT EXISTS formulario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cremacao BOOLEAN,
     horario INT,
@@ -101,8 +91,7 @@ CREATE TABLE formulario (
     FOREIGN KEY (cama_ardente) REFERENCES cama_ardente(id)
 );
 
-
-CREATE TABLE contrata (
+CREATE TABLE IF NOT EXISTS contrata (
     id INT AUTO_INCREMENT PRIMARY KEY,
     valor DECIMAL(10,2),
     hora INT,
@@ -114,15 +103,14 @@ CREATE TABLE contrata (
     FOREIGN KEY (cliente) REFERENCES users(id)
 );
 
-
-CREATE TABLE pedidos (
+CREATE TABLE IF NOT EXISTS pedidos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   usuario_id INT NOT NULL,
   status VARCHAR(20) DEFAULT 'aberto',
   criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE pedido_produtos (
+CREATE TABLE IF NOT EXISTS pedido_produtos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   pedido_id INT NOT NULL,
   produto_id INT NOT NULL,
