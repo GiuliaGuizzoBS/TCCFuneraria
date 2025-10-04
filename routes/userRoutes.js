@@ -7,7 +7,6 @@ const router = express.Router();
 // 🔒 todas as rotas de produtos só admin acessa
 router.use(verificarAdmin);
 router.get('/', userController.getAllUsers);
-router.get('/search', userController.searchUsers); // Adicione esta rota
 router.get('/new', userController.renderCreateForm);
 router.post('/', userController.createUser);
 router.get('/:id', userController.getUserById);

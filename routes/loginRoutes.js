@@ -5,13 +5,11 @@ const Pedido = require('../models/pedidosModel');
 
 const router = express.Router();
 
-// Página de login
 router.get('/', (req, res) => {
   const sucesso = req.query.sucesso;
   res.render('login', { erro: null, sucesso });
 });
 
-// Ação de login
 router.post('/', (req, res) => {
   const { username, password } = req.body;
 
@@ -24,7 +22,6 @@ router.post('/', (req, res) => {
         return res.render('login', { erro: 'Usuário ou senha inválidos', sucesso: null });
       }
 
-      // Senha válida: salva na sessão
       req.session.user = {
         id: user.id,
         username: user.username,
@@ -36,7 +33,6 @@ router.post('/', (req, res) => {
           req.session.pedido_id = pedido.id;
         }
 
-        // Redireciona por role
         if (user.role.toLowerCase() === 'admin') {
           return res.redirect('/gerenciador');
         } else {

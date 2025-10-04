@@ -1,5 +1,6 @@
 const express = require('express');
-const User = require('../models/userModel'); // model do banco
+const bcrypt = require('bcrypt');
+const User = require('../models/userModel');
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ router.post('/', (req, res) => {
     return res.render('registrar', { erro: 'Preencha todos os campos!', sucesso: null });
   }
 
-  // Verifica se já existe usuário com o mesmo nome
+  // Verifica se o usuário já existe
   User.findByUsername(username, (err, existingUser) => {
     if (err) {
       console.error(err);
@@ -27,40 +28,29 @@ router.post('/', (req, res) => {
       return res.render('registrar', { erro: 'Usuário já existe!', sucesso: null });
     }
 
-    // Cria novo usuário → role padrão = 'user'
-    const bcrypt = require('bcrypt');
-
-bcrypt.hash(password, 10, (err, hash) => {
-  if (err) {
-    console.error(err);
-    return res.render('registrar', { erro: 'Erro ao processar senha.', sucesso: null });
-  }
-
-  const newUser = {
-    username,
-    password: hash, // ✔️ senha criptografada
-    role: 'user'
-  };
-
-  User.create(newUser, (err, result) => {
-    if (err) {
-      console.error(err);
-      return res.render('registrar', { erro: 'Erro ao criar conta.', sucesso: null });
-    }
-
-    return res.redirect('/login?sucesso=1');
-  });
-});
-
-
-    User.create(newUser, (err, result) => {
+    // Criptografa a senha antes de salvar
+    bcrypt.hash(password, 10, (err, hash) => {
       if (err) {
         console.error(err);
-        return res.render('registrar', { erro: 'Erro ao criar conta.', sucesso: null });
+        return res.render('registrar', { erro: 'Erro ao processar senha.', sucesso: null });
       }
 
-      return res.redirect('/login?sucesso=1');
+      const newUser = {
+        username,
+        password: hash, // senha com hash
+        role: 'user'    // padrão
+      };
 
+      // Cria o novo usuário no banco
+      User.create(newUser, (err) => {
+        if (err) {
+          console.error(err);
+          return res.render('registrar', { erro: 'Erro ao criar conta.', sucesso: null });
+        }
+
+        // Redireciona para o login com mensagem de sucesso
+        return res.redirect('/login?sucesso=1');
+      });
     });
   });
 });

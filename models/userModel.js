@@ -25,14 +25,6 @@ const User = {
         });
     },
 
-    findByEmail: (email, callback) => {
-        const query = 'SELECT * FROM users WHERE username = ?';
-        db.query(query, [email], (err, results) => {
-            if (err) return callback(err);
-            callback(null, results[0]);
-        });
-    },
-
     update: (id, user, callback) => {
         const query = 'UPDATE users SET username = ?, password = ?, role = ? WHERE id = ?';
         db.query(query, [user.username, user.password, user.role, id], (err, results) => {
@@ -55,15 +47,15 @@ const User = {
             if (err) return callback(err);
             callback(null, results);
         });
-    },
-
-    searchByName: (name, callback) => {
-        const query = 'SELECT * FROM users WHERE username LIKE ?';
-        db.query(query, [`%${name}%`], (err, results) => {
-            if (err) return callback(err);
-            callback(null, results);
-        });
-    },    
+    }
 };
+        findById: (id, callback) => {
+    const query = 'SELECT * FROM users WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+        if (err) return callback(err);
+        callback(null, results[0]);
+    });
+},
+
 
 module.exports = User;

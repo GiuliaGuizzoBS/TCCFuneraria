@@ -22,11 +22,13 @@ router.post('/adicionar', (req, res) => {
   let pedidoId = req.session.pedido_id;
 
   if (!pedidoId) {
-    // cria um pedido novo para o usuário logado
-    Pedido.create({ usuario_id: req.session.user.id }, (err, id) => {
+    // Cria um pedido novo para o usuário logado
+    Pedido.create(req.session.user.id, (err, pedido) => {
       if (err) return res.status(500).send(err);
-      req.session.pedido_id = id;
-      Pedido.addProduto(id, produto_id, quantidade || 1, (err2) => {
+      
+      req.session.pedido_id = pedido.id;
+
+      Pedido.addProduto(pedido.id, produto_id, quantidade || 1, (err2) => {
         if (err2) return res.status(500).send(err2);
         res.redirect('/pedidos');
       });
@@ -56,7 +58,7 @@ router.post('/finalizar', (req, res) => {
   const pedidoId = req.session.pedido_id;
   if (!pedidoId) return res.redirect('/pedidos');
 
-  Pedido.fechar(pedidoId, (err) => {
+  Pedido.finalizar(pedidoId, (err) => {
     if (err) return res.status(500).send(err);
     req.session.pedido_id = null;
     res.redirect('/pedidos');
