@@ -6,11 +6,12 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 router.use(verificarLogin);
 
 router.get('/', (req, res) => {
-  Produto.getAll(8, (err, produtos) => {
+  Produto.getAll('homenagens', (err, produtos) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Erro ao carregar produtos da categoria homenagens.');
     }
+    // Renderiza a view homenagens.ejs passando os produtos
     res.render('homenagens', { produtos, title: 'Homenagens' });
   });
 });

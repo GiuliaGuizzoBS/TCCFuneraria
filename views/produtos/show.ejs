@@ -1,10 +1,17 @@
 <%- include('../partials/navbar') %>
 
-<h1>produto Details</h1>
-<p>ID: <%= produto.id %></p>
-<p>Nome: <%= produto.nome %></p>
-<p>Descrição: <%= produto.descricao %></p>
-<p>Preço: <%= produto.preco %></p>
-<p>Quantidade: <%= produto.quantidade %></p>
-<p>Categoria: <%= produto.categoria_nome %></p>
-<a href="/produtos" class="btn btn-primary">Back to List</a>
+<h1>Detalhes do produto</h1>
+
+<p><strong>ID:</strong> <%= produto.id %></p>
+<p><strong>Nome:</strong> <%= produto.nome %></p>
+<p><strong>Descrição:</strong> <%= produto.descricao %></p>
+<p><strong>Preço:</strong> R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %></p>
+<p><strong>Quantidade:</strong> <%= produto.quantidade %></p>
+<p><strong>Categoria:</strong> <%= produto.categoria_nome ?? produto.categoria %></p>
+
+<a href="/produtos" class="btn btn-primary">Voltar à lista</a>
+<a href="/produtos/<%= produto.id %>/edit" class="btn btn-marrom">Editar</a>
+
+<form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST" style="display:inline;">
+  <button type="submit" class="btn btn-danger">Excluir</button>
+</form>

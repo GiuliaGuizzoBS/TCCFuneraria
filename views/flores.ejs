@@ -1,4 +1,5 @@
 <%- include('partials/navbarCliente') %>
+
 <h2 class="mt-4 titulo-centralizado"><strong>Arranjos Florais</strong></h2>
 <div class="container mt-4">
   <div class="row">
@@ -6,11 +7,18 @@
       <% produtos.forEach(produto => { %>
         <div class="col-md-4 mb-4">
           <div class="feature-card h-100 d-flex flex-column justify-content-between">
-            <img src="<%= produto.imagem_url %>" class="card-img-top rounded" alt="<%= produto.nome %>" style="height: 200px; object-fit: cover;">
+            <img src="<%= produto.imagem_url ?? '/img/placeholder.jpg' %>" 
+                 class="card-img-top rounded" 
+                 alt="<%= produto.nome %>" 
+                 style="height: 200px; object-fit: cover;">
             <div class="mt-3">
               <h5 class="card-title text-capitalize texto-marrom"><%= produto.nome %></h5>
-              <p class="card-text text-muted"><%= produto.descricao %></p>
-              <p class="card-text fw-bold texto-marrom">R$ <%= Number(produto.preco).toFixed(2) %></p>
+              <% if (produto.descricao) { %>
+                <p class="card-text text-muted"><%= produto.descricao %></p>
+              <% } %>
+              <p class="card-text fw-bold texto-marrom">
+                R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %>
+              </p>
             </div>
             <form action="/pedidos/adicionar" method="POST">
               <input type="hidden" name="produto_id" value="<%= produto.id %>">

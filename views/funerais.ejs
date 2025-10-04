@@ -14,8 +14,8 @@
         return isNaN(v) ? 0 : v;
       };
 
-      // Filtra por nome da categoria (caixão = funerais)
-      const itens = lista.filter(p => (p.categoria_nome ?? '').toLowerCase() === 'caixão');
+      // Filtra por categoria do ENUM
+const itens = lista.filter(p => (p.categoria ?? '').toLowerCase() === 'funerais');
     %>
 
     <% if (itens.length > 0) { %>
