@@ -166,22 +166,19 @@
                     <input type="date" class="form-control" name="data" required>
                 </div>
             </div>
+            
             <div class="form-group">
-                <label for="forma_de_pagamento">Forma de Pagamento</label>
-                <select name="forma_de_pagamento" class="form-control" required>
-                    <% formasPagamento.forEach(fp => { %>
-                        <option value="<%= fp.id %>"><%= fp.descricao %></option>
-                    <% }) %>
-                </select>
-            </div>
+    <label for="forma_de_pagamento">Forma de Pagamento</label>
+    <input type="text" class="form-control" name="forma_de_pagamento" placeholder="Ex: Dinheiro, Cartão, Pix..." required>
+</div>
+
             <div class="form-group">
-                <label for="cliente">Cliente (Usuário)</label>
-                <select name="cliente" class="form-control" required>
-                    <% usuarios.forEach(u => { %>
-                        <option value="<%= u.id %>"><%= u.username %></option>
-                    <% }) %>
-                </select>
-            </div>
+    <label for="cliente">Nome completo do cliente</label>
+    <input type="text" class="form-control" name="cliente" required>
+</div>
+            <div class="form-group">
+                <label for="observacoes">Observações</label>
+                <textarea class="form-control" name="observacoes" rows="3" maxlength="200"></textarea>
 
             <button type="submit" class="btn btn-custom">Salvar</button>
         </form>
