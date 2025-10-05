@@ -5,27 +5,36 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 
 router.use(verificarLogin);
 
-// Mostrar produtos do pedido
+// Mostrar produtos em aberto e pedidos confirmados
 router.get('/', (req, res) => {
-  const pedidoId = req.session.pedido_id;
-  if (!pedidoId) return res.render('pedidos', { produtos: [] });
+  const userId = req.session.user.id;
 
-  Pedido.getProdutos(pedidoId, (err, produtos) => {
-    if (err) return res.status(500).send('Erro ao carregar o pedido.');
-    res.render('pedidos', { produtos });
+  Pedido.getEmAberto(userId, (err, produtos) => {
+    if (err) {
+      console.error('Erro ao carregar pedidos abertos:', err);
+      return res.status(500).send('Erro ao carregar pedidos abertos.');
+    }
+
+    Pedido.getConfirmados(userId, (err2, confirmados) => {
+      if (err2) {
+        console.error('Erro ao carregar pedidos confirmados:', err2);
+        return res.status(500).send('Erro ao carregar pedidos confirmados.');
+      }
+
+      res.render('pedidos', { produtos, confirmados });
+    });
   });
 });
 
-// Adicionar produto
+// Adicionar produto ao pedido
 router.post('/adicionar', (req, res) => {
   const { produto_id, quantidade } = req.body;
   let pedidoId = req.session.pedido_id;
 
   if (!pedidoId) {
-    // Cria um pedido novo para o usuário logado
     Pedido.create(req.session.user.id, (err, pedido) => {
       if (err) return res.status(500).send(err);
-      
+
       req.session.pedido_id = pedido.id;
 
       Pedido.addProduto(pedido.id, produto_id, quantidade || 1, (err2) => {
@@ -41,7 +50,7 @@ router.post('/adicionar', (req, res) => {
   }
 });
 
-// Remover produto
+// Remover produto do pedido
 router.post('/remover', (req, res) => {
   const { produto_id } = req.body;
   const pedidoId = req.session.pedido_id;
@@ -53,16 +62,9 @@ router.post('/remover', (req, res) => {
   });
 });
 
-// Finalizar pedido
+// Finalizar pedido → redireciona para o formulário
 router.post('/finalizar', (req, res) => {
-  const pedidoId = req.session.pedido_id;
-  if (!pedidoId) return res.redirect('/pedidos');
-
-  Pedido.finalizar(pedidoId, (err) => {
-    if (err) return res.status(500).send(err);
-    req.session.pedido_id = null;
-    res.redirect('/pedidos');
-  });
+  res.redirect('/formulario');
 });
 
 module.exports = router;

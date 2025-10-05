@@ -1,74 +1,127 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../config/db"); // conexão mysql2
+const db = require("../config/db");
+const Pedido = require("../models/pedidosModel");
+const { verificarLogin } = require("../middlewares/authMiddleware");
 
-// Função para converter valores "0" e "1" em números
-const toBool = val => val === "1" ? 1 : 0;
+router.use(verificarLogin);
 
-// GET -> Renderiza formulário com selects preenchidos
+// Exibir formulário
 router.get("/", (req, res) => {
-    const sqlFP = "SELECT * FROM forma_de_pagamento";
-
-    db.query(sqlFP, (err, formas) => {
-        if (err) return res.status(500).send("Erro ao carregar formas de pagamento");
-
-        res.render("formulario", { formasPagamento: formas });
-    });
+  res.render("formulario", { user: req.session.user });
 });
 
-// POST -> Salva nas tabelas relacionadas
+// Salvar formulário e finalizar pedido
 router.post("/", (req, res) => {
-    const {
-        numero, rua, bairro, cidade, estado, pais,
-        roupa, r_intimas, batom, unha, observacao, intensidade,
-        embacamento, tanatopraxia, aspiracao, restauracao, mumificacao, higienizacao,
-        cortina, tapete, livropre, veleiro, cristo, biblia, cavalete,
-        valor, hora, data, forma_de_pagamento, cliente
-    } = req.body;
+  const {
+    cremacao,
+    horario,
+    translado,
+    roupa,
+    r_intimas,
+    batom,
+    unha,
+    observacao,
+    intensidade,
+    cabelo,
+    embacamento,
+    tanatopraxia,
+    aspiracao,
+    restauracao,
+    mumificacao,
+    higienizacao,
+    cortina,
+    tapete,
+    livropre,
+    veleiro,
+    cristo,
+    biblia,
+    cavalete,
+    numero,
+    rua,
+    bairro,
+    cidade,
+    estado,
+    pais,
+    valor,
+    hora,
+    data,
+    forma_de_pagamento,
+    cliente,
+    observacoes
+  } = req.body;
 
-    // Inserir endereço
-    const sqlEndereco = "INSERT INTO endereco (numero, rua, bairro, cidade, estado, pais) VALUES (?, ?, ?, ?, ?, ?)";
-    db.query(sqlEndereco, [numero, rua, bairro, cidade, estado, pais], (err, resultEnd) => {
-        if (err) return res.status(500).send("Erro ao salvar endereço");
+  const pedidoId = req.session.pedido_id;
+  if (!pedidoId) return res.redirect("/pedidos");
 
-        // Inserir necromaquiagem
-        const sqlNecro = "INSERT INTO necromaquiagem (roupa, r_intimas, batom, unha, observacao, intensidade) VALUES (?, ?, ?, ?, ?, ?)";
-        db.query(sqlNecro, [roupa, toBool(r_intimas), batom, unha, observacao, toBool(intensidade)], (err2, resultNecro) => {
-            if (err2) return res.status(500).send("Erro ao salvar necromaquiagem");
+  // 1️⃣ Inserir endereço
+  const sqlEndereco = `
+    INSERT INTO endereco (numero, rua, bairro, cidade, estado, pais)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+  db.query(sqlEndereco, [numero, rua, bairro, cidade, estado, pais], (err, resultEndereco) => {
+    if (err) return res.status(500).send("Erro ao salvar endereço.");
+    const enderecoId = resultEndereco.insertId;
 
-            // Inserir laboratório
-            const sqlLab = "INSERT INTO laboratorio (embacamento, tanatopraxia, aspiracao, restauracao, mumificacao, higienizacao) VALUES (?, ?, ?, ?, ?, ?)";
-            db.query(sqlLab, [
-                toBool(embacamento), toBool(tanatopraxia), toBool(aspiracao),
-                toBool(restauracao), toBool(mumificacao), toBool(higienizacao)
-            ], (err3, resultLab) => {
-                if (err3) return res.status(500).send("Erro ao salvar laboratório");
+    // 2️⃣ Inserir necromaquiagem
+    const sqlNecro = `
+      INSERT INTO necromaquiagem (roupa, r_intimas, batom, unha, observacao, intensidade, cabelo)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    db.query(sqlNecro, [roupa, r_intimas, batom, unha, observacao, intensidade, cabelo], (err, resultNecro) => {
+      if (err) return res.status(500).send("Erro ao salvar necromaquiagem.");
+      const necroId = resultNecro.insertId;
 
-                // Inserir cama ardente
-                const sqlCama = "INSERT INTO cama_ardente (cortina, tapete, livropre, veleiro, cristo, biblia, cavalete) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                db.query(sqlCama, [
-                    toBool(cortina), toBool(tapete), toBool(livropre),
-                    toBool(veleiro), toBool(cristo), toBool(biblia), toBool(cavalete)
-                ], (err4, resultCama) => {
-                    if (err4) return res.status(500).send("Erro ao salvar cama ardente");
+      // 3️⃣ Inserir laboratório
+      const sqlLab = `
+        INSERT INTO laboratorio (embacamento, tanatopraxia, aspiracao, restauracao, mumificacao, higienizacao)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `;
+      db.query(sqlLab, [embacamento, tanatopraxia, aspiracao, restauracao, mumificacao, higienizacao], (err, resultLab) => {
+        if (err) return res.status(500).send("Erro ao salvar laboratório.");
+        const labId = resultLab.insertId;
 
-                    // Inserir formulário (ligando necro/lab/cama)
-                    const sqlForm = "INSERT INTO formulario (cremacao, horario, translado, necromaquiagem, laboratorio, cama_ardente) VALUES (?, ?, ?, ?, ?, ?)";
-                    db.query(sqlForm, [0, hora, "Não informado", resultNecro.insertId, resultLab.insertId, resultCama.insertId], (err5, resultForm) => {
-                        if (err5) return res.status(500).send("Erro ao salvar formulário");
+        // 4️⃣ Inserir cama ardente
+        const sqlCama = `
+          INSERT INTO cama_ardente (cortina, tapete, livropre, veleiro, cristo, biblia, cavalete)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        db.query(sqlCama, [cortina, tapete, livropre, veleiro, cristo, biblia, cavalete], (err, resultCama) => {
+          if (err) return res.status(500).send("Erro ao salvar cama ardente.");
+          const camaId = resultCama.insertId;
 
-                        // Inserir contrato (aqui cliente é nome direto)
-                        const sqlContrata = "INSERT INTO contrata (valor, hora, data, assinatura, forma_de_pagamento, cliente) VALUES (?, ?, ?, ?, ?, ?)";
-                        db.query(sqlContrata, [valor, hora, data, 1, forma_de_pagamento, cliente], (err6) => {
-                            if (err6) return res.status(500).send("Erro ao salvar contrato");
+          // 5️⃣ Inserir formulário principal
+          const sqlForm = `
+            INSERT INTO formulario (cremacao, horario, translado, necromaquiagem, laboratorio, cama_ardente, endereco_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+          `;
+          db.query(sqlForm, [cremacao, horario, translado, necroId, labId, camaId, enderecoId], (err, resultForm) => {
+            if (err) return res.status(500).send("Erro ao salvar formulário principal.");
 
-                            res.redirect("/formulario");
-                        });
-                    });
-                });
+            // 6️⃣ Inserir contrato (contrata)
+            const sqlContrata = `
+              INSERT INTO contrata (valor, hora, data, assinatura, forma_de_pagamento, cliente, pedido_id)
+              VALUES (?, ?, ?, ?, ?, ?, ?)
+            `;
+            db.query(sqlContrata, [valor, hora, data, 1, forma_de_pagamento, cliente, pedidoId], (err) => {
+              if (err) return res.status(500).send("Erro ao salvar contrato.");
+
+              // 7️⃣ Atualizar status do pedido para finalizado
+              Pedido.atualizarStatus(pedidoId, "finalizado", (err) => {
+                if (err) return res.status(500).send("Erro ao finalizar pedido.");
+
+                // Limpar pedido da sessão
+                req.session.pedido_id = null;
+
+                // Redirecionar para a página de pedidos confirmados
+                res.redirect("/pedidos");
+              });
             });
+          });
         });
+      });
     });
+  });
 });
 
 module.exports = router;

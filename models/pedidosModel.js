@@ -63,6 +63,99 @@ class Pedido {
       callback
     );
   }
+
+    // Buscar produtos do pedido em aberto (para a tela principal)
+  static getEmAberto(usuario_id, callback) {
+    const sql = `
+      SELECT p2.id, p2.nome, p2.descricao, p2.preco, pp.quantidade
+      FROM pedidos pe
+      JOIN pedido_produtos pp ON pe.id = pp.pedido_id
+      JOIN produtos p2 ON pp.produto_id = p2.id
+      WHERE pe.usuario_id = ? AND pe.status = 'aberto'
+    `;
+    db.query(sql, [usuario_id], callback);
+  }
+// Buscar pedidos confirmados com todos os detalhes e produtos
+static getConfirmados(usuario_id, callback) {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
+      c.cliente,
+      c.data,
+      c.valor,
+      c.forma_de_pagamento,
+
+      f.cremacao,
+      f.horario,
+      f.translado,
+
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
+
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
+
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
+
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
+
+      GROUP_CONCAT(DISTINCT CONCAT(p.nome, ' (', pp.quantidade, ')') SEPARATOR ', ') AS produtos
+    FROM pedidos pe
+    LEFT JOIN contrata c ON c.pedido_id = pe.id
+    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
+    LEFT JOIN pedido_produtos pp ON pp.pedido_id = pe.id
+    LEFT JOIN produtos p ON p.id = pp.produto_id
+    WHERE pe.usuario_id = ? AND pe.status = 'finalizado'
+    GROUP BY 
+      pe.id, pe.status, pe.criado_em, 
+      c.cliente, c.data, c.valor, c.forma_de_pagamento,
+      f.cremacao, f.horario, f.translado,
+      n.roupa, n.r_intimas, n.batom, n.unha, n.observacao, n.intensidade, n.cabelo,
+      l.embacamento, l.tanatopraxia, l.aspiracao, l.restauracao, l.mumificacao, l.higienizacao,
+      ca.cortina, ca.tapete, ca.livropre, ca.veleiro, ca.cristo, ca.biblia, ca.cavalete,
+      e.numero, e.rua, e.bairro, e.cidade, e.estado, e.pais
+    ORDER BY pe.criado_em DESC
+  `;
+  
+  db.query(sql, [usuario_id], callback);
 }
+
+
+  // 🔹 Atualizar status do pedido
+  static atualizarStatus(pedido_id, status, callback) {
+    db.query(
+      'UPDATE pedidos SET status = ? WHERE id = ?',
+      [status, pedido_id],
+      callback
+    );
+  }
+}
+
 
 module.exports = Pedido;

@@ -1,23 +1,5 @@
 CREATE DATABASE IF NOT EXISTS CRUD;
 USE CRUD;
--- USERS
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'user') NOT NULL
-);
-
--- CONTRATA (cliente agora VARCHAR)
-CREATE TABLE IF NOT EXISTS contrata (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    valor DECIMAL(10,2) NOT NULL,
-    hora INT,
-    data DATE NOT NULL,
-    assinatura INT NOT NULL,
-    forma_de_pagamento VARCHAR(50),
-    cliente VARCHAR(255) NOT NULL,
-);
 
 -- Tabela 'users'
 CREATE TABLE IF NOT EXISTS users (
@@ -25,6 +7,15 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL
+);
+
+-- Tabela 'pedidos'
+CREATE TABLE IF NOT EXISTS pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    status VARCHAR(20) DEFAULT 'aberto',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES users(id)
 );
 
 -- Tabela 'produtos'
@@ -92,28 +83,22 @@ CREATE TABLE IF NOT EXISTS endereco (
     pais VARCHAR(15) NOT NULL
 );
 
-
--- Tabela 'formulario'
+-- Tabela 'formulario' agora RELACIONA com pedido_id
 CREATE TABLE IF NOT EXISTS formulario (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    pedido_id INT NOT NULL,
     cremacao BOOLEAN,
     horario INT,
     translado VARCHAR(100),
     necromaquiagem INT,
     laboratorio INT,
     cama_ardente INT,
+    endereco_id INT,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (necromaquiagem) REFERENCES necromaquiagem(id),
     FOREIGN KEY (laboratorio) REFERENCES laboratorio(id),
-    FOREIGN KEY (cama_ardente) REFERENCES cama_ardente(id)
-);
-
--- Tabela 'pedidos'
-CREATE TABLE IF NOT EXISTS pedidos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id INT NOT NULL,
-    status VARCHAR(20) DEFAULT 'aberto',
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (usuario_id) REFERENCES users(id)
+    FOREIGN KEY (cama_ardente) REFERENCES cama_ardente(id),
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
 
 -- Tabela 'pedido_produtos'
@@ -124,4 +109,17 @@ CREATE TABLE IF NOT EXISTS pedido_produtos (
     quantidade INT DEFAULT 1,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
+
+-- Tabela 'contrata' agora NÃO precisa de formulario_id
+CREATE TABLE IF NOT EXISTS contrata (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor DECIMAL(10,2) NOT NULL,
+    hora INT,
+    data DATE NOT NULL,
+    assinatura INT NOT NULL,
+    forma_de_pagamento VARCHAR(50),
+    cliente VARCHAR(255) NOT NULL,
+    pedido_id INT,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
 );
