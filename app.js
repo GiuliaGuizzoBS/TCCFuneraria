@@ -20,7 +20,10 @@ const registrarRoutes = require('./routes/registrarRoutes');
 const funeraisRoutes = require('./routes/funeraisRoutes');
 const pedidosRoutes = require('./routes/pedidosRoutes');
 const logoutRoutes = require('./routes/logoutRoutes');
-const formularioRoutes = require('./routes/formularioRoutes'); // 🔹 ADICIONADO
+const formularioRoutes = require('./routes/formularioRoutes'); 
+const pedidosGerenciadorRoutes = require('./routes/pedidosGerenciadorRoutes');
+
+// 🔹 ADICIONADO
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -66,6 +69,7 @@ app.use('/pedidos', pedidosRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/formulario', formularioRoutes); // 🔹 ADICIONADO
 app.use('/', indexRoutes);
+app.use('/pedidos-gerenciador', pedidosGerenciadorRoutes);
 
 // 🔹 Captura qualquer rota não encontrada e redireciona para "/"
 app.use((req, res) => {
