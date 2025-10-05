@@ -83,10 +83,11 @@ CREATE TABLE IF NOT EXISTS endereco (
     pais VARCHAR(15) NOT NULL
 );
 
--- Tabela 'formulario' agora RELACIONA com pedido_id
+-- Tabela 'formulario' agora RELACIONA com pedido_id e usuario_id
 CREATE TABLE IF NOT EXISTS formulario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
+    usuario_id INT NOT NULL,  -- Nova coluna adicionada
     cremacao BOOLEAN,
     horario INT,
     translado VARCHAR(100),
@@ -95,6 +96,7 @@ CREATE TABLE IF NOT EXISTS formulario (
     cama_ardente INT,
     endereco_id INT,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (usuario_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE, -- Nova chave estrangeira com CASCADE
     FOREIGN KEY (necromaquiagem) REFERENCES necromaquiagem(id),
     FOREIGN KEY (laboratorio) REFERENCES laboratorio(id),
     FOREIGN KEY (cama_ardente) REFERENCES cama_ardente(id),

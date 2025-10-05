@@ -6,183 +6,312 @@
     <title>Formulário Funerária</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
+
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d9c8b8;
+            color: #4b2e1e;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main, .container-body {
+            flex: 1; /* ocupa o espaço restante */
+        }
+
+        .titulo-centralizado {
+            text-align: center;
+            color: #57330f; /* marrom suave */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-control {
+            border-radius: 25px;
+            background-color: #fff8eb;
+            border: 1px solid #d9c8b8;
+            color: #57330f;
+        }
+
+        .form-control:focus {
+            background-color: #fff8eb;
+            border-color: #57330f;
+            box-shadow: none;
+        }
+
+        .btn-custom {
+            background-color: #57330f;
+            color: white;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #291605;
+            color: white;
+        }
+
+        .bg-marrom-claro {
+            background-color: #d9c8b8;
+        }
+
+        .bg-marrom-clarinho {
+            background-color: #fff8eb;
+            color: #57330f;
+        }
+
+        .texto-marrom {
+            color: #57330f;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #57330f !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #291605 !important;
+        }
+
+        .navbar {
+            border-bottom: #4b2e1e 1px solid;
+        }
+    </style>
 </head>
 <body>
     <%- include('partials/navbarCliente') %>
-<main class="container-body">
-    <div class="container mt-5">
-        <h2 class="titulo-centralizado">Cadastro - Serviços Funerários</h2>
+    <main class="container-body">
+        <div class="container mt-5">
+            <h2 class="titulo-centralizado">Cadastro - Serviços Funerários</h2>
 
-        <form action="/formulario" method="POST" class="bg-marrom-clarinho p-4 rounded">
-
-            <!-- Endereço -->
-            <h4 class="texto-marrom">Endereço</h4>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="numero">Número</label>
-                    <input type="number" class="form-control" name="numero" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="rua">Rua</label>
-                    <input type="text" class="form-control" name="rua" required maxlength="40">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="bairro">Bairro</label>
-                    <input type="text" class="form-control" name="bairro" required maxlength="15">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="cidade">Cidade</label>
-                    <input type="text" class="form-control" name="cidade" required maxlength="15">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="estado">Estado</label>
-                    <input type="text" class="form-control" name="estado" required maxlength="20">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="pais">País</label>
-                    <input type="text" class="form-control" name="pais" required maxlength="15">
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- Necromaquiagem -->
-            <h4 class="texto-marrom">Necromaquiagem</h4>
-            <div class="form-group">
-                <label for="roupa">Roupa</label>
-                <input type="text" class="form-control" name="roupa" maxlength="100">
-            </div>
-            <div class="form-group">
-                <label for="r_intimas">Roupas Íntimas</label>
-                <select class="form-control" name="r_intimas">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="batom">Batom</label>
-                    <input type="text" class="form-control" name="batom" maxlength="10">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="unha">Unha</label>
-                    <input type="text" class="form-control" name="unha" maxlength="20">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="observacao">Observação</label>
-                    <input type="text" class="form-control" name="observacao" maxlength="100">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="intensidade">Intensidade</label>
-                <select class="form-control" name="intensidade">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
-                </select>
-            </div>
-
-            <hr>
-
-            <!-- Laboratório -->
-            <h4 class="texto-marrom">Laboratório</h4>
-            <div class="form-row">
-                <div class="form-group col-md-2">
-                    <label for="embacamento">Embalçamento</label>
-                    <select class="form-control" name="embacamento">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="tanatopraxia">Tanatopraxia</label>
-                    <select class="form-control" name="tanatopraxia">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="aspiracao">Aspiração</label>
-                    <select class="form-control" name="aspiracao">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="restauracao">Restauração</label>
-                    <select class="form-control" name="restauracao">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="mumificacao">Mumificação</label>
-                    <select class="form-control" name="mumificacao">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="higienizacao">Higienização</label>
-                    <select class="form-control" name="higienizacao">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- Cama Ardente -->
-            <h4 class="texto-marrom">Cama Ardente</h4>
-            <div class="form-row">
-                <% ["cortina","tapete","livropre","veleiro","cristo","biblia","cavalete"].forEach(item => { %>
+            <form action="/formulario" method="POST" class="bg-marrom-clarinho p-4 rounded">
+                <!-- Endereço -->
+                <h4 class="texto-marrom">Endereço</h4>
+                <div class="form-row">
                     <div class="form-group col-md-2">
-                        <label><%= item.charAt(0).toUpperCase() + item.slice(1) %></label>
-                        <select class="form-control" name="<%= item %>">
+                        <label for="numero">Número</label>
+                        <input type="number" class="form-control" name="numero" placeholder="Ex: 123" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="rua">Rua</label>
+                        <input type="text" class="form-control" name="rua" placeholder="Ex: Rua das Flores" required maxlength="40">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="bairro">Bairro</label>
+                        <input type="text" class="form-control" name="bairro" placeholder="Ex: Centro" required maxlength="15">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" class="form-control" name="cidade" placeholder="Ex: São Paulo" required maxlength="15">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="estado">Estado</label>
+                        <input type="text" class="form-control" name="estado" placeholder="Ex: SP" required maxlength="20">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="pais">País</label>
+                        <input type="text" class="form-control" name="pais" placeholder="Ex: Brasil" required maxlength="15">
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Necromaquiagem -->
+                <h4 class="texto-marrom">Necromaquiagem</h4>
+                <div class="form-group">
+                    <label for="roupa">Roupa</label>
+                    <input type="text" class="form-control" name="roupa" placeholder="Ex: Traje de velório" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="r_intimas">Roupas Íntimas</label>
+                    <select class="form-control" name="r_intimas">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="batom">Batom</label>
+                        <input type="text" class="form-control" name="batom" placeholder="Ex: Vermelho" maxlength="10">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="unha">Unha</label>
+                        <input type="text" class="form-control" name="unha" placeholder="Ex: Curta" maxlength="20">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="observacao">Observação</label>
+                        <input type="text" class="form-control" name="observacao" placeholder="Ex: Maquiagem leve" maxlength="100">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="intensidade">Intensidade</label>
+                    <select class="form-control" name="intensidade">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+
+                <hr>
+
+                <!-- Laboratório -->
+                <h4 class="texto-marrom">Laboratório</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="embacamento">Embalçamento</label>
+                        <select class="form-control" name="embacamento">
                             <option value="1">Sim</option>
                             <option value="0">Não</option>
                         </select>
                     </div>
-                <% }) %>
-            </div>
-
-            <hr>
-
-            <!-- Contrato -->
-            <h4 class="texto-marrom">Contrato</h4>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="valor">Valor</label>
-                    <input type="number" step="0.01" class="form-control" name="valor" required>
+                    <div class="form-group col-md-2">
+                        <label for="tanatopraxia">Tanatopraxia</label>
+                        <select class="form-control" name="tanatopraxia">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="aspiracao">Aspiração</label>
+                        <select class="form-control" name="aspiracao">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="restauracao">Restauração</label>
+                        <select class="form-control" name="restauracao">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="mumificacao">Mumificação</label>
+                        <select class="form-control" name="mumificacao">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="higienizacao">Higienização</label>
+                        <select class="form-control" name="higienizacao">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="hora">Hora</label>
-                    <input type="number" class="form-control" name="hora" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="data">Data</label>
-                    <input type="date" class="form-control" name="data" required>
-                </div>
-            </div>
-            
-            <div class="form-group">
-    <label for="forma_de_pagamento">Forma de Pagamento</label>
-    <input type="text" class="form-control" name="forma_de_pagamento" placeholder="Ex: Dinheiro, Cartão, Pix..." required>
-</div>
 
-            <div class="form-group">
-    <label for="cliente">Nome completo do cliente</label>
-    <input type="text" class="form-control" name="cliente" required>
-</div>
-            <div class="form-group">
-                <label for="observacoes">Observações</label>
-                <textarea class="form-control" name="observacoes" rows="3" maxlength="200"></textarea>
+                <hr>
 
-            <button type="submit" class="btn btn-custom">Salvar</button>
-        </form>
+                <!-- Cama Ardente -->
+                <h4 class="texto-marrom">Cama Ardente</h4>
+<div class="form-row">
+    <div class="form-group col-md-2">
+        <label for="cortina">Cortina</label>
+        <select class="form-control" name="cortina">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
     </div>
-</main>
+    <div class="form-group col-md-2">
+        <label for="tapete">Tapete</label>
+        <select class="form-control" name="tapete">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="livropre">Livro de Presença</label>
+        <select class="form-control" name="livropre">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="veleiro">Veleiro</label>
+        <select class="form-control" name="veleiro">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="cristo">Cristo</label>
+        <select class="form-control" name="cristo">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="biblia">Bíblia</label>
+        <select class="form-control" name="biblia">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="cavalete">Cavalete</label>
+        <select class="form-control" name="cavalete">
+            <option value="1">Sim</option>
+            <option value="0">Não</option>
+        </select>
+    </div>
+</div>
+
+
+                <hr>
+
+                <!-- Contrato -->
+                <h4 class="texto-marrom">Contrato</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="valor">Valor</label>
+                        <input type="number" step="0.01" class="form-control" name="valor" placeholder="Ex: 1000.00" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="hora">Hora</label>
+                        <input type="number" class="form-control" name="hora" placeholder="Ex: 10" required>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="data">Data</label>
+                        <input type="date" class="form-control" name="data" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="forma_de_pagamento">Forma de Pagamento</label>
+                    <input type="text" class="form-control" name="forma_de_pagamento" placeholder="Ex: Dinheiro, Cartão, Pix..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cliente">Nome completo do cliente</label>
+                    <input type="text" class="form-control" name="cliente" placeholder="Ex: João da Silva" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações</label>
+                    <textarea class="form-control" name="observacoes" rows="3" placeholder="Observações adicionais..." maxlength="200"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-custom">Salvar</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>
