@@ -1,14 +1,12 @@
 <head>
   <style>
-    /* fundo igual ao navbar */
     body {
       background-color: #d9c8b8;
       margin: 0;
       padding: 0;
     }
 
-    /* card central */
-    .form-container {
+    .container-form {
       background-color: #fff8eb;
       border: 1px solid #d9c8b8;
       border-radius: 15px;
@@ -18,14 +16,12 @@
       box-shadow: 0 2px 8px rgba(87, 51, 15, 0.1);
     }
 
-    /* título */
     .titulo-centralizado {
       text-align: center;
       color: #57330f;
       margin-bottom: 1.5rem;
     }
 
-    /* labels e inputs */
     label {
       color: #57330f;
       font-weight: 500;
@@ -44,7 +40,6 @@
       box-shadow: 0 0 4px rgba(87, 51, 15, 0.3);
     }
 
-    /* botão */
     .btn-marrom {
       background-color: #57330f;
       color: #fff;
@@ -52,6 +47,7 @@
       border-radius: 8px;
       padding: 0.6rem 1.2rem;
       font-weight: 500;
+      text-decoration: none;
       transition: background-color 0.2s;
     }
 
@@ -60,7 +56,22 @@
       color: #fff;
     }
 
-    /* espaçamento */
+    .btn-voltar {
+      background-color: #bfa68a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .btn-voltar:hover {
+      background-color: #a89274;
+      color: #fff;
+    }
+
     .form-group {
       margin-bottom: 1.2rem;
     }
@@ -73,7 +84,7 @@
 
 <%- include('../partials/navbar') %>
 
-<div class="form-container">
+<div class="container-form">
   <h2 class="titulo-centralizado"><strong>Cadastrar Novo Usuário</strong></h2>
 
   <form action="/users" method="POST">
@@ -97,6 +108,7 @@
 
     <div class="text-center mt-4">
       <button type="submit" class="btn-marrom">Cadastrar</button>
+      <a href="/users" class="btn-voltar">Voltar</a>
     </div>
   </form>
 </div>

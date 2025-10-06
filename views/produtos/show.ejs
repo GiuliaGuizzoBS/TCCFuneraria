@@ -1,17 +1,96 @@
+<head>
+  <style>
+    body {
+      background-color: #d9c8b8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .detalhes-container {
+      background-color: #fff8eb;
+      border: 1px solid #d9c8b8;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(87, 51, 15, 0.1);
+    }
+
+    .titulo-centralizado {
+      text-align: center;
+      color: #57330f;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      color: #57330f;
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+
+    strong {
+      color: #6a3d13;
+    }
+
+    .btn-marrom {
+      background-color: #57330f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      margin: 0 0.3rem;
+    }
+
+    .btn-marrom:hover {
+      background-color: #6a3d13;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background-color: #b54a3a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      transition: background-color 0.2s;
+      margin: 0 0.3rem;
+    }
+
+    .btn-danger:hover {
+      background-color: #99372a;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    form {
+      display: inline;
+    }
+  </style>
+</head>
+
 <%- include('../partials/navbar') %>
 
-<h1>Detalhes do produto</h1>
+<div class="detalhes-container">
+  <h2 class="titulo-centralizado"><strong>Detalhes do Produto</strong></h2>
 
-<p><strong>ID:</strong> <%= produto.id %></p>
-<p><strong>Nome:</strong> <%= produto.nome %></p>
-<p><strong>Descrição:</strong> <%= produto.descricao %></p>
-<p><strong>Preço:</strong> R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %></p>
-<p><strong>Quantidade:</strong> <%= produto.quantidade %></p>
-<p><strong>Categoria:</strong> <%= produto.categoria_nome ?? produto.categoria %></p>
+  <p><strong>ID:</strong> <%= produto.id %></p>
+  <p><strong>Nome:</strong> <%= produto.nome %></p>
+  <p><strong>Descrição:</strong> <%= produto.descricao %></p>
+  <p><strong>Preço:</strong> R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %></p>
+  <p><strong>Quantidade:</strong> <%= produto.quantidade %></p>
+  <p><strong>Categoria:</strong> <%= produto.categoria_nome ?? produto.categoria %></p>
 
-<a href="/produtos" class="btn btn-primary">Voltar à lista</a>
-<a href="/produtos/<%= produto.id %>/edit" class="btn btn-marrom">Editar</a>
-
-<form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST" style="display:inline;">
-  <button type="submit" class="btn btn-danger">Excluir</button>
-</form>
+  <div class="text-center mt-4">
+    <a href="/produtos" class="btn-marrom">Voltar à Lista</a>
+    <a href="/produtos/<%= produto.id %>/edit" class="btn-marrom">Editar</a>
+    <form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST">
+      <button type="submit" class="btn-danger">Excluir</button>
+    </form>
+  </div>
+</div>
