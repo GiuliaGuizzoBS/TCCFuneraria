@@ -7,15 +7,12 @@ function verificarLogin(req, res, next) {
 }
 
 function verificarAdmin(req, res, next) {
-  // Primeiro verifica login
   if (!req.session.user) {
     return res.redirect('/login');
   }
 
-  // Garante que role exista e é admin
   if (req.session.user.role !== 'admin') {
-    // Redireciona para home do usuário
-    return res.redirect('/'); 
+    return res.redirect('/');
   }
 
   next();

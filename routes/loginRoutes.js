@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
       req.session.user = {
         id: user.id,
         username: user.username,
-        role: user.role.toLowerCase()
+        role: user.role.toLowerCase(),
       };
 
       Pedido.getPedidoAberto(user.id, (err, pedido) => {
@@ -33,6 +33,7 @@ router.post('/', (req, res) => {
           req.session.pedido_id = pedido.id;
         }
 
+        // Redirecionamento certo pra admin e user
         if (user.role.toLowerCase() === 'admin') {
           return res.redirect('/gerenciador');
         } else {

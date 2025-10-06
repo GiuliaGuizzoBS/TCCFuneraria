@@ -11,9 +11,9 @@ router.get('/', verificarAdmin, (req, res) => {
       return res.status(500).send('Erro ao carregar produtos no gerenciador.');
     }
 
-    res.render('gerenciador', { 
+    res.render('gerenciador', {
       user: req.session.user,
-      produtos // agora a view recebe essa variável
+      produtos,
     });
   });
 });

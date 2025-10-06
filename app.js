@@ -20,10 +20,8 @@ const registrarRoutes = require('./routes/registrarRoutes');
 const funeraisRoutes = require('./routes/funeraisRoutes');
 const pedidosRoutes = require('./routes/pedidosRoutes');
 const logoutRoutes = require('./routes/logoutRoutes');
-const formularioRoutes = require('./routes/formularioRoutes'); 
+const formularioRoutes = require('./routes/formularioRoutes');
 const pedidosGerenciadorRoutes = require('./routes/pedidosGerenciadorRoutes');
-
-// 🔹 ADICIONADO
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,43 +38,48 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 // Sessão
-app.use(session({
-  secret: 'seuSegredoSeguro',
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: 'seuSegredoSeguro',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-// 🔹 Middleware para expor a sessão às views
+// Expor sessão nas views
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
 });
 
 // Rotas
-app.use('/gerenciador', gerenciadorRoutes);
-app.use('/users', userRoutes);
-app.use('/produtos', produtoRoutes);
-app.use('/categorias', categoriaRoutes);
-app.use('/servicos', servicosRoutes);
-app.use('/contato', contatoRoutes);
-app.use('/flores', floresRoutes);
-app.use('/homenagens', homenagensRoutes);
-app.use('/sobre', sobreRoutes);
 app.use('/login', loginRoutes);
 app.use('/registrar', registrarRoutes);
-app.use('/funerais', funeraisRoutes);
-app.use('/pedidos', pedidosRoutes);
 app.use('/logout', logoutRoutes);
-app.use('/formulario', formularioRoutes); // 🔹 ADICIONADO
-app.use('/', indexRoutes);
+app.use('/users', userRoutes);
+app.use('/categorias', categoriaRoutes);
+app.use('/produtos', produtoRoutes);
+app.use('/funerais', funeraisRoutes);
+app.use('/flores', floresRoutes);
+app.use('/homenagens', homenagensRoutes);
+app.use('/servicos', servicosRoutes);
+app.use('/contato', contatoRoutes);
+app.use('/sobre', sobreRoutes);
+app.use('/formulario', formularioRoutes);
+app.use('/pedidos', pedidosRoutes);
+
+// 🔹 Rotas do admin devem vir antes da indexRoutes
+app.use('/gerenciador', gerenciadorRoutes);
 app.use('/pedidos-gerenciador', pedidosGerenciadorRoutes);
 
-// 🔹 Captura qualquer rota não encontrada e redireciona para "/"
+// 🔹 Index sempre no final
+app.use('/', indexRoutes);
+
+// Rota fallback
 app.use((req, res) => {
   res.redirect('/');
 });
 
-// Servidor
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

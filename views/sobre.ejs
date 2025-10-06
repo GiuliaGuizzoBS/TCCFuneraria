@@ -1,3 +1,32 @@
+<style>
+  .container { 
+    margin-top: 2%;
+    border-radius: 20px;
+  }
+  .imagemsobre {
+    border-radius: 10px;
+    border: 1px solid #291605;
+  }
+
+  .texto-marromjust {
+    color: #57330f;
+    /* marrom suave */
+    text-align: justify;
+  }
+
+  @media (max-width: 768px) {
+    .texto-marromjust {
+      text-align: justify;
+      margin-top: 2%;
+    }
+    .texto-marrommeio {
+      text-align: center;
+      margin-top: 2%;
+    }
+  }
+
+</style>
+
 <%- include('partials/navbarCliente') %>
 
 <div class="container bg-marrom-clarinho p-4 rounded">
@@ -5,21 +34,24 @@
   <!-- Cabeçalho -->
   <div class="text-center mb-5">
     <h2 class="titulo-centralizado"><strong>Sobre a Funerária Menino Deus</strong></h2>
-    <p class="texto-marrom lead">Acolhimento, respeito e dignidade para honrar cada despedida.</p>
+    
   </div>
 
   <!-- Seção 1: Quem Somos (altura igual) -->
   <div class="row align-items-stretch mb-5">
     <div class="col-md-6 d-flex">
       <div class="w-100">
-        <img src="/imagens/tapaburaco4.jpg" alt="Equipe da funerária" class="img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
+        <img src="imagens/carrofuneraria.jpg" alt="Equipe da funerária" class="imagemsobre img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
       </div>
     </div>
-    <div class="col-md-6 d-flex">
+    <div class="col-md-6 ">
       <div class="d-flex flex-column justify-content-center w-100">
-        <h4 class="texto-marrom mb-3"><strong>Quem somos</strong></h4>
-        <p class="texto-marrom">A <strong>Funerária Menino Deus</strong> é referência regional em serviços funerários. Com uma história construída sobre empatia e dedicação, acompanhamos famílias nos momentos mais delicados com total respeito e profissionalismo.</p>
-        <p class="texto-marrom">Oferecemos atendimento humanizado 24h, com uma equipe preparada para cuidar de cada detalhe com carinho e eficiência.</p>
+        <h4 class="texto-marrommeio mb-3"><strong>Quem somos</strong></h4>
+        <p class="texto-marromjust">A <strong>Funerária Menino Deus</strong> é referência regional em serviços funerários. Com uma história construída sobre empatia e dedicação, acompanhamos famílias nos momentos mais delicados com total respeito e profissionalismo.</p>
+        <p class="texto-marromjust">Oferecemos atendimento humanizado 24h, com uma equipe preparada para cuidar de cada detalhe com carinho e eficiência.</p>
+        <h4 class="texto-marrommeio mb-3"><strong>Nosso Compromisso</strong></h4>
+        <p class="texto-marromjust">Honrar a memória de quem partiu e cuidar de quem fica. Desenvolvemos homenagens e cerimônias personalizadas que celebram a vida com dignidade e significado.</p>
+        <p class="texto-marromjust">Cada atendimento é único. Por isso, escutamos, acolhemos e buscamos oferecer soluções que respeitem as histórias e desejos de cada família.</p>
       </div>
     </div>
   </div>
@@ -33,26 +65,26 @@
     <div class="col-md-4 mb-4">
       <div class="feature-card h-100">
         <i class="fas fa-heart fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marrom"><strong>Missão</strong></h5>
-        <p class="texto-marrom">Oferecer serviços funerários com respeito e acolhimento, proporcionando amparo emocional e prático às famílias.</p>
+        <h5 class="texto-marromcard"><strong>Missão</strong></h5>
+        <p class="texto-marromcard">Oferecer serviços funerários com respeito e acolhimento, proporcionando amparo emocional e prático às famílias.</p>
       </div>
     </div>
     <div class="col-md-4 mb-4">
       <div class="feature-card h-100">
         <i class="fas fa-eye fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marrom"><strong>Visão</strong></h5>
-        <p class="texto-marrom">Ser referência em excelência, inovação e sensibilidade no atendimento funerário em toda a região.</p>
+        <h5 class="texto-marromcard"><strong>Visão</strong></h5>
+        <p class="texto-marromcard">Ser referência em excelência, inovação e sensibilidade no atendimento funerário em toda a região.</p>
       </div>
     </div>
     <div class="col-md-4 mb-4">
       <div class="feature-card h-100">
         <i class="fas fa-handshake fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marrom"><strong>Valores</strong></h5>
-        <ul class="texto-marrom list-unstyled">
-          <li>✔ Respeito à vida e à memória</li>
-          <li>✔ Empatia e escuta ativa</li>
-          <li>✔ Ética e transparência</li>
-          <li>✔ Profissionalismo</li>
+        <h5 class="texto-marromcard"><strong>Valores</strong></h5>
+        <ul class="texto-marromcard list-unstyled">
+          <li> Respeito à vida e à memória</li>
+          <li> Empatia e escuta ativa</li>
+          <li> Ética e transparência</li>
+          <li> Profissionalismo</li>
         </ul>
       </div>
     </div>
@@ -62,14 +94,7 @@
   <div class="row align-items-stretch mt-5">
     <div class="col-md-6 order-md-2 d-flex">
       <div class="w-100">
-        <img src="/imagens/sobre2.jpg" alt="Cerimônia" class="img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
-      </div>
-    </div>
-    <div class="col-md-6 order-md-1 d-flex">
-      <div class="d-flex flex-column justify-content-center w-100">
-        <h4 class="texto-marrom mb-3"><strong>Nosso Compromisso</strong></h4>
-        <p class="texto-marrom">Honrar a memória de quem partiu e cuidar de quem fica. Desenvolvemos homenagens e cerimônias personalizadas que celebram a vida com dignidade e significado.</p>
-        <p class="texto-marrom">Cada atendimento é único. Por isso, escutamos, acolhemos e buscamos oferecer soluções que respeitem as histórias e desejos de cada família.</p>
+        <img src="/imagens/sobre2.jpg" alt="koda_santana" class="img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
       </div>
     </div>
   </div>

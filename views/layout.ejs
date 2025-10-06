@@ -1,279 +1,306 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funerária Menino Deus</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funerária Menino Deus</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 
-    <style>
-        
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-          overflow-x: hidden;
-        }
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #d9c8b8;
-            color: #4b2e1e;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d9c8b8;
+      color: #4b2e1e;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        main, .container-body {
-            flex: 1; /* ocupa o espaço restante */
-        }
+    main,
+    .container-body {
+      flex: 1;
+      /* ocupa o espaço restante */
+    }
 
-        .carousel-inner {
-                height: 300px;            
+    .carousel-inner {
+      height: 300px;
 
-        }
+    }
 
-        /* === ESTILO DOS CARDS DE PEDIDOS === */
-.pedido-card {
-  background-color: #fff8eb !important; /* cor bege suave */
-  border: 1px solid #d9c8b8; /* borda levemente contrastante */
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    /* === ESTILO DOS CARDS DE PEDIDOS === */
+    .pedido-card {
+      background-color: #fff8eb !important;
+      /* cor bege suave */
+      border: 1px solid #d9c8b8;
+      /* borda levemente contrastante */
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.pedido-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
+    .pedido-card:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
-.pedido-card h5 {
-  color: #57330f;
-}
+    .pedido-card h5 {
+      color: #57330f;
+    }
 
-.pedido-card hr {
-  border-color: #d9c8b8;
-}
-
-
-        .jumbotron {
-            background-color: #fff8eb;
-            color: #57330f;
-            padding: 2rem 1rem;
-            margin-bottom: 2rem;
-            border-radius: 0.5rem;
-            margin: 20px
-        }
-        .jumbotron h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-        
-        .btn-custom {
-            background-color: #57330f;
-            color: white;
-            border-radius: 25px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            transition: background-color 0.3s ease;
-        }
-        .btn-custom:hover {
-            background-color: #291605; /* marrom mais escuro */
-            color: white;
-            
-        }
-
-   
-         .feature-card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background-color:#fff8eb;
-            text-align: center;
-            margin: 1rem;
-        }
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card-servicos {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 1rem;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #d9c8b8
-}
-
-/* Efeito hover no card */
-.feature-card-servicos:hover {
-  transform: scale(1.02);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Sobreposição preta */
-.feature-card-servicos .card-img-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.35);
-  z-index: 1;
-  transition: background-color 0.3s ease;
-}
-
-/* Escurece mais a sobreposição no hover */
-.feature-card-servicos:hover .card-img-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Conteúdo do card */
-.feature-card-servicos .card-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: #ffeede;
-  padding: 1rem;
-  
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.15);
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Efeito leve no conteúdo no hover */
-.feature-card-servicos:hover .card-content {
-  background-color: rgba(0, 0, 0, 0.25);
-
-}
-
-.feature-card-servicos .card-content h3,
-.feature-card-servicos .card-content p {
-  margin: 0.5rem 0;
-}
-
-/* Imagens de fundo dos cards */
-.card1 {
-  background-image: url('/imagens/tapaburaco1.png');
-}
-.card2 {
-  background-image: url('/imagens/tapaburaco2.png');
-}
-.card3 {
-  background-image: url('/imagens/tapaburaco3.png');
-}
+    .pedido-card hr {
+      border-color: #d9c8b8;
+    }
 
 
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .btn-marrom {
-        background-color: #57330f; /* marrom escuro */
-        color: white;
-        border: none;
-        }
+    .jumbotron {
+      background-color: #fff8eb;
+      color: #57330f;
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+      border-radius: 0.5rem;
+      margin: 20px
+    }
 
-        .btn-marrom:hover {
-        background-color: #291605; /* marrom mais escuro */
-        color: white;
-        }
-        .bg-marrom-claro {
-         background-color: #d9c8b8; /* tom de amarelo bem clarinho */
-         }
+    .jumbotron h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
 
-        .bg-marrom-clarinho {
-         background-color: #fff8eb; /* tom de amarelo bem clarinho */
-         color:#57330f
-         }
-        .texto-marrom {
-         color: #57330f; /* marrom suave */
-         }
+    .btn-custom {
+      background-color: #57330f;
+      color: white;
+      border-radius: 25px;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease;
+    }
 
-         .navbar-nav .nav-link {
-         color: #57330f !important; /* marrom suave */
-         }
+    .btn-custom:hover {
+      background-color: #291605;
+      /* marrom mais escuro */
+      color: white;
+
+    }
 
 
-        .navbar-nav .nav-link:hover {
-         color: #291605 !important; /* marrom mais forte ao passar o mouse */
-         }
+    .feature-card {
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background-color: #fff8eb;
+      text-align: center;
+      margin: 1rem;
+    }
 
-        .navbar {
-          border-bottom: #4b2e1e 1px solid;
-         }
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
 
-        .carrinho {  
-            margin-right: 20px;
-            border-radius: 25px;
-            transition: background-color 0.3s ease;
-            text-align: center;
-         }
+    .feature-card-servicos {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 1rem;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #d9c8b8
+    }
 
-          .carrinho:hover {
-        background-color: #57330f; /* marrom mais escuro */
-        color: white;
-        transition: background-color 0.3s ease;
-        }
+    /* Efeito hover no card */
+    .feature-card-servicos:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    }
 
-        #navbarNav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        .titulo-centralizado {
-            text-align: center;
-            color: #57330f; /* marrom suave */
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
+    /* Sobreposição preta */
+    .feature-card-servicos .card-img-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.35);
+      z-index: 1;
+      transition: background-color 0.3s ease;
+    }
 
-        .carrinho-texto {
-            color: #4b2e1e; /* marrom elegante */
-            font-weight: 500;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+    /* Escurece mais a sobreposição no hover */
+    .feature-card-servicos:hover .card-img-overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
 
-        .carrinho-texto:hover {
-         color: #2d1a10; /* tom mais escuro ao passar o mouse */
-        }
+    /* Conteúdo do card */
+    .feature-card-servicos .card-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #ffeede;
+      padding: 1rem;
 
-    </style>
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Efeito leve no conteúdo no hover */
+    .feature-card-servicos:hover .card-content {
+      background-color: rgba(0, 0, 0, 0.25);
+
+    }
+
+    .feature-card-servicos .card-content h3,
+    .feature-card-servicos .card-content p {
+      margin: 0.5rem 0;
+    }
+
+    /* Imagens de fundo dos cards */
+    .card1 {
+      background-image: url('/imagens/viagemuruguai.jpg');
+    }
+
+    .card2 {
+      background-image: url('/imagens/corbelia.jpg');
+    }
+
+    .card3 {
+      background-image: url('/imagens/homenagem.jpg');
+    }
+
+
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .btn-marrom {
+      background-color: #57330f;
+      /* marrom escuro */
+      color: white;
+      border: none;
+    }
+
+    .btn-marrom:hover {
+      background-color: #291605;
+      /* marrom mais escuro */
+      color: white;
+    }
+
+    .bg-marrom-claro {
+      background-color: #d9c8b8;
+      /* tom de amarelo bem clarinho */
+    }
+
+    .bg-marrom-clarinho {
+      background-color: #fff8eb;
+      /* tom de amarelo bem clarinho */
+      color: #57330f
+    }
+
+    .texto-marrom {
+      color: #57330f;
+      /* marrom suave */
+    }
+
+    .navbar-nav .nav-link {
+      color: #57330f !important;
+      /* marrom suave */
+    }
+
+
+    .navbar-nav .nav-link:hover {
+      color: #291605 !important;
+      /* marrom mais forte ao passar o mouse */
+    }
+
+    .navbar {
+      border-bottom: #4b2e1e 1px solid;
+    }
+
+    .carrinho {
+      margin-right: 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s ease;
+      text-align: center;
+    }
+
+    .carrinho:hover {
+      background-color: #57330f;
+      /* marrom mais escuro */
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    #navbarNav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .titulo-centralizado {
+      text-align: center;
+      color: #57330f;
+      /* marrom suave */
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .carrinho-texto {
+      color: #4b2e1e;
+      /* marrom elegante */
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .carrinho-texto:hover {
+      color: #2d1a10;
+      /* tom mais escuro ao passar o mouse */
+    }
+  </style>
 </head>
-<body>
-   <main class="container-body">
-        <%- body %>
-    </main>
 
-    <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
-      <hr>
-        <div class="container bg-marrom-claro">
-           <p class="texto-marrom mb-1 small">&copy;2025 FUNERÁRIA MENINO DEUS</p>
-           <p class="texto-marrom mb-1 small">Desenvolvido por Eloá Brizeis Costa Santana e Giulia Guizzo Baladão Santos</p>
-           <p class="texto-marrom small">
-            <a href="https://github.com/GiuliaGuizzoBS/TCCFuneraria.git" target="_blank" class="texto-marrom">
-            Clique aqui
-            </a> para acessar o repositório do GitHub
-            </p>
-        </div>
-    </footer>
-  
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<body>
+  <main class="container-body">
+    <%- body %>
+  </main>
+
+  <footer class="footer mt-auto py-3 text-center bg-marrom-claro">
+    <hr>
+    <div class="container bg-marrom-claro">
+      <p class="texto-marrom mb-1 small">&copy;2025 FUNERÁRIA MENINO DEUS</p>
+      <p class="texto-marrom mb-1 small">Desenvolvido por Eloá Brizeis Costa Santana e Giulia Guizzo Baladão Santos</p>
+      <p class="texto-marrom small">
+        <a href="https://github.com/GiuliaGuizzoBS/TCCFuneraria.git" target="_blank" class="texto-marrom">
+          Clique aqui
+        </a> para acessar o repositório do GitHub
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
