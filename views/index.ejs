@@ -10,6 +10,7 @@
   padding: 0;        /* remove paddings */
   box-sizing: border-box; /* garante que padding/borda não aumentem a largura */
   min-height: 200px; /* garante altura mínima sem precisar de valor fixo */
+  height: 300px;
 }
 
 
@@ -68,6 +69,138 @@
 .carousel-fade .carousel-item img {
    width: 100%; height: 300px; object-fit: cover; 
 }  
+
+/* ======== Seções Sobre Nós e Contato ======== */
+    .secao-dupla {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      height: 450px; /* altura igual para ambas */
+      padding: 4rem 2rem;
+      color: #fff8eb;
+    }
+
+    .secao-dupla .texto {
+      max-width: 500px;
+      flex: 1;
+      margin-left: 20%;
+    }
+
+    .secao-dupla .texto2 {
+      max-width: 500px;
+      flex: 1;
+      margin-right: 20%;
+    }
+
+
+    .secao-dupla .texto h2, .texto2 h2 {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .secao-dupla .texto a, .texto2 a {
+      color: #fff8eb;
+      text-decoration: underline;
+    }
+
+     .secao-dupla .imagem {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #4a2f1b;
+      box-shadow: 0 0 15px #4a2f1b(0,0,0,0.3);
+    }
+
+    .secao-dupla .imagem2 {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #3b2514;
+      box-shadow: 0 0 15px #3b2514(0,0,0,0.3);
+    }
+
+
+    .secao-dupla .imagem::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+     
+      opacity: 0.3;
+    }
+
+
+    .secao-dupla .imagem img {
+      max-width: 70%;
+      height: auto;
+    }
+
+    /* Cores individuais das seções */
+    .sobre-nos {
+      background-color: #3b2514;
+    }
+
+    .contato {
+      background-color: #4a2f1b;
+    }
+
+    @media (min-width: 993px) {
+      .secao-dupla .imagem {
+        margin-right: 20%;
+      }
+
+      .secao-dupla .imagem2 {
+        margin-left: 20%;
+      }
+    }
+
+    /* Responsivo */
+    @media (max-width: 992px) {
+      .secao-dupla {
+        flex-direction: column;
+        text-align: center;
+        height: auto;
+        padding: 3rem 1rem;
+      }
+      .secao-dupla .imagem{
+        margin-top: 2rem;
+        width: 220px;
+        height: 220px;
+      }
+
+      .secao-dupla .imagem2{
+        margin-top: 2rem;
+        width: 220px;
+        height: 220px;
+      }
+
+      .secao-dupla .texto {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+
+      .secao-dupla .texto2 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+
+    }
 
 </style>
 
@@ -173,6 +306,36 @@
     </div>
   </div>
 </div>
+
+
+  <!-- ======== SEÇÃO SOBRE NÓS ======== -->
+  <section class="secao-dupla sobre-nos mt-5">
+    <div class="texto">
+      <h2><strong>Sobre Nós</strong></h2>
+      <p>Atuamos em Sombrio e região há X anos com especialidade, respeito e preços justos, garantindo um serviço de qualidade para seu ente querido.</p>
+      <a href="/sobre">Saiba mais</a>
+    </div>
+
+    <div class="imagem">
+      <img src="imagens/pombabrancalogo.png" alt="Imagem ilustrativa de pombo" />
+      <!-- espaço reservado -->
+    </div>
+  </section>
+
+  <!-- ======== SEÇÃO CONTATO ======== -->
+  <section class="secao-dupla contato">
+    <div class="imagem2">
+      <img src="imagens/whatsapp.png" alt="Ícone do WhatsApp" />
+      <!-- espaço reservado -->
+    </div>
+
+    <div class="texto2">
+      <h4>Deseja um atendimento mais detalhado?</h4>
+      <h2><strong>Contate-nos</strong></h2>
+      <p>Tire dúvidas e tenha detalhes mais específicos de nossos produtos, planos e outros serviços, além de negociações e informações extras.</p>
+      <a href="https://wa.me/5548999999999" target="_blank">Clique aqui para enviar uma mensagem via WhatsApp</a>
+    </div>
+  </section>
 
 </body>
 </html>
