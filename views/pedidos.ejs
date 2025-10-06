@@ -1,5 +1,27 @@
 <%- include('partials/navbarCliente') %>
 
+<style>
+/* === ESTILO DOS CARDS DE PRODUTOS E PEDIDOS === */
+.produto-card, .pedido-card {
+  background-color: #fff8eb !important;
+  border: 1px solid #d9c8b8;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.produto-card:hover, .pedido-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.pedido-card h5, .produto-card h5 {
+  color: #57330f;
+}
+.pedido-card hr, .produto-card hr {
+  border-color: #d9c8b8;
+}
+</style>
+
 <h2 class="mt-4 titulo-centralizado"><strong>Pedidos Esperando Confirmação</strong></h2>
 
 <div class="container mt-4">
@@ -34,7 +56,7 @@
 <div class="container mt-4">
   <% if (confirmados && confirmados.length > 0) { %>
     <% confirmados.forEach(p => { %>
-      <div class="pedido-card mb-4 p-4 bg-light rounded shadow-sm">
+      <div class="pedido-card mb-4 rounded shadow-sm">
         <h5 class="texto-marrom mb-3">
           <strong>Pedido nº <%= p.pedido_id %></strong>
         </h5>

@@ -1,11 +1,32 @@
 <%- include('partials/navbar') %>
 
+<style>
+.pedido-card {
+  background-color: #fff8eb !important;
+  border: 1px solid #d9c8b8;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.pedido-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+.pedido-card h5 {
+  color: #57330f;
+}
+.pedido-card hr {
+  border-color: #d9c8b8;
+}
+</style>
+
 <div class="container mt-4">
   <h2 class="titulo-centralizado"><strong>Gerenciamento de Pedidos</strong></h2>
 
   <% if (pedidos.length > 0) { %>
     <% pedidos.forEach(p => { %>
-      <div class="pedido-card mb-4 p-4 bg-light rounded shadow-sm">
+      <div class="pedido-card mb-4 rounded shadow-sm">
         <h5 class="texto-marrom mb-3">
           <strong>Pedido nº <%= p.pedido_id %></strong> — 
           <span class="text-muted">Usuário: <%= p.usuario_nome %></span>
