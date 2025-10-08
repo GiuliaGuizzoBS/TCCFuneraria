@@ -11,7 +11,19 @@
       color: #57330f
     }
 
-      .carrinho {
+ 
+
+   /* Mantém layout flex apenas em telas grandes */
+@media (min-width: 992px) {
+
+  #navbarNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+       .carrinho {
       margin-right: 20px;
       border-radius: 25px;
       transition: background-color 0.3s ease;
@@ -24,13 +36,20 @@
       color: white;
       transition: background-color 0.3s ease;
     }
+}
 
-      #navbarNav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
+@media (max-width: 991.98px) {
+  .carrinho {
+    text-align: left;
+    background-color: transparent;
+    color: black !important;
+  }
+
+  .navbar-nav .nav-link.carrinho {
+    color: black !important;
+  }
+}
+
 
     
     .carrinho-texto {
@@ -142,7 +161,7 @@
 
       <!-- Carrinho dentro do menu (aparece só em telas pequenas) -->
       <li class="nav-item d-lg-none">
-        <a class="nav-link bg-marrom-clarinho" href="/pedidos">Pedidos</a>
+        <a class="nav-link carrinho" href="/pedidos">Pedidos</a>
       </li>
     </ul>
 <!-- Carrinho fora do menu (aparece só em telas grandes) -->
@@ -158,9 +177,10 @@
 </nav>
 
 <script>
-  $(document).ready(function() {
-    $('.navbar-collapse a').click(function(){
+  $(function() {
+    $('.navbar-collapse').on('click', '.nav-link:not(.dropdown-toggle), .dropdown-item', function() {
       $('.navbar-collapse').collapse('hide');
     });
   });
 </script>
+

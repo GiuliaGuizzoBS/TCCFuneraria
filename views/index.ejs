@@ -2,82 +2,80 @@
 <html>
 <head>
   <title><%= title %></title>
-<style> 
-     .carousel {
-  width: 100%;       /* ocupa 100% da largura do elemento pai */
-  max-width: 100vw;  /* não ultrapassa a largura da tela */
-  margin: 0;         /* remove margens que podem limitar */
-  padding: 0;        /* remove paddings */
-  box-sizing: border-box; /* garante que padding/borda não aumentem a largura */
-  min-height: 200px; /* garante altura mínima sem precisar de valor fixo */
-  height: 300px;
-}
+  <style> 
+    .carousel {
+      width: 100%;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      min-height: 200px;
+      height: 300px;
+    }
 
+    .carousel-item {
+      height: 100%;
+    }
 
-.carousel-item {
-  height: 100%;
-}
+    .carousel-item img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
 
-.carousel-item img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover; /* faz a imagem preencher sem distorcer */
-}
+    .carousel-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
 
-.carousel-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.55); /* preto 55% transparente */
-  z-index: 1;
-}
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      color: #ffeede;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      box-shadow: none !important;
+      border: none !important;
+    }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
- /* background-color: rgba(0, 0, 0, 0.5);  fundo escuro semi-transparente para as setas */
-  color: #ffeede;
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-  box-shadow: none !important;
-  border: none !important;
-}
+    .carousel-control-prev,
+    .carousel-control-next {
+      background: none !important;
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
 
-.carousel-control-prev,
-.carousel-control-next {
-  background: none !important;    /* remove o fundo */
-  border: none;                   /* remove borda */
-  outline: none;                  /* remove outline ao focar */
-  box-shadow: none;               /* remove qualquer sombra */
-}
+    @media (max-width: 768px) {
+      .carousel {
+        height: 200px;
+        margin-bottom: 2rem;
+      }
+      .articletitle {
+        margin-top: 8rem;
+      }
+    }
 
-@media (max-width: 768px) {
-  .carousel {
-    height: 200px; /* mantém altura reduzida em mobile */
-    margin-bottom: 2rem; /* espaço abaixo para não sobrepor o título */
-  }
-  .articletitle {
-    margin-top: 8rem; /* espaço acima para não sobrepor o título */
-  }
-}
+    .carousel-fade .carousel-item {
+      transition: opacity 1s ease-in-out;
+    } 
+    .carousel-fade .carousel-item img {
+      width: 100%; height: 300px; object-fit: cover; 
+    }  
 
-.carousel-fade .carousel-item {
-   transition: opacity 1s ease-in-out; /* 1s é a duração da transição */ 
-  } 
-.carousel-fade .carousel-item img {
-   width: 100%; height: 300px; object-fit: cover; 
-}  
-
-/* ======== Seções Sobre Nós e Contato ======== */
+    /* ======== Seções Sobre Nós e Contato ======== */
     .secao-dupla {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      height: 450px; /* altura igual para ambas */
-      padding: 4rem 2rem;
+      height: 450px;
+      padding: 4rem 2rem; 
       color: #fff8eb;
     }
 
@@ -93,7 +91,6 @@
       margin-right: 20%;
     }
 
-
     .secao-dupla .texto h2, .texto2 h2 {
       font-weight: bold;
       margin-bottom: 1rem;
@@ -101,23 +98,9 @@
 
     .secao-dupla .texto a, .texto2 a {
       color: #fff8eb;
-      text-decoration: underline;
     }
 
-     .secao-dupla .imagem {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      background: #4a2f1b;
-      box-shadow: 0 0 15px #4a2f1b(0,0,0,0.3);
-    }
-
+    .secao-dupla .imagem,
     .secao-dupla .imagem2 {
       width: 300px;
       height: 300px;
@@ -128,34 +111,77 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      background: #3b2514;
-      box-shadow: 0 0 15px #3b2514(0,0,0,0.3);
+      background: #4a2f1b;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
 
-
-    .secao-dupla .imagem::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-     
-      opacity: 0.3;
-    }
-
-
-    .secao-dupla .imagem img {
+    .secao-dupla .imagem img,
+    .secao-dupla .imagem2 img {
       max-width: 70%;
       height: auto;
+      object-fit: contain;
     }
 
-    /* Cores individuais das seções */
     .sobre-nos {
       background-color: #3b2514;
+      margin-bottom: 0 !important;
+    }
+
+    .btn-secoesinicio {
+      background-color: #fff8eb;
+      color: #3b2514 !important;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+      text-align: center;
+      text-decoration: none !important;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-secoesinicio:hover {
+      background-color: #3b2514;
+      color: #fff8eb !important;
+      text-decoration: none;
+      transform: scale(1.03);
+      border: solid 1px #ffeede;
     }
 
     .contato {
       background-color: #4a2f1b;
     }
 
+    /* ======== NOVA SEÇÃO CENTRAL ======== */
+    .secao-meio {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      color: #3b2514;
+      background: linear-gradient(to bottom, rgba(59,37,20,0.8), #d9c8b8c2),
+                  url('imagens/carros.jpg') center/cover no-repeat;
+      background-attachment: fixed;
+      border-top: none;
+      margin-top: 0 !important;
+    }
+
+    .secao-meio .texto {
+      max-width: 700px;
+      background-color: #d9c8b8;
+      padding: 2rem 3rem;
+      border-radius: 15px;
+     
+    }
+
+    .secao-meio .texto h2 {
+      font-weight: bold;
+      color: #3b2514;
+      margin-bottom: 1rem;
+    }
+
+    /* Responsivo */
     @media (min-width: 993px) {
       .secao-dupla .imagem {
         margin-right: 20%;
@@ -166,7 +192,6 @@
       }
     }
 
-    /* Responsivo */
     @media (max-width: 992px) {
       .secao-dupla {
         flex-direction: column;
@@ -174,54 +199,38 @@
         height: auto;
         padding: 3rem 1rem;
       }
-      .secao-dupla .imagem{
+
+      .secao-dupla .imagem,
+      .secao-dupla .imagem2 {
         margin-top: 2rem;
         width: 220px;
         height: 220px;
       }
 
-      .secao-dupla .imagem2{
-        margin-top: 2rem;
-        width: 220px;
-        height: 220px;
-      }
-
-      .secao-dupla .texto {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        margin-left: 0px;
-        margin-right: 0px;
-      }
-
+      .secao-dupla .texto,
       .secao-dupla .texto2 {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        margin-left: 0px;
-        margin-right: 0px;
+        margin: 50px 0;
       }
-
+      
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none !important;
+  }
     }
-
-</style>
-
+    
+  </style>
 </head>
+
 <body>
   <%- include('partials/navbarCliente') %>
   <article class="article p-0 text-white">
 
   <!-- Carousel -->
   <div id="carrossel-inicial" class="carousel slide carousel-fade" data-bs-ride="carousel">
-
-
-    <!-- Slideshow -->
     <div class="carousel-inner">
-
       <div class="carousel-item active position-relative">
-        <img src="imagens/carrossel1.jpg" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
-         <!-- overlay preto com transparência -->
-      <div class="carousel-overlay"></div>
-
-        <!-- Texto sobreposto -->
+        <img src="imagens/carrossel1.jpg" alt="funeraria" class="d-block w-100">
+        <div class="carousel-overlay"></div>
         <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1><strong>Bem-vindo ao Sistema da Funerária Menino Deus</strong></h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
@@ -229,11 +238,8 @@
       </div>
 
       <div class="carousel-item position-relative">
-        <img src="imagens/igreja.jpg" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
-         <!-- overlay preto com transparência -->
-      <div class="carousel-overlay"></div>
-
-        <!-- Texto sobreposto -->
+        <img src="imagens/igreja.jpg" alt="funeraria" class="d-block w-100">
+        <div class="carousel-overlay"></div>
         <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1><strong>Bem-vindo ao Sistema da Funerária Menino Deus</strong></h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
@@ -241,99 +247,96 @@
       </div>
 
       <div class="carousel-item position-relative">
-        <img src="imagens/carrossel3.jpg" alt="funeraria" class="d-block w-100" style="height:300px; object-fit:cover;">
-         <!-- overlay preto com transparência -->
-      <div class="carousel-overlay"></div>
-
-        <!-- Texto sobreposto -->
+        <img src="imagens/carrossel3.jpg" alt="funeraria" class="d-block w-100">
+        <div class="carousel-overlay"></div>
         <div class="carousel-caption text-start" style="color:#fff8eb; border-radius: 10px; padding: 20px; max-width: 600px;">
           <h1><strong>Bem-vindo ao Sistema da Funerária Menino Deus</strong></h1>
           <p class="lead">Tratando sempre a sua família com todo respeito em todos os momentos.</p>
         </div>
       </div>
-
     </div>
 
-    <!-- Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-inicial" data-bs-slide="prev">
       <span class="carousel-control-prev-icon"></span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carrossel-inicial" data-bs-slide="next">
       <span class="carousel-control-next-icon"></span>
     </button>
-
+  </div>
+  </article>
+</br>
+  <!-- Nossos Serviços -->
+  <div class="articletitle text-center mb-4">
+    <h2 class="mt-4 titulo-centralizado"><strong>Nossos Serviços</strong></h2>
   </div>
 
-</article>
-
-
-    <!-- Nossos Serviços -->
-<div class="articletitle text-center mb-4">
-  <h2 class="mt-4 titulo-centralizado"><strong>Nossos Serviços</strong></h2>
-</div>
-
-<div class="row">
-  <div class="col-md-4">
-    <div class="feature-card-servicos card1">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
-        <h3>Serviços Funerários</h3>
-        <p>Organização completa de velórios e sepultamentos com dignidade, respeito e cuidado aos detalhes.</p>
-        <a href="/funerais" class="btn btn-marrom">Detalhes</a>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="feature-card-servicos card1">
+        <div class="card-img-overlay"></div>
+        <div class="card-content">
+          <h3>Serviços Funerários</h3>
+          <p>Organização completa de velórios e sepultamentos com dignidade, respeito e cuidado aos detalhes.</p>
+          <a href="/funerais" class="btn btn-marrom">Detalhes</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="feature-card-servicos card2">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
-        <h3>Arranjos Florais</h3>
-        <p>Flores naturais e artificiais para homenagens, coroas e ornamentos sob medida.</p>
-        <a href="/flores" class="btn btn-marrom">Detalhes</a>
+    <div class="col-md-4">
+      <div class="feature-card-servicos card2">
+        <div class="card-img-overlay"></div>
+        <div class="card-content">
+          <h3>Arranjos Florais</h3>
+          <p>Flores naturais e artificiais para homenagens, coroas e ornamentos sob medida.</p>
+          <a href="/flores" class="btn btn-marrom">Detalhes</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-4">
-    <div class="feature-card-servicos card3">
-      <div class="card-img-overlay"></div>
-      <div class="card-content">
-        <h3>Homenagens Especiais</h3>
-        <p>Momentos personalizados com música, mensagens e rituais simbólicos que celebram a memória.</p>
-        <a href="/homenagens" class="btn btn-marrom">Detalhes</a>
+    <div class="col-md-4">
+      <div class="feature-card-servicos card3">
+        <div class="card-img-overlay"></div>
+        <div class="card-content">
+          <h3>Homenagens Especiais</h3>
+          <p>Momentos personalizados com música, mensagens e rituais simbólicos que celebram a memória.</p>
+          <a href="/homenagens" class="btn btn-marrom">Detalhes</a>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
+  </div></br></br></br>
 
   <!-- ======== SEÇÃO SOBRE NÓS ======== -->
-  <section class="secao-dupla sobre-nos mt-5">
+  <section class="secao-dupla sobre-nos">
     <div class="texto">
       <h2><strong>Sobre Nós</strong></h2>
-      <p>Atuamos em Sombrio e região há X anos com especialidade, respeito e preços justos, garantindo um serviço de qualidade para seu ente querido.</p>
-      <a href="/sobre">Saiba mais</a>
+      <p>Atuamos em Sombrio e região desde 1987 com especialidade, respeito e preços justos, garantindo um serviço de qualidade para o seu ente querido.</p>
+      <a class="btn-secoesinicio" href="/sobre">Saiba Mais</a>
     </div>
-
     <div class="imagem">
       <img src="imagens/pombabrancabranca.png" alt="Imagem ilustrativa de pombo" />
-      <!-- espaço reservado -->
     </div>
   </section>
 
-  <!-- ======== SEÇÃO CONTATO ======== -->
+  <!-- ======== MISSÃO, VISÃO E VALORES ======== -->
+  <section class="secao-meio">
+    <div class="texto">
+      <h2><strong>Missão, Visão e Valores</strong></h2>
+      <p>Guiados pelo respeito, oferecemos mais do que um serviço — oferecemos acolhimento.  
+      Nossa missão é cuidar com empatia, nossa visão é manter a confiança de quem nos escolhe,  
+      e nossos valores refletem o compromisso com a dignidade e o amor à vida.</p>
+    </div>
+  </section>
+
+  <!-- ======== CONTATO ======== -->
   <section class="secao-dupla contato">
     <div class="imagem2">
-      <img src="imagens/whatsapp.png" alt="Ícone do WhatsApp" />
-      <!-- espaço reservado -->
+      <img src="imagens/whatsapplogo.png" alt="Ícone do WhatsApp" />
     </div>
-
     <div class="texto2">
       <h4>Deseja um atendimento mais detalhado?</h4>
       <h2><strong>Contate-nos</strong></h2>
       <p>Tire dúvidas e tenha detalhes mais específicos de nossos produtos, planos e outros serviços, além de negociações e informações extras.</p>
-      <a href="https://wa.me/5548999999999" target="_blank">Clique aqui para enviar uma mensagem via WhatsApp</a>
+      <a class="btn-secoesinicio" href="https://wa.me/5548999999999" target="_blank">Clique aqui para enviar uma mensagem via WhatsApp</a>
     </div>
   </section>
 

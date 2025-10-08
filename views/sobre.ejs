@@ -2,17 +2,50 @@
   .container { 
     margin-top: 2%;
     border-radius: 20px;
+    margin-bottom: 2%;
+    background-color: #d9c8b8;
   }
+
   .imagemsobre {
     border-radius: 10px;
     border: 1px solid #291605;
   }
 
-  .texto-marromjust {
+  .texto-marromjust { 
     color: #57330f;
     /* marrom suave */
     text-align: justify;
   }
+
+  
+.btn-secoesinicio {
+  background-color: #fff8eb; /* amarelo claro */
+  color: #3b2514 !important; /* força texto marrom escuro */
+  border: none;
+  border-radius: 10px;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none !important; /* remove sublinhado */
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+
+/* Hover */
+.btn-secoesinicio:hover {
+  background-color: #3b2514; /* marrom escuro */
+  color: #fff8eb !important; /* amarelo claro */
+  text-decoration: none;
+  transform: scale(1.03); /* leve destaque ao passar o mouse */
+  border: solid 1px #ffeede
+}
+
+.btn-vejamais {
+  width: 300px; /* largura fixa só pra esses */
+}
+
+
 
   @media (max-width: 768px) {
     .texto-marromjust {
@@ -22,26 +55,34 @@
     .texto-marrommeio {
       text-align: center;
       margin-top: 2%;
+     
     }
+
+    .titulo {
+      text-align: center;
+      font-size: 2rem;
+    }
+  }
+
+  body {
+    background-color: #57330f; /* cor de fundo suave */
   }
 
 </style>
 
 <%- include('partials/navbarCliente') %>
 
-<div class="container bg-marrom-clarinho p-4 rounded">
+<div class="container p-4 rounded">
 
   <!-- Cabeçalho -->
-  <div class="text-center mb-5">
-    <h2 class="titulo-centralizado"><strong>Sobre a Funerária Menino Deus</strong></h2>
-    
-  </div>
+    <h2 class="titulo"><strong>Sobre a Funerária Menino Deus</strong></h2>
+    </br>
 
   <!-- Seção 1: Quem Somos (altura igual) -->
   <div class="row align-items-stretch mb-5">
     <div class="col-md-6 d-flex">
       <div class="w-100">
-        <img src="imagens/carrofuneraria.jpg" alt="Equipe da funerária" class="imagemsobre img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
+        <img src="imagens/sobre2.jpeg" alt="Equipe da funerária" class="imagemsobre img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
       </div>
     </div>
     <div class="col-md-6 ">
@@ -55,47 +96,41 @@
       </div>
     </div>
   </div>
+<!-- ======== SEÇÃO LOCALIZAÇÃO ======== -->
+<section class="secao-localizacao">
+  <h3><strong>Onde Estamos</strong></h3>
+  <p>Rua João José Maria, 145 - Centro, Sombrio/SC<br>
+  Atendemos toda a região com agilidade e respeito 24h por dia.</p>
 
-  <!-- Seção 2: Missão, Visão e Valores -->
+  <div class="mapa-local">
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3530.267414919499!2d-49.62854288494286!3d-29.11460628225232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521782355555555%3A0x123456789abcde!2sSombrio%2C%20SC!5e0!3m2!1spt-BR!2sbr!4v1699999999999!5m2!1spt-BR!2sbr"
+      width="100%"
+      height="100%"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+
+   <!-- Seção 2: Missão, Visão e Valores -->
   <div class="text-center my-5">
-    <h3 class="titulo-centralizado"><strong>Nossos Princípios</strong></h3>
+    <h3 class="titulo-centralizado"><strong>Veja Mais</strong></h3>
   </div>
 
   <div class="row text-center">
     <div class="col-md-4 mb-4">
-      <div class="feature-card h-100">
-        <i class="fas fa-heart fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marromcard"><strong>Missão</strong></h5>
-        <p class="texto-marromcard">Oferecer serviços funerários com respeito e acolhimento, proporcionando amparo emocional e prático às famílias.</p>
-      </div>
+      <a class="btn-secoesinicio btn-vejamais" href="/" target="_blank">Início</a>
     </div>
     <div class="col-md-4 mb-4">
-      <div class="feature-card h-100">
-        <i class="fas fa-eye fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marromcard"><strong>Visão</strong></h5>
-        <p class="texto-marromcard">Ser referência em excelência, inovação e sensibilidade no atendimento funerário em toda a região.</p>
-      </div>
+      <a class="btn-secoesinicio btn-vejamais" href="/servicos" target="_blank">Serviços</a>
     </div>
     <div class="col-md-4 mb-4">
-      <div class="feature-card h-100">
-        <i class="fas fa-handshake fa-2x mb-3 texto-marrom"></i>
-        <h5 class="texto-marromcard"><strong>Valores</strong></h5>
-        <ul class="texto-marromcard list-unstyled">
-          <li> Respeito à vida e à memória</li>
-          <li> Empatia e escuta ativa</li>
-          <li> Ética e transparência</li>
-          <li> Profissionalismo</li>
-        </ul>
-      </div>
+      <a class="btn-secoesinicio btn-vejamais" href="/contato" target="_blank">Contato</a>
     </div>
   </div>
 
-  <!-- Seção 3: Nosso Compromisso (altura igual) -->
-  <div class="row align-items-stretch mt-5">
-    <div class="col-md-6 order-md-2 d-flex">
-      <div class="w-100">
-        <img src="/imagens/sobre2.jpg" alt="koda_santana" class="img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
-      </div>
-    </div>
-  </div>
+
+ 
 </div>

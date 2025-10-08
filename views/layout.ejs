@@ -235,7 +235,7 @@
       border-bottom: #4b2e1e 1px solid;
     }
 
-    .carrinho {
+  /*  .carrinho {
       margin-right: 20px;
       border-radius: 25px;
       transition: background-color 0.3s ease;
@@ -244,17 +244,21 @@
 
     .carrinho:hover {
       background-color: #57330f;
-      /* marrom mais escuro */
       color: white;
       transition: background-color 0.3s ease;
-    }
+    } */
 
-    #navbarNav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
+ /* Mantém display:flex DO LADO de desktop (>=992px).
+   Em telas pequenas, deixa o comportamento padrão do Bootstrap collapse. */
+@media (min-width: 992px) {
+  #navbarNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+}
+
 
     .titulo-centralizado {
       text-align: center;
@@ -264,9 +268,8 @@
       margin-bottom: 2rem;
     }
 
-    .carrinho-texto {
+   /* .carrinho-texto {
       color: #4b2e1e;
-      /* marrom elegante */
       font-weight: 500;
       text-decoration: none;
       transition: color 0.3s ease;
@@ -274,8 +277,7 @@
 
     .carrinho-texto:hover {
       color: #2d1a10;
-      /* tom mais escuro ao passar o mouse */
-    }
+    } */
   </style>
 </head>
 
@@ -298,9 +300,20 @@
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+  <!-- Fecha o menu ao clicar em links (NÃO fecha quando clicar no dropdown-toggle) -->
+<script>
+  $(function() {
+    $('.navbar-collapse').on('click', '.nav-link:not(.dropdown-toggle), .dropdown-item', function() {
+      $('.navbar-collapse').collapse('hide');
+    });
+  });
+</script>
+
 </body>
 
 </html>
