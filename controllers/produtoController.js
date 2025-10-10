@@ -1,150 +1,100 @@
 const Produto = require('../models/produtoModel');
-const Categoria = require('../models/categoriaModel');
 
-const produtoController = {
-
-  // Criar novo produto
-  createProduto: (req, res) => {
-    const newProduto = {
-      nome: req.body.nome,
-      descricao: req.body.descricao,
-      preco: req.body.preco,
-      quantidade: req.body.quantidade,
-      categoria: req.body.categoria
-    };
-
-    Produto.create(newProduto, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-      res.redirect('/produtos');
-    });
-  },
-
-  // Listar todos os produtos (com filtro opcional por categoria)
-  getAllProdutos: (req, res) => {
-    const categoria = req.query.categoria || null;
-    Produto.getAll(categoria, (err, produtos) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-
-      Categoria.getAll((err, categorias) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ error: err });
-        }
-
-        res.render('produtos/index', {
-          produtos,
-          categorias,
-          categoriaSelecionada: categoria
-        });
-      });
-    });
-  },
-
-  // Exibir um produto pelo ID
-  getProdutoById: (req, res) => {
-    const produtoId = req.params.id;
-
-    Produto.findById(produtoId, (err, produto) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-      if (!produto) {
-        return res.status(404).json({ message: 'Produto não encontrado' });
-      }
-      res.render('produtos/show', { produto });
-    });
-  },
-
-  // Renderizar formulário de criação
-  renderCreateForm: (req, res) => {
-    Categoria.getAll((err, categorias) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-      res.render('produtos/create', { categorias });
-    });
-  },
-
-  // Renderizar formulário de edição
-  renderEditForm: (req, res) => {
-    const produtoId = req.params.id;
-
-    Produto.findById(produtoId, (err, produto) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-
-      Categoria.getAll((err, categorias) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ error: err });
-        }
-
-        res.render('produtos/edit', { produto, categorias });
-      });
-    });
-  },
-
-  // Atualizar produto
-  updateProduto: (req, res) => {
-    const produtoId = req.params.id;
-    const updatedProduto = {
-      nome: req.body.nome,
-      descricao: req.body.descricao,
-      preco: req.body.preco,
-      quantidade: req.body.quantidade,
-      categoria: req.body.categoria
-    };
-
-    Produto.update(produtoId, updatedProduto, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-      res.redirect('/produtos');
-    });
-  },
-
-  // Deletar produto
-  deleteProduto: (req, res) => {
-    const produtoId = req.params.id;
-
-    Produto.delete(produtoId, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: err });
-      }
-      res.redirect('/produtos');
-    });
-  }
-};
-        updateProduto: (req, res) => {
-  const produtoId = req.params.id;
-  const updatedProduto = {
-    nome: req.body.nome,
-    descricao: req.body.descricao,
-    preco: req.body.preco,
-    quantidade: req.body.quantidade,
-    categoria: req.body.categoria
-  };
-
-  Produto.update(produtoId, updatedProduto, (err) => {
+// Listar produtos
+exports.getAllProdutos = (req, res) => {
+  const categoria = req.query.categoria || null;
+  Produto.getAll(categoria, (err, produtos) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ error: err });
+      return res.status(500).send('Erro ao carregar produtos.');
+    }
+
+    const categorias = [
+      { id: 1, nome: 'Funerais' },
+      { id: 2, nome: 'Flores' },
+      { id: 3, nome: 'Homenagens' }
+    ];
+
+    res.render('produtos/index', { produtos, categorias, categoriaSelecionada: categoria });
+  });
+};
+
+// Formulário de criação
+exports.renderCreateForm = (req, res) => {
+  const categorias = [
+    { id: 1, nome: 'Funerais' },
+    { id: 2, nome: 'Flores' },
+    { id: 3, nome: 'Homenagens' }
+  ];
+  res.render('produtos/create', { categorias });
+};
+
+// Criar produto
+exports.createProduto = (req, res) => {
+  const { nome, descricao, preco, quantidade, categoria } = req.body;
+  const imagemUrl = req.file ? `/imagens/${req.file.filename}` : null;
+
+  Produto.create({ nome, descricao, preco, quantidade, categoria }, imagemUrl, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Erro ao cadastrar produto.');
     }
     res.redirect('/produtos');
   });
-}
+};
 
+// Mostrar produto
+exports.getProdutoById = (req, res) => {
+  const id = req.params.id;
+  Produto.findById(id, (err, produto) => {
+    if (err || !produto) {
+      console.error(err);
+      return res.status(404).send('Produto não encontrado.');
+    }
+    res.render('produtos/show', { produto });
+  });
+};
 
-module.exports = produtoController;
+// Formulário de edição
+exports.renderEditForm = (req, res) => {
+  const id = req.params.id;
+  Produto.findById(id, (err, produto) => {
+    if (err || !produto) {
+      console.error(err);
+      return res.status(404).send('Produto não encontrado.');
+    }
+    const categorias = [
+      { id: 1, nome: 'Funerais' },
+      { id: 2, nome: 'Flores' },
+      { id: 3, nome: 'Homenagens' }
+    ];
+    res.render('produtos/edit', { produto, categorias });
+  });
+};
+
+// Atualizar produto
+exports.updateProduto = (req, res) => {
+  const id = req.params.id;
+  const { nome, descricao, preco, quantidade, categoria } = req.body;
+  const imagemUrl = req.file ? `/imagens/${req.file.filename}` : null;
+
+  Produto.update(id, { nome, descricao, preco, quantidade, categoria }, imagemUrl, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Erro ao atualizar produto.');
+    }
+    res.redirect(`/produtos/${id}`);
+  });
+};
+
+// Excluir produto
+exports.deleteProduto = (req, res) => {
+  const id = req.params.id;
+  Produto.delete(id, (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Erro ao excluir produto.');
+    }
+    res.redirect('/produtos');
+  });
+};

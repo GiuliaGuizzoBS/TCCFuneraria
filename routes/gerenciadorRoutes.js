@@ -1,7 +1,6 @@
 const express = require('express');
 const { verificarAdmin } = require('../middlewares/authMiddleware');
 const Produto = require('../models/produtoModel');
-
 const router = express.Router();
 
 router.get('/', verificarAdmin, (req, res) => {

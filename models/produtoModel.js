@@ -1,45 +1,62 @@
-const db = require('../config/db'); // ⬅️ ESTA LINHA RESOLVE O ERRO
+const db = require('../config/db');
+
 const Produto = {
-  create: (produto, callback) => {
+  // Criar produto + imagem
+  create: (produto, imagemUrl, callback) => {
     const query = `
       INSERT INTO produtos (nome, descricao, preco, quantidade, categoria)
       VALUES (?, ?, ?, ?, ?)
     `;
+
     db.query(
       query,
       [produto.nome, produto.descricao, produto.preco, produto.quantidade, produto.categoria],
       (err, result) => {
         if (err) return callback(err);
-        callback(null, result.insertId);
+
+        const produtoId = result.insertId;
+
+        if (imagemUrl) {
+          const imgQuery = `
+            INSERT INTO imagens (url, descricao, produto_id)
+            VALUES (?, ?, ?)
+          `;
+          db.query(imgQuery, [imagemUrl, produto.nome, produtoId], callback);
+        } else {
+          callback(null);
+        }
       }
     );
   },
 
   getAll: (categoria, callback) => {
-    let query = 'SELECT * FROM produtos';
+    let query = `
+      SELECT p.*, i.url AS imagem_url
+      FROM produtos p
+      LEFT JOIN imagens i ON p.id = i.produto_id
+    `;
     const params = [];
-
     if (categoria) {
-      query += ' WHERE categoria = ?';
+      query += ' WHERE p.categoria = ?';
       params.push(categoria);
     }
-
-    db.query(query, params, (err, results) => {
-      if (err) return callback(err);
-      callback(null, results);
-    });
+    db.query(query, params, callback);
   },
 
   findById: (id, callback) => {
-    const query = 'SELECT * FROM produtos WHERE id = ?';
+    const query = `
+      SELECT p.*, i.url AS imagem_url, i.descricao AS imagem_desc
+      FROM produtos p
+      LEFT JOIN imagens i ON p.id = i.produto_id
+      WHERE p.id = ?
+    `;
     db.query(query, [id], (err, results) => {
       if (err) return callback(err);
       callback(null, results[0]);
     });
   },
 
-  // Novo método update
-  update: (id, updatedProduto, callback) => {
+  update: (id, produto, imagemUrl, callback) => {
     const query = `
       UPDATE produtos
       SET nome = ?, descricao = ?, preco = ?, quantidade = ?, categoria = ?
@@ -47,20 +64,32 @@ const Produto = {
     `;
     db.query(
       query,
-      [
-        updatedProduto.nome,
-        updatedProduto.descricao,
-        updatedProduto.preco,
-        updatedProduto.quantidade,
-        updatedProduto.categoria,
-        id
-      ],
-      (err, result) => {
+      [produto.nome, produto.descricao, produto.preco, produto.quantidade, produto.categoria, id],
+      (err) => {
         if (err) return callback(err);
-        callback(null, result);
+
+        if (imagemUrl) {
+          const imgQuery = `
+            INSERT INTO imagens (url, descricao, produto_id)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE 
+              url = VALUES(url),
+              descricao = VALUES(descricao)
+          `;
+          db.query(imgQuery, [imagemUrl, produto.nome, id], callback);
+        } else {
+          callback(null);
+        }
       }
     );
-  }
+  },
+
+  delete: (id, callback) => {
+    db.query('DELETE FROM imagens WHERE produto_id = ?', [id], (err) => {
+      if (err) return callback(err);
+      db.query('DELETE FROM produtos WHERE id = ?', [id], callback);
+    });
+  },
 };
 
 module.exports = Produto;
