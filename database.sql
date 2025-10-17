@@ -1,7 +1,6 @@
 CREATE DATABASE IF NOT EXISTS CRUD;
 USE CRUD;
 
-
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -17,16 +16,14 @@ CREATE TABLE IF NOT EXISTS pedidos (
     FOREIGN KEY (usuario_id) REFERENCES users(id)
 );
 
-
 CREATE TABLE IF NOT EXISTS produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     descricao TEXT NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
-    quantidade INT NOT NULL,
-    categoria ENUM('funerais', 'flores', 'homenagens') NOT NULL
+    quantidade INT NOT NULL
+    -- coluna categoria removida
 );
-
 
 CREATE TABLE IF NOT EXISTS imagens (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +32,6 @@ CREATE TABLE IF NOT EXISTS imagens (
     produto_id INT NOT NULL,
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
-
 
 CREATE TABLE IF NOT EXISTS cama_ardente (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,7 +55,6 @@ CREATE TABLE IF NOT EXISTS necromaquiagem (
     cabelo INT
 );
 
-
 CREATE TABLE IF NOT EXISTS laboratorio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     embacamento BOOLEAN,
@@ -70,7 +65,6 @@ CREATE TABLE IF NOT EXISTS laboratorio (
     higienizacao BOOLEAN
 );
 
-
 CREATE TABLE IF NOT EXISTS endereco (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT NOT NULL,
@@ -80,7 +74,6 @@ CREATE TABLE IF NOT EXISTS endereco (
     estado VARCHAR(20) NOT NULL,
     pais VARCHAR(15) NOT NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS formulario (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -101,7 +94,6 @@ CREATE TABLE IF NOT EXISTS formulario (
     FOREIGN KEY (endereco_id) REFERENCES endereco(id)
 );
 
-
 CREATE TABLE IF NOT EXISTS pedido_produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
@@ -110,7 +102,6 @@ CREATE TABLE IF NOT EXISTS pedido_produtos (
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
-
 
 CREATE TABLE IF NOT EXISTS contrata (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -122,4 +113,13 @@ CREATE TABLE IF NOT EXISTS contrata (
     cliente VARCHAR(255) NOT NULL,
     pedido_id INT,
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
+);
+
+CREATE TABLE IF NOT EXISTS arquivados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    produto_id INT NOT NULL,
+    data_arquivamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

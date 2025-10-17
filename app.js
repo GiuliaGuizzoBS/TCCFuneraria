@@ -22,6 +22,7 @@ const pedidosRoutes = require('./routes/pedidosRoutes');
 const logoutRoutes = require('./routes/logoutRoutes');
 const formularioRoutes = require('./routes/formularioRoutes');
 const pedidosGerenciadorRoutes = require('./routes/pedidosGerenciadorRoutes');
+const arquivadosRoutes = require('./routes/arquivadosRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -67,6 +68,7 @@ app.use('/contato', contatoRoutes);
 app.use('/sobre', sobreRoutes);
 app.use('/formulario', formularioRoutes);
 app.use('/pedidos', pedidosRoutes);
+app.use('/arquivados', arquivadosRoutes);
 
 // 🔹 Rotas do admin devem vir antes da indexRoutes
 app.use('/gerenciador', gerenciadorRoutes);

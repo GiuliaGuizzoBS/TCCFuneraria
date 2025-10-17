@@ -1,0 +1,62 @@
+<head>
+  <style>
+    body { background-color: #d9c8b8; margin:0; padding:0; }
+    .arquivados-container {
+      background-color: #fff8eb;
+      border: 1px solid #d9c8b8;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 1000px;
+      box-shadow: 0 2px 8px rgba(87,51,15,0.1);
+    }
+    .titulo-centralizado { text-align:center; color:#57330f; margin-bottom:1.5rem; }
+    table { width:100%; border-radius:10px; overflow:hidden; background-color:#fff8eb; }
+    th { background-color:#d9c8b8; color:#57330f; text-align:center; }
+    td, th { vertical-align:middle !important; color:#57330f; text-align:center; }
+    tr:nth-child(even) { background-color:#f3e7d8; }
+    tr:hover { background-color:#eeddcc; }
+  </style>
+</head>
+
+<%- include('../partials/navbar') %>
+
+<div class="arquivados-container">
+  <h2 class="titulo-centralizado"><strong>Itens Arquivados</strong></h2>
+<table class="table">
+  </thead>
+<thead>
+  <tr>
+    <th>Nome</th>
+    <th>Descrição</th>
+    <th>Arquivado Por</th>
+    <th>Data</th>
+    <th>Ações</th>
+  </tr>
+</thead>
+<tbody>
+  <% if (itens.length > 0) { %>
+    <% itens.forEach(item => { %>
+      <tr>
+        <td><%= item.produto_nome ?? '-' %></td>
+        <td><%= item.produto_descricao ?? '-' %></td>
+        <td><%= item.arquivador_nome ?? 'N/A' %></td>
+        <td><%= new Date(item.data_arquivado).toLocaleString('pt-BR') %></td>
+        <td>
+          <form action="/arquivados/desarquivar" method="POST" style="display:inline;">
+            <input type="hidden" name="id" value="<%= item.id %>">
+            <button type="submit" class="btn btn-marrom">Desarquivar</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  <% } else { %>
+    <tr>
+      <td colspan="5">Nenhum item arquivado.</td>
+    </tr>
+  <% } %>
+</tbody>
+
+</table>
+
+</div>

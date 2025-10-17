@@ -41,6 +41,7 @@
     td, th {
       vertical-align: middle !important;
       color: #57330f;
+      text-align: center;
     }
 
     tr:nth-child(even) {
@@ -54,7 +55,7 @@
     /* botões */
     .button-group {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       gap: 0.3rem;
     }
 
@@ -71,11 +72,34 @@
       background-color: #57330f;
       color: #fff;
       border: none;
+      border-radius: 8px;
+      text-decoration: none;
     }
 
     .btn-marrom:hover {
       background-color: #6a3d13;
       color: #fff;
+    }
+
+    .btn-danger {
+      background-color: #b54a3a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.4rem 0.5rem;
+    }
+
+    .btn-danger:hover {
+      background-color: #99372a;
+      color: #fff;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    form {
+      display: inline;
     }
   </style>
 </head>
@@ -85,6 +109,7 @@
 <div class="usuarios-container">
   <h2 class="titulo-centralizado"><strong>Lista de Usuários</strong></h2>
 
+  <!-- Tabela -->
   <table class="table">
     <thead>
       <tr>
@@ -104,8 +129,10 @@
             <div class="button-group">
               <a href="/users/<%= user.id %>" class="btn btn-marrom">View</a>
               <a href="/users/<%= user.id %>/edit" class="btn btn-marrom">Edit</a>
-              <form action="/users/<%= user.id %>?_method=DELETE" method="POST" style="display:inline;">
-                <button type="submit" class="btn btn-danger">Delete</button>
+              <form action="/arquivados/arquivar" method="POST">
+                <input type="hidden" name="tipo" value="usuario">
+                <input type="hidden" name="alvo_id" value="<%= user.id %>">
+                <button type="submit" class="btn btn-danger">Arquivar</button>
               </form>
             </div>
           </td>
@@ -114,7 +141,6 @@
     </tbody>
   </table>
 </div>
-
 <script>
   document.getElementById('search')?.addEventListener('input', function() {
     const searchValue = this.value;
@@ -123,7 +149,7 @@
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('userTableBody');
-        tbody.innerHTML = '';
+        tbody.innerHTML = ''; // limpa a tabela antes de adicionar os resultados
 
         data.users.forEach(user => {
           const tr = document.createElement('tr');
@@ -135,8 +161,10 @@
               <div class="button-group">
                 <a href="/users/${user.id}" class="btn btn-marrom">View</a>
                 <a href="/users/${user.id}/edit" class="btn btn-marrom">Edit</a>
-                <form action="/users/${user.id}?_method=DELETE" method="POST" style="display:inline;">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                <form action="/arquivados/arquivar" method="POST" style="display:inline;">
+                  <input type="hidden" name="tipo" value="usuario">
+                  <input type="hidden" name="alvo_id" value="${user.id}">
+                  <button type="submit" class="btn btn-danger">Arquivar</button>
                 </form>
               </div>
             </td>

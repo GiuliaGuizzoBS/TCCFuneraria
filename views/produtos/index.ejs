@@ -64,6 +64,7 @@
   </style>
 </head>
 
+
 <%- include('../partials/navbar') %>
 
 <div class="produtos-container">
@@ -112,11 +113,21 @@
             <td><%= produto.categoria_nome ?? produto.categoria %></td>
             <td>
               <div class="button-group">
+                <!-- Visualizar -->
                 <a href="/produtos/<%= produto.id %>" class="btn btn-marrom">View</a>
+
+                <!-- Editar -->
                 <a href="/produtos/<%= produto.id %>/edit" class="btn btn-marrom">Edit</a>
-                <form action="/produtos/<%= produto.id %>?_method=DELETE" method="POST" style="display:inline;">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+
+                <!-- Form único para ações que enviam POST/DELETE (não aninhar forms) -->
+                <form action="/arquivados/arquivar" method="POST" style="display:inline; margin:0;">
+                  <input type="hidden" name="tipo" value="produto">
+                  <input type="hidden" name="alvo_id" value="<%= produto.id %>">
+                  <button type="submit" class="btn btn-danger">Arquivar</button>
                 </form>
+
+                <!-- Se você tiver rota de deletar via form (DELETE), pode manter outro form separado -->
+                
               </div>
             </td>
           </tr>
