@@ -5,14 +5,14 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 
 router.use(verificarLogin);
 
-router.get('/', (req, res) => {
-  Produto.getAll('funerais', (err, produtos) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Erro ao carregar produtos da categoria funerais.');
-    }
-    res.render('funerais', { produtos, title: 'Funerais' });
-  });
+router.get('/', async (req, res) => {
+  try {
+    const produtos = await Produto.getAllByCategoria('funerais');
+    res.render('funerais', { produtos, title: 'Serviços Funerários' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao carregar produtos da categoria funerais.');
+  }
 });
 
 module.exports = router;

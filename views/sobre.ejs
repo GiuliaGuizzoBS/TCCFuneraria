@@ -1,73 +1,178 @@
 <style>
+  /* ======= BODY ======= */
+  body {
+    background-color: #57330f;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* ======= CONTAINER ======= */
   .container { 
-    margin-top: 2%;
-    border-radius: 20px;
-    margin-bottom: 2%;
-    background-color: #d9c8b8;
+      margin-top: 2%;
+      margin-bottom: 2%;
+      padding: 2rem;
+      border-radius: 20px;
+      background-color: #d9c8b8;
   }
 
+  /* ======= IMAGEM ======= */
   .imagemsobre {
-    border-radius: 10px;
-    border: 1px solid #291605;
+      border-radius: 10px;
+      border: 1px solid #291605;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
   }
 
+  /* ======= TEXTOS ======= */
   .texto-marromjust { 
-    color: #57330f;
-    /* marrom suave */
-    text-align: justify;
+      color: #57330f;
+      text-align: justify;
+      line-height: 1.6;
+      margin-bottom: 1rem;
   }
 
-  
-.btn-secoesinicio {
-  background-color: #fff8eb; /* amarelo claro */
-  color: #3b2514 !important; /* força texto marrom escuro */
-  border: none;
-  border-radius: 10px;
-  padding: 10px 25px;
-  text-align: center;
-  text-decoration: none !important; /* remove sublinhado */
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
+  .texto-marrommeio {
+      color: #57330f;
+      line-height: 1.4;
+  }
 
+  /* ======= TITULOS ======= */
+  .titulo {
+      text-align: left;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+  }
 
-/* Hover */
-.btn-secoesinicio:hover {
-  background-color: #3b2514; /* marrom escuro */
-  color: #fff8eb !important; /* amarelo claro */
-  text-decoration: none;
-  transform: scale(1.03); /* leve destaque ao passar o mouse */
-  border: solid 1px #ffeede
-}
-
-.btn-vejamais {
-  width: 300px; /* largura fixa só pra esses */
-}
-
-
-
-  @media (max-width: 768px) {
-    .texto-marromjust {
-      text-align: justify;
-      margin-top: 2%;
-    }
-    .texto-marrommeio {
-      text-align: center;
-      margin-top: 2%;
-     
-    }
-
-    .titulo {
+  .titulo-centralizado {
       text-align: center;
       font-size: 2rem;
-    }
+      margin-bottom: 2rem;
   }
 
-  body {
-    background-color: #57330f; /* cor de fundo suave */
+  /* ======= BOTOES EXISTENTES ======= */
+  .btn-secoesinicio {
+      background-color: #fff8eb;
+      color: #3b2514 !important;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 25px;
+      text-align: center;
+      text-decoration: none !important;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
   }
 
+  .btn-secoesinicio:hover {
+      background-color: #3b2514;
+      color: #fff8eb !important;
+      text-decoration: none;
+      transform: scale(1.03);
+      border: solid 1px #ffeede;
+  }
+
+  .btn-vejamais {
+      width: 300px;
+  }
+
+  /* ======= SEÇÃO LOCALIZAÇÃO ======= */
+  .secao-localizacao {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      text-align: center;
+  }
+
+  .secao-localizacao h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #57330f;
+  }
+
+  .secao-localizacao p {
+      color: #57330f;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+  }
+
+  /* Mapa com overlay semi-transparente */
+  .mapa-local {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 0 auto;
+  }
+
+  .mapa-local iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+  }
+
+  .mapa-local::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(59, 37, 20, 0.4);
+      pointer-events: none;
+  }
+
+  /* ======= BOTÕES INFORMATIVOS “QUEM SOMOS” E “NOSSO COMPROMISSO” ======= */
+  .btn-secao-info {
+      background-color: #fff8eb;
+      color: #3b2514 !important;
+      border: none;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+      text-decoration: none !important;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: block;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+  }
+
+  .btn-secao-info:hover {
+      background-color: #3b2514;
+      color: #fff8eb !important;
+      transform: scale(1.03);
+      text-decoration: none;
+  }
+
+  /* ======= RESPONSIVIDADE ======= */
+  @media (max-width: 992px) {
+      .row.align-items-stretch {
+          flex-direction: column;
+      }
+
+      .titulo {
+          text-align: center;
+          font-size: 1.9rem;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .texto-marromjust, .texto-marrommeio {
+          text-align: center;
+          margin-top: 1rem;
+      }
+
+      .imagemsobre {
+          height: auto;
+          margin-bottom: 1.5rem;
+      }
+
+      .titulo-centralizado {
+          font-size: 1.7rem;
+      }
+  }
 </style>
 
 <%- include('partials/navbarCliente') %>
@@ -75,8 +180,8 @@
 <div class="container p-4 rounded">
 
   <!-- Cabeçalho -->
-    <h2 class="titulo"><strong>Sobre a Funerária Menino Deus</strong></h2>
-    </br>
+  <h2 class="titulo"><strong>Sobre a Funerária Menino Deus</strong></h2>
+  </br>
 
   <!-- Seção 1: Quem Somos (altura igual) -->
   <div class="row align-items-stretch mb-5">
@@ -85,36 +190,43 @@
         <img src="imagens/sobre2.jpeg" alt="Equipe da funerária" class="imagemsobre img-fluid h-100 rounded shadow-sm" style="object-fit: cover; width: 100%;">
       </div>
     </div>
+    
     <div class="col-md-6 ">
       <div class="d-flex flex-column justify-content-center w-100">
-        <h4 class="texto-marrommeio mb-3"><strong>Quem somos</strong></h4>
-        <p class="texto-marromjust">A <strong>Funerária Menino Deus</strong> é referência regional em serviços funerários. Com uma história construída sobre empatia e dedicação, acompanhamos famílias nos momentos mais delicados com total respeito e profissionalismo.</p>
-        <p class="texto-marromjust">Oferecemos atendimento humanizado 24h, com uma equipe preparada para cuidar de cada detalhe com carinho e eficiência.</p>
-        <h4 class="texto-marrommeio mb-3"><strong>Nosso Compromisso</strong></h4>
-        <p class="texto-marromjust">Honrar a memória de quem partiu e cuidar de quem fica. Desenvolvemos homenagens e cerimônias personalizadas que celebram a vida com dignidade e significado.</p>
-        <p class="texto-marromjust">Cada atendimento é único. Por isso, escutamos, acolhemos e buscamos oferecer soluções que respeitem as histórias e desejos de cada família.</p>
+        <div class="btn-secao-info">
+          <h4><strong>Quem somos</strong></h4>
+          <p>A <strong>Funerária Menino Deus</strong> é referência regional em serviços funerários. Com uma história construída sobre empatia e dedicação, acompanhamos famílias nos momentos mais delicados com total respeito e profissionalismo.</p>
+          <p>Oferecemos atendimento humanizado 24h, com uma equipe preparada para cuidar de cada detalhe com carinho e eficiência.</p>
+        </div>
+
+        <div class="btn-secao-info">
+          <h4><strong>Nosso Compromisso</strong></h4>
+          <p>Honrar a memória de quem partiu e cuidar de quem fica. Desenvolvemos homenagens e cerimônias personalizadas que celebram a vida com dignidade e significado.</p>
+          <p>Cada atendimento é único. Por isso, escutamos, acolhemos e buscamos oferecer soluções que respeitem as histórias e desejos de cada família.</p>
+        </div>
       </div>
     </div>
   </div>
-<!-- ======== SEÇÃO LOCALIZAÇÃO ======== -->
-<section class="secao-localizacao">
-  <h3><strong>Onde Estamos</strong></h3>
-  <p>Rua João José Maria, 145 - Centro, Sombrio/SC<br>
-  Atendemos toda a região com agilidade e respeito 24h por dia.</p>
 
-  <div class="mapa-local">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3530.267414919499!2d-49.62854288494286!3d-29.11460628225232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521782355555555%3A0x123456789abcde!2sSombrio%2C%20SC!5e0!3m2!1spt-BR!2sbr!4v1699999999999!5m2!1spt-BR!2sbr"
-      width="100%"
-      height="100%"
-      style="border:0;"
-      allowfullscreen=""
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
+  <!-- ======== SEÇÃO LOCALIZAÇÃO ======== -->
+  <section class="secao-localizacao">
+    <h3><strong>Onde Estamos</strong></h3>
+    <p>Rua João José Maria, 145 - Centro, Sombrio/SC<br>
+    Atendemos toda a região com agilidade e respeito 24h por dia.</p>
 
-   <!-- Seção 2: Missão, Visão e Valores -->
+    <div class="mapa-local">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3530.267414919499!2d-49.62854288494286!3d-29.11460628225232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9521782355555555%3A0x123456789abcde!2sSombrio%2C%20SC!5e0!3m2!1spt-BR!2sbr!4v1699999999999!5m2!1spt-BR!2sbr"
+        width="100%"
+        height="100%"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Seção 2: Missão, Visão e Valores -->
   <div class="text-center my-5">
     <h3 class="titulo-centralizado"><strong>Veja Mais</strong></h3>
   </div>
@@ -130,7 +242,4 @@
       <a class="btn-secoesinicio btn-vejamais" href="/contato" target="_blank">Contato</a>
     </div>
   </div>
-
-
- 
 </div>

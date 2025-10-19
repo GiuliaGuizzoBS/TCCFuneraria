@@ -5,15 +5,14 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 
 router.use(verificarLogin);
 
-router.get('/', (req, res) => {
-  // chamamos pelo ENUM da tabela (categoria = 'flores')
-  Produto.getAll('flores', (err, produtos) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Erro ao carregar produtos da categoria flores.');
-    }
+router.get('/', async (req, res) => {
+  try {
+    const produtos = await Produto.getAllByCategoria('flores');
     res.render('flores', { produtos, title: 'Arranjos Florais' });
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao carregar produtos da categoria flores.');
+  }
 });
 
 module.exports = router;

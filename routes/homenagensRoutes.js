@@ -5,15 +5,14 @@ const { verificarLogin } = require('../middlewares/authMiddleware');
 
 router.use(verificarLogin);
 
-router.get('/', (req, res) => {
-  Produto.getAll('homenagens', (err, produtos) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send('Erro ao carregar produtos da categoria homenagens.');
-    }
-    // Renderiza a view homenagens.ejs passando os produtos
-    res.render('homenagens', { produtos, title: 'Homenagens' });
-  });
+router.get('/', async (req, res) => {
+  try {
+    const produtos = await Produto.getAllByCategoria('homenagens');
+    res.render('homenagens', { produtos, title: 'Homenagens Especiais' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao carregar produtos da categoria homenagens.');
+  }
 });
 
 module.exports = router;
