@@ -1,13 +1,11 @@
 <head>
   <style>
-    /* fundo igual ao navbar */
     body {
       background-color: #d9c8b8;
       margin: 0;
       padding: 0;
     }
 
-    /* card central */
     .usuarios-container {
       background-color: #fff8eb;
       border: 1px solid #d9c8b8;
@@ -24,24 +22,26 @@
       margin-bottom: 1.5rem;
     }
 
-    /* tabela */
     table {
       background-color: #fff8eb;
       border-radius: 10px;
       overflow: hidden;
       width: 100%;
+      border-collapse: collapse;
     }
 
     th {
       background-color: #d9c8b8;
       color: #57330f;
       text-align: center;
+      padding: 0.8rem;
     }
 
-    td, th {
+    td {
       vertical-align: middle !important;
       color: #57330f;
       text-align: center;
+      padding: 0.8rem;
     }
 
     tr:nth-child(even) {
@@ -52,28 +52,28 @@
       background-color: #eeddcc;
     }
 
-    /* botões */
     .button-group {
       display: flex;
       justify-content: center;
       gap: 0.3rem;
     }
 
-    .button-group .btn,
-    .button-group button {
-      width: 80px;
+    /* ====== BOTÕES PADRONIZADOS ====== */
+    .btn-marrom, .btn-danger {
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      text-decoration: none;
+      width: 120px; /* tamanho padronizado */
+      display: inline-block;
       text-align: center;
-      padding: 0.4rem 0.5rem;
-      white-space: nowrap;
+      transition: background-color 0.2s;
     }
 
-    /* botão marrom padrão */
     .btn-marrom {
       background-color: #57330f;
       color: #fff;
-      border: none;
-      border-radius: 8px;
-      text-decoration: none;
     }
 
     .btn-marrom:hover {
@@ -84,22 +84,18 @@
     .btn-danger {
       background-color: #b54a3a;
       color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.4rem 0.5rem;
     }
 
     .btn-danger:hover {
       background-color: #99372a;
-      color: #fff;
-    }
-
-    .text-center {
-      text-align: center;
     }
 
     form {
       display: inline;
+    }
+
+    .text-center {
+      text-align: center;
     }
   </style>
 </head>
@@ -109,11 +105,9 @@
 <div class="usuarios-container">
   <h2 class="titulo-centralizado"><strong>Lista de Usuários</strong></h2>
 
-  <!-- Tabela -->
   <table class="table">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Nome</th>
         <th>Regra</th>
         <th>Ações</th>
@@ -122,17 +116,16 @@
     <tbody id="userTableBody">
       <% users.forEach(user => { %>
         <tr>
-          <td><%= user.id %></td>
           <td><%= user.username %></td>
           <td><%= user.role %></td>
           <td>
             <div class="button-group">
-              <a href="/users/<%= user.id %>" class="btn btn-marrom">View</a>
-              <a href="/users/<%= user.id %>/edit" class="btn btn-marrom">Edit</a>
+              <a href="/users/<%= user.id %>" class="btn-marrom">View</a>
+              <a href="/users/<%= user.id %>/edit" class="btn-marrom">Edit</a>
               <form action="/arquivados/arquivar" method="POST">
                 <input type="hidden" name="tipo" value="usuario">
                 <input type="hidden" name="alvo_id" value="<%= user.id %>">
-                <button type="submit" class="btn btn-danger">Arquivar</button>
+                <button type="submit" class="btn-danger">Arquivar</button>
               </form>
             </div>
           </td>
@@ -141,30 +134,28 @@
     </tbody>
   </table>
 </div>
+
 <script>
   document.getElementById('search')?.addEventListener('input', function() {
     const searchValue = this.value;
-
     fetch(`/users/search?search=${encodeURIComponent(searchValue)}`)
       .then(response => response.json())
       .then(data => {
         const tbody = document.getElementById('userTableBody');
-        tbody.innerHTML = ''; // limpa a tabela antes de adicionar os resultados
-
+        tbody.innerHTML = '';
         data.users.forEach(user => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.role}</td>
             <td>
               <div class="button-group">
-                <a href="/users/${user.id}" class="btn btn-marrom">View</a>
-                <a href="/users/${user.id}/edit" class="btn btn-marrom">Edit</a>
+                <a href="/users/${user.id}" class="btn-marrom">View</a>
+                <a href="/users/${user.id}/edit" class="btn-marrom">Edit</a>
                 <form action="/arquivados/arquivar" method="POST" style="display:inline;">
                   <input type="hidden" name="tipo" value="usuario">
                   <input type="hidden" name="alvo_id" value="${user.id}">
-                  <button type="submit" class="btn btn-danger">Arquivar</button>
+                  <button type="submit" class="btn-danger">Arquivar</button>
                 </form>
               </div>
             </td>

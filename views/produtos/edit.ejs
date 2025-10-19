@@ -1,58 +1,3 @@
-<%- include('../partials/navbar') %>
-
-<div class="form-container">
-  <h2 class="titulo-centralizado"><strong>Editar Produto</strong></h2>
-
-  <form action="/produtos/<%= produto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="nome">Nome</label>
-      <input type="text" class="form-control" id="nome" name="nome" value="<%= produto.nome %>" required>
-    </div>
-
-    <div class="form-group">
-      <label for="descricao">Descrição</label>
-      <textarea class="form-control" id="descricao" name="descricao" required><%= produto.descricao %></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="preco">Preço</label>
-      <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="<%= produto.preco %>" required>
-    </div>
-
-    <div class="form-group">
-      <label for="quantidade">Quantidade</label>
-      <input type="number" class="form-control" id="quantidade" name="quantidade" value="<%= produto.quantidade %>" required>
-    </div>
-
-    <div class="form-group">
-      <label for="categoria">Categoria</label>
-      <select class="form-control" id="categoria" name="categoria" required>
-        <% if (Array.isArray(categorias)) { %>
-          <% categorias.forEach(function(categoria) { %>
-            <option value="<%= categoria.id %>" <%= (produto.categoria == categoria.id) ? 'selected' : '' %>>
-              <%= categoria.nome %>
-            </option>
-          <% }); %>
-        <% } %>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="imagem">Nova Imagem (opcional)</label>
-      <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
-    </div>
-
-    <% if (produto.imagem) { %>
-      <div class="form-group">
-        <p>Imagem atual:</p>
-        <img src="<%= produto.imagem %>" alt="Imagem do produto" style="max-width: 200px; border-radius: 8px;">
-      </div>
-    <% } %>
-
-    <button type="submit" class="btn btn-marrom">Salvar Alterações</button>
-  </form>
-</div>
-
 <head>
   <style>
     body {
@@ -100,6 +45,11 @@
       height: 100px;
     }
 
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    /* ====== BOTÕES PADRONIZADOS ====== */
     .btn-marrom {
       background-color: #57330f;
       color: #fff;
@@ -107,16 +57,73 @@
       border-radius: 8px;
       padding: 0.6rem 1.2rem;
       font-weight: 500;
+      text-decoration: none;
+      width: 120px; /* tamanho padronizado */
+      display: inline-block;
+      text-align: center;
       transition: background-color 0.2s;
+      margin-top: 0.5rem;
     }
 
     .btn-marrom:hover {
       background-color: #6a3d13;
       color: #fff;
     }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
   </style>
 </head>
+
+<%- include('../partials/navbar') %>
+
+<div class="form-container">
+  <h2 class="titulo-centralizado"><strong>Editar Produto</strong></h2>
+  <form action="/produtos/<%= produto.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" id="nome" name="nome" value="<%= produto.nome %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <textarea class="form-control" id="descricao" name="descricao" required><%= produto.descricao %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="preco">Preço</label>
+      <input type="number" step="0.01" class="form-control" id="preco" name="preco" value="<%= produto.preco %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="quantidade">Quantidade</label>
+      <input type="number" class="form-control" id="quantidade" name="quantidade" value="<%= produto.quantidade %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoria</label>
+      <select class="form-control" id="categoria" name="categoria" required>
+        <% if (Array.isArray(categorias)) { %>
+          <% categorias.forEach(function(categoria) { %>
+            <option value="<%= categoria.id %>" <%= (produto.categoria == categoria.id) ? 'selected' : '' %>>
+              <%= categoria.nome %>
+            </option>
+          <% }); %>
+        <% } %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="imagem">Nova Imagem (opcional)</label>
+      <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
+    </div>
+
+    <% if (produto.imagem) { %>
+      <div class="form-group">
+        <p>Imagem atual:</p>
+        <img src="<%= produto.imagem %>" alt="Imagem do produto" style="max-width: 200px; border-radius: 8px;">
+      </div>
+    <% } %>
+
+    <div class="text-center">
+      <button type="submit" class="btn-marrom">Salvar Alterações</button>
+    </div>
+  </form>
+</div>

@@ -27,7 +27,10 @@
   </thead>
 <thead>
   <tr>
+      <th>Imagem</th>
     <th>Nome</th>
+  
+
     <th>Descrição</th>
     <th>Arquivado Por</th>
     <th>Data</th>
@@ -38,7 +41,16 @@
   <% if (itens.length > 0) { %>
     <% itens.forEach(item => { %>
       <tr>
+          <td>
+  <% if (item.produto_imagem) { %>
+    <img src="<%= item.produto_imagem %>" alt="<%= item.produto_nome %>" style="width:50px; height:50px; object-fit:cover; border-radius:5px;">
+  <% } else { %>
+    -
+  <% } %>
+</td>
         <td><%= item.produto_nome ?? '-' %></td>
+      
+
         <td><%= item.produto_descricao ?? '-' %></td>
         <td><%= item.arquivador_nome ?? 'N/A' %></td>
         <td><%= new Date(item.data_arquivado).toLocaleString('pt-BR') %></td>

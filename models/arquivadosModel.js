@@ -12,17 +12,23 @@ const Arquivado = {
     });
   },
 
- listar: () => {
+listar: () => {
   return new Promise((resolve, reject) => {
     const sql = `
-SELECT a.id, a.tipo, a.alvo_id, a.arquivado_por, a.data_arquivado,
-       p.nome AS produto_nome, p.descricao AS produto_descricao,
-       u.username AS arquivador_nome
-FROM arquivados a
-LEFT JOIN produtos p ON a.alvo_id = p.id AND a.tipo = 'produto'
-LEFT JOIN users u ON a.arquivado_por = u.id
-ORDER BY a.data_arquivado DESC;
-
+      SELECT 
+        a.id,
+        a.tipo,
+        a.alvo_id,
+        a.arquivado_por,
+        a.data_arquivado,
+        p.nome AS produto_nome,
+        p.descricao AS produto_descricao,
+        u.username AS arquivador_nome,
+        (SELECT url FROM imagens WHERE produto_id = p.id LIMIT 1) AS produto_imagem
+      FROM arquivados a
+      LEFT JOIN produtos p ON a.alvo_id = p.id AND a.tipo = 'produto'
+      LEFT JOIN users u ON a.arquivado_por = u.id
+      ORDER BY a.data_arquivado DESC;
     `;
     db.query(sql, (err, results) => {
       if (err) return reject(err);
@@ -30,6 +36,7 @@ ORDER BY a.data_arquivado DESC;
     });
   });
 }
+
 ,
 
   // ✅ NOVO MÉTODO
