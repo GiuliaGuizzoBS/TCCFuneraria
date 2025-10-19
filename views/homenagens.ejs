@@ -7,7 +7,8 @@
       <% produtos.forEach(produto => { %>
         <div class="col-md-4 mb-4">
           <div class="feature-card h-100 d-flex flex-column justify-content-between">
-            <img src="<%= produto.imagem_url ?? '/img/placeholder.jpg' %>" 
+            <img src="<%= produto.imagem ?? '/img/placeholder.jpg' %>" alt="<%= produto.nome %>" class="produto-imagem">
+
                  class="card-img-top rounded" 
                  alt="<%= produto.nome %>" 
                  style="height: 200px; object-fit: cover;">

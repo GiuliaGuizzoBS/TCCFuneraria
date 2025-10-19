@@ -1,13 +1,17 @@
 const db = require('../config/db');
 
 const Produto = {
-  // 🔹 Buscar todos os produtos
+  // 🔹 Buscar todos os produtos (exceto arquivados)
   getAll: () => {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT id, nome, descricao, preco, quantidade, categoria
-        FROM produtos
-        ORDER BY id DESC
+        SELECT p.id, p.nome, p.descricao, p.preco, p.quantidade, p.categoria,
+               (SELECT url FROM imagens WHERE produto_id = p.id LIMIT 1) AS imagem
+        FROM produtos p
+        LEFT JOIN arquivados a 
+          ON a.alvo_id = p.id AND a.tipo = 'produto'
+        WHERE a.id IS NULL
+        ORDER BY p.id DESC
       `;
       db.query(sql, (err, results) => {
         if (err) return reject(err);
@@ -16,14 +20,16 @@ const Produto = {
     });
   },
 
-  // 🔹 Buscar produtos por categoria (funerais, flores, homenagens)
   getAllByCategoria: (categoria) => {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT id, nome, descricao, preco, quantidade, categoria
-        FROM produtos
-        WHERE categoria = ?
-        ORDER BY id DESC
+        SELECT p.id, p.nome, p.descricao, p.preco, p.quantidade, p.categoria,
+               (SELECT url FROM imagens WHERE produto_id = p.id LIMIT 1) AS imagem
+        FROM produtos p
+        LEFT JOIN arquivados a 
+          ON a.alvo_id = p.id AND a.tipo = 'produto'
+        WHERE a.id IS NULL AND p.categoria = ?
+        ORDER BY p.id DESC
       `;
       db.query(sql, [categoria], (err, results) => {
         if (err) return reject(err);
@@ -32,13 +38,13 @@ const Produto = {
     });
   },
 
-  // 🔹 Buscar um produto específico
   getById: (id) => {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT id, nome, descricao, preco, quantidade, categoria
-        FROM produtos
-        WHERE id = ?
+        SELECT p.id, p.nome, p.descricao, p.preco, p.quantidade, p.categoria,
+               (SELECT url FROM imagens WHERE produto_id = p.id LIMIT 1) AS imagem
+        FROM produtos p
+        WHERE p.id = ?
       `;
       db.query(sql, [id], (err, results) => {
         if (err) return reject(err);
@@ -47,7 +53,6 @@ const Produto = {
     });
   },
 
-  // 🔹 Criar produto
   create: (produto) => {
     return new Promise((resolve, reject) => {
       const sql = `
@@ -62,29 +67,51 @@ const Produto = {
     });
   },
 
-  // 🔹 Atualizar produto
   update: (id, produto) => {
     return new Promise((resolve, reject) => {
-      const sql = `
-        UPDATE produtos
-        SET nome = ?, descricao = ?, preco = ?, quantidade = ?, categoria = ?
-        WHERE id = ?
-      `;
-      const { nome, descricao, preco, quantidade, categoria } = produto;
-      db.query(sql, [nome, descricao, preco, quantidade, categoria, id], (err, result) => {
+      const campos = [];
+      const valores = [];
+      for (let [key, value] of Object.entries(produto)) {
+        if (value !== undefined && value !== null) {
+          campos.push(`${key} = ?`);
+          valores.push(value);
+        }
+      }
+      const sql = `UPDATE produtos SET ${campos.join(', ')} WHERE id = ?`;
+      valores.push(id);
+      db.query(sql, valores, (err, result) => {
         if (err) return reject(err);
         resolve(result);
       });
     });
   },
 
-  // 🔹 Excluir produto
   delete: (id) => {
     return new Promise((resolve, reject) => {
       const sql = `DELETE FROM produtos WHERE id = ?`;
       db.query(sql, [id], (err, result) => {
         if (err) return reject(err);
         resolve(result);
+      });
+    });
+  },
+
+  addImagem: (produto_id, url, descricao) => {
+    return new Promise((resolve, reject) => {
+      const sql = `INSERT INTO imagens (produto_id, url, descricao) VALUES (?, ?, ?)`;
+      db.query(sql, [produto_id, url, descricao], (err, result) => {
+        if (err) return reject(err);
+        resolve(result.insertId);
+      });
+    });
+  },
+
+  getImagensByProdutoId: (produto_id) => {
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT * FROM imagens WHERE produto_id = ?`;
+      db.query(sql, [produto_id], (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
       });
     });
   }

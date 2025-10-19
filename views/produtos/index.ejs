@@ -1,15 +1,13 @@
 <head>
   <style>
-    /* fundo geral agora igual ao navbar */
     body {
-      background-color: #d9c8b8; /* mesmo tom do navbar */
+      background-color: #d9c8b8;
       margin: 0;
       padding: 0;
     }
 
-    /* card central */
     .produtos-container {
-      background-color: #fff8eb; /* mantém o tom claro do card */
+      background-color: #fff8eb;
       border: 1px solid #d9c8b8;
       border-radius: 15px;
       padding: 2rem;
@@ -47,11 +45,13 @@
     th {
       background-color: #d9c8b8;
       color: #57330f;
+      text-align: center;
     }
 
     td, th {
       vertical-align: middle !important;
       color: #57330f;
+      text-align: center;
     }
 
     tr:nth-child(even) {
@@ -61,9 +61,16 @@
     tr:hover {
       background-color: #eeddcc;
     }
+
+    img.produto-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #d9c8b8;
+    }
   </style>
 </head>
-
 
 <%- include('../partials/navbar') %>
 
@@ -93,6 +100,7 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Imagem</th>
         <th>Nome</th>
         <th>Descrição</th>
         <th>Preço</th>
@@ -106,35 +114,37 @@
         <% produtos.forEach(produto => { %>
           <tr>
             <td><%= produto.id %></td>
+
+            <td>
+              <% if (produto.imagem) { %>
+                <img src="<%= produto.imagem %>" alt="Imagem do produto" class="produto-img">
+              <% } else { %>
+                <span>Sem imagem</span>
+              <% } %>
+            </td>
+
             <td><%= produto.nome %></td>
             <td><%= produto.descricao %></td>
             <td>R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %></td>
             <td><%= produto.quantidade %></td>
             <td><%= produto.categoria_nome ?? produto.categoria %></td>
+
             <td>
               <div class="button-group">
-                <!-- Visualizar -->
                 <a href="/produtos/<%= produto.id %>" class="btn btn-marrom">View</a>
-
-                <!-- Editar -->
                 <a href="/produtos/<%= produto.id %>/edit" class="btn btn-marrom">Edit</a>
-
-                <!-- Form único para ações que enviam POST/DELETE (não aninhar forms) -->
                 <form action="/arquivados/arquivar" method="POST" style="display:inline; margin:0;">
                   <input type="hidden" name="tipo" value="produto">
                   <input type="hidden" name="alvo_id" value="<%= produto.id %>">
                   <button type="submit" class="btn btn-danger">Arquivar</button>
                 </form>
-
-                <!-- Se você tiver rota de deletar via form (DELETE), pode manter outro form separado -->
-                
               </div>
             </td>
           </tr>
         <% }) %>
       <% } else { %>
         <tr>
-          <td colspan="7" class="text-center">Nenhum produto cadastrado.</td>
+          <td colspan="8" class="text-center">Nenhum produto cadastrado.</td>
         </tr>
       <% } %>
     </tbody>

@@ -1,45 +1,20 @@
 const Produto = require('../models/produtoModel');
 
 // Listar produtos
-// Listar produtos (corrigido: ordem antiga->nova e exclui arquivados quando possível)
 exports.getAllProdutos = async (req, res) => {
   try {
     const categoria = req.query.categoria || null;
-    let produtos;
+    let produtos = categoria
+      ? await Produto.getAllByCategoria(categoria)
+      : await Produto.getAll();
 
-    if (categoria) {
-      produtos = await Produto.getAllByCategoria(categoria);
-    } else {
-      produtos = await Produto.getAll();
-    }
+    produtos = produtos.slice().reverse(); // do mais antigo para o mais novo
 
-    // Inverter para MOSTRAR do mais antigo para o mais novo
-    if (Array.isArray(produtos)) {
-      produtos = produtos.slice().reverse(); // faz uma cópia e inverte
-    }
-
-    // Tentar remover produtos arquivados (se existir model/funcionalidade)
-    try {
-      const Arquivado = require('../models/arquivadosModel');
-      // supondo que Arquivado.listar() retorna array de { tipo, alvo_id, ... }
-      if (typeof Arquivado.listar === 'function') {
-        const itensArquivados = await Arquivado.listar();
-        const idsArquivados = new Set(
-          itensArquivados
-            .filter(i => i.tipo === 'produto')
-            .map(i => Number(i.alvo_id))
-        );
-        produtos = produtos.filter(p => !idsArquivados.has(Number(p.id)));
-      }
-    } catch (err) {
-      // se não existir o model ou deu erro, não quebra: apenas não filtra
-      // console.log('Model arquivados não disponível ou erro ao filtrar:', err.message);
-    }
-
+    // categorias como objetos para o select funcionar
     const categorias = [
-      { id: 1, nome: 'Funerais' },
-      { id: 2, nome: 'Flores' },
-      { id: 3, nome: 'Homenagens' }
+      { id: 1, nome: 'funerais' },
+      { id: 2, nome: 'flores' },
+      { id: 3, nome: 'homenagens' }
     ];
 
     res.render('produtos/index', { produtos, categorias, categoriaSelecionada: categoria });
@@ -49,12 +24,12 @@ exports.getAllProdutos = async (req, res) => {
   }
 };
 
-// Formulário de criação
+// Formulário criação
 exports.renderCreateForm = (req, res) => {
   const categorias = [
-    { id: 1, nome: 'Funerais' },
-    { id: 2, nome: 'Flores' },
-    { id: 3, nome: 'Homenagens' }
+    { id: 1, nome: 'funerais' },
+    { id: 2, nome: 'flores' },
+    { id: 3, nome: 'homenagens' }
   ];
   res.render('produtos/create', { categorias });
 };
@@ -63,7 +38,15 @@ exports.renderCreateForm = (req, res) => {
 exports.createProduto = async (req, res) => {
   try {
     const { nome, descricao, preco, quantidade, categoria } = req.body;
-    await Produto.create({ nome, descricao, preco, quantidade, categoria });
+
+    // Cria o produto sem imagem
+    const produtoId = await Produto.create({ nome, descricao, preco, quantidade, categoria });
+
+    // Se tiver imagem enviada, adiciona na tabela imagens
+    if (req.file) {
+      await Produto.addImagem(produtoId, `/imagens/${req.file.filename}`, '');
+    }
+
     res.redirect('/produtos');
   } catch (err) {
     console.error(err);
@@ -76,10 +59,12 @@ exports.getProdutoById = async (req, res) => {
   try {
     const id = req.params.id;
     const produto = await Produto.getById(id);
+    if (!produto) return res.status(404).send('Produto não encontrado.');
 
-    if (!produto) {
-      return res.status(404).send('Produto não encontrado.');
-    }
+    // Pega todas imagens do produto
+    const imagens = await Produto.getImagensByProdutoId(id);
+    produto.imagens = imagens; // adiciona array de imagens ao produto
+    produto.imagem = imagens[0]?.url ?? null; // primeira imagem para mostrar
 
     res.render('produtos/show', { produto });
   } catch (err) {
@@ -93,16 +78,18 @@ exports.renderEditForm = async (req, res) => {
   try {
     const id = req.params.id;
     const produto = await Produto.getById(id);
-
-    if (!produto) {
-      return res.status(404).send('Produto não encontrado.');
-    }
+    if (!produto) return res.status(404).send('Produto não encontrado.');
 
     const categorias = [
-      { id: 1, nome: 'Funerais' },
-      { id: 2, nome: 'Flores' },
-      { id: 3, nome: 'Homenagens' }
+      { id: 1, nome: 'funerais' },
+      { id: 2, nome: 'flores' },
+      { id: 3, nome: 'homenagens' }
     ];
+
+    // pega imagens do produto
+    const imagens = await Produto.getImagensByProdutoId(id);
+    produto.imagens = imagens;
+    produto.imagem = imagens[0]?.url ?? null;
 
     res.render('produtos/edit', { produto, categorias });
   } catch (err) {
@@ -116,7 +103,15 @@ exports.updateProduto = async (req, res) => {
   try {
     const id = req.params.id;
     const { nome, descricao, preco, quantidade, categoria } = req.body;
-    await Produto.update(id, { nome, descricao, preco, quantidade, categoria });
+    const updateData = { nome, descricao, preco, quantidade, categoria };
+
+    // Se houver nova imagem, adiciona na tabela imagens e usa como primeira
+    if (req.file) {
+       await Produto.addImagem(id, `/imagens/${req.file.filename}`, '');
+      updateData.imagem = `/imagens/${req.file.filename}`;
+    }
+
+    await Produto.update(id, updateData);
     res.redirect(`/produtos/${id}`);
   } catch (err) {
     console.error(err);

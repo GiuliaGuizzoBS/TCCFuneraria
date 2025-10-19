@@ -6,7 +6,7 @@
     <%
       const lista = Array.isArray(produtos) ? produtos : [];
 
-      const getImg = (p) => (p?.imagem_url ?? p?.imagemUrl ?? p?.imagem ?? p?.foto_url ?? '/img/placeholder.jpg');
+     const getImg = (p) => (p?.imagem ?? '/img/placeholder.jpg');
       const getNome = (p) => (p?.nome ?? p?.titulo ?? p?.name ?? 'Produto');
       const getDesc = (p) => (p?.descricao ?? p?.descr ?? p?.description ?? '');
       const getPreco = (p) => {
@@ -22,7 +22,9 @@ const itens = lista.filter(p => (p.categoria ?? '').toLowerCase() === 'funerais'
       <% itens.forEach(produto => { %>
         <div class="col-md-4 mb-4">
           <div class="feature-card h-100 d-flex flex-column justify-content-between">
-            <img src="<%= getImg(produto) %>" class="card-img-top rounded" alt="<%= getNome(produto) %>" style="height: 200px; object-fit: cover;">
+    <img src="<%= produto.imagem ?? '/img/placeholder.jpg' %>" alt="<%= produto.nome %>" class="produto-imagem">
+
+
             <div class="mt-3">
               <h5 class="card-title text-capitalize texto-marrom"><%= getNome(produto) %></h5>
               <% if (getDesc(produto)) { %>

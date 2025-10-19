@@ -88,8 +88,9 @@
 <div class="detalhes-container">
   <h2 class="titulo-centralizado"><strong>Detalhes do Produto</strong></h2>
 
-  <% if (produto.imagem_url) { %>
-    <img src="<%= produto.imagem_url %>" alt="<%= produto.nome %>" class="produto-imagem">
+  <% if (produto.imagem) { %>
+   <img src="<%= produto.imagem ?? '/img/placeholder.jpg' %>" alt="<%= produto.nome %>" class="produto-imagem">
+
   <% } %>
 
   <p><strong>ID:</strong> <%= produto.id %></p>
