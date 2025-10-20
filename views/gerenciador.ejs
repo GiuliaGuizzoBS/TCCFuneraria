@@ -2,42 +2,41 @@
 
 <div class="jumbotron text-center">
     <h1>Bem-vindo ao Sistema da Funerária Menino Deus</h1>
-    <p class="lead">Gerencie seus usuários e produtos sem esforço.</p>
-    <a href="/users" class="btn btn-custom">Gerenciar usuários</a>
-    <a href="/produtos" class="btn btn-custom ml-2">Gerenciar produtos</a>
+    <p class="lead">Gerencie seus usuários, produtos, pedidos e arquivados sem esforço.</p>
 </div>
+
 
 <div class="row">
     <div class="col-md-6">
         <div class="feature-card">
-            <h3>Gerenciamento de usuários</h3>
-            <p>Adicione, edite e exclua usuários facilmente.</p>
+            <h3>Gerenciamento de Usuários</h3>
+            <p>Adicione e edite usuários facilmente.</p>
             <a href="/users" class="btn btn-marrom">Ir para usuários</a>
         </div>
     </div>
     <div class="col-md-6">
         <div class="feature-card">
-            <h3>Gerenciamento de produtos</h3>
+            <h3>Gerenciamento de Produtos</h3>
             <p>Acompanhe seus produtos e seus detalhes perfeitamente.</p>
             <a href="/produtos" class="btn btn-marrom">Ir para produtos</a>
         </div>
     </div>
 </div>
 
-<hr>
-
-<h2 class="mt-4 titulo-centralizado"><strong>Produtos disponíveis</strong></h2>
-
-<% if (!produtos || produtos.length === 0) { %>
-    <div class="col-12 d-flex justify-content-center mt-4">
-    <p class="fw-bold">Nenhum produto cadastrado.</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="feature-card">
+            <h3>Gerenciamento de Pedidos</h3>
+            <p>Acompanhe seus pedidos e seus detalhes perfeitamente.</p>
+            <a href="/pedidos-gerenciador" class="btn btn-marrom">Ir para pedidos</a>
+        </div>
     </div>
-<% } else { %>
-    <div class="row">
-        <% produtos.forEach(produto => { %>
-            <div class="col-md-4">
-                <%- include('partials/produtoCard', { produto: produto }) %>
-            </div>
-        <% }); %>
+    <div class="col-md-6">
+        <div class="feature-card">
+            <h3>Gerenciamento de Arquivados</h3>
+            <p>Desarquive os produtos facilmente.</p>
+            <a href="/arquivados" class="btn btn-marrom">Ir para arquivados</a>
+        </div>
     </div>
-<% } %>
+   
+</div>
