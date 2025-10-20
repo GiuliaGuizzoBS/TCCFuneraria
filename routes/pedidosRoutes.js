@@ -67,4 +67,24 @@ router.post('/finalizar', (req, res) => {
   res.redirect('/formulario');
 });
 
+// Mostrar detalhes de um pedido específico
+router.get('/:id', (req, res) => {
+  const pedidoId = req.params.id;
+  const userId = req.session.user.id;
+
+  Pedido.getById(pedidoId, userId, (err, pedido) => {
+    if (err) {
+      console.error('Erro ao buscar pedido:', err);
+      return res.status(500).send('Erro ao buscar pedido.');
+    }
+
+    if (!pedido) {
+      return res.status(404).send('Pedido não encontrado.');
+    }
+
+    res.render('pedidoDetalhes', { pedido });
+  });
+});
+
+
 module.exports = router;

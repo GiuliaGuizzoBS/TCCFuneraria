@@ -1,4 +1,4 @@
-<%- include('partials/navbar') %>
+
 
 <style>
 .pedido-card {
@@ -20,100 +20,24 @@
   border-color: #d9c8b8;
 }
 </style>
+<%- include('partials/navbar') %>
+
+
+<h2 class="mt-4 titulo-centralizado texto-marrom"><strong>Pedidos Recebidos</strong></h2>
 
 <div class="container mt-4">
-  <h2 class="titulo-centralizado"><strong>Gerenciamento de Pedidos</strong></h2>
-
   <% if (pedidos.length > 0) { %>
     <% pedidos.forEach(p => { %>
-      <div class="pedido-card mb-4 rounded shadow-sm">
-        <h5 class="texto-marrom mb-3">
-          <strong>Pedido nº <%= p.pedido_id %></strong> — 
-          <span class="text-muted">Usuário: <%= p.usuario_nome %></span>
+      <div class="pedido-card mb-3">
+        <h5 class="texto-marrom">
+          <%= new Date(p.criado_em).toLocaleDateString() %> — <%= p.cliente %>
         </h5>
-
         <p><strong>Status:</strong> <%= p.status %></p>
-        <p><strong>Data:</strong> 
-          <%= p.criado_em ? new Date(p.criado_em).toISOString().split('T')[0] : '—' %>
-        </p>
-        <p><strong>Cliente:</strong> <%= p.cliente || 'Não informado' %></p>
-        <p><strong>Valor:</strong> R$ <%= p.valor ? Number(p.valor).toFixed(2) : '—' %></p>
-        <p><strong>Forma de Pagamento:</strong> <%= p.forma_de_pagamento || '—' %></p>
-
-        <% if (p.produtos) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Produtos</h6>
-          <ul class="list-unstyled ms-3">
-            <% p.produtos.split(',').forEach(prod => { %>
-              <li>• <%= prod.trim() %></li>
-            <% }) %>
-          </ul>
-        <% } %>
-
-        <% if (p.cremacao !== null || p.translado || p.horario) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Formulário</h6>
-          <p><strong>Cremação:</strong> <%= p.cremacao ? 'Sim' : 'Não' %></p>
-          <p><strong>Horário:</strong> <%= p.horario || '—' %></p>
-          <p><strong>Translado:</strong> <%= p.translado || '—' %></p>
-        <% } %>
-
-        <% if (p.roupa || p.batom || p.unha || p.observacao) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Necromaquiagem</h6>
-          <p>
-            Roupa: <%= p.roupa || '—' %> |
-            Roupas íntimas: <%= p.r_intimas ? 'Sim' : 'Não' %> |
-            Batom: <%= p.batom || '—' %> |
-            Unha: <%= p.unha || '—' %> |
-            Cabelo: <%= p.cabelo || '—' %> |
-            Intensidade: <%= p.intensidade ? 'Alta' : 'Normal' %>
-          </p>
-          <p><strong>Observação:</strong> <%= p.observacao || '—' %></p>
-        <% } %>
-
-        <% if (p.embacamento !== null || p.tanatopraxia !== null) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Laboratório</h6>
-          <p>
-            Embalsamamento: <%= p.embacamento ? 'Sim' : 'Não' %> |
-            Tanatopraxia: <%= p.tanatopraxia ? 'Sim' : 'Não' %> |
-            Aspiração: <%= p.aspiracao ? 'Sim' : 'Não' %> |
-            Restauração: <%= p.restauracao ? 'Sim' : 'Não' %> |
-            Mumificação: <%= p.mumificacao ? 'Sim' : 'Não' %> |
-            Higienização: <%= p.higienizacao ? 'Sim' : 'Não' %>
-          </p>
-        <% } %>
-
-        <% if (p.cortina !== null || p.tapete !== null) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Cama Ardente</h6>
-          <p>
-            Cortina: <%= p.cortina ? 'Sim' : 'Não' %> |
-            Tapete: <%= p.tapete ? 'Sim' : 'Não' %> |
-            Livro Pré: <%= p.livropre ? 'Sim' : 'Não' %> |
-            Veleiro: <%= p.veleiro ? 'Sim' : 'Não' %> |
-            Cristo: <%= p.cristo ? 'Sim' : 'Não' %> |
-            Bíblia: <%= p.biblia ? 'Sim' : 'Não' %> |
-            Cavalete: <%= p.cavalete ? 'Sim' : 'Não' %>
-          </p>
-        <% } %>
-
-        <% if (p.rua || p.numero || p.bairro || p.cidade) { %>
-          <hr>
-          <h6 class="texto-marrom mt-3">Endereço</h6>
-          <p>
-            <%= p.rua || 'Rua não informada' %>, 
-            <%= p.numero || 's/n' %> - 
-            <%= p.bairro || '' %>, 
-            <%= p.cidade || '' %> / 
-            <%= p.estado || '' %> - 
-            <%= p.pais || '' %>
-          </p>
-        <% } %>
+       <a href="/pedidos/<%= p.pedido_id %>" class="btn btn-marrom">Vizualizar</a>
       </div>
     <% }) %>
   <% } else { %>
-    <p class="text-center fw-bold mt-4">Nenhum pedido finalizado encontrado.</p>
+    <p>Nenhum pedido registrado.</p>
   <% } %>
 </div>
+

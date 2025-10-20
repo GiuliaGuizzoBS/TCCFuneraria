@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS CRUD;
 USE CRUD;
 
+-- 👤 Usuários
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     role ENUM('admin', 'user') NOT NULL
 );
 
+-- 🧾 Pedidos
 CREATE TABLE IF NOT EXISTS pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -16,6 +18,7 @@ CREATE TABLE IF NOT EXISTS pedidos (
     FOREIGN KEY (usuario_id) REFERENCES users(id)
 );
 
+-- 🛍️ Produtos
 CREATE TABLE IF NOT EXISTS produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -25,6 +28,7 @@ CREATE TABLE IF NOT EXISTS produtos (
     -- coluna categoria removida
 );
 
+-- 🖼️ Imagens dos produtos
 CREATE TABLE IF NOT EXISTS imagens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     url VARCHAR(255) NOT NULL,
@@ -33,6 +37,7 @@ CREATE TABLE IF NOT EXISTS imagens (
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
+-- ⚰️ Cama Ardente
 CREATE TABLE IF NOT EXISTS cama_ardente (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cortina BOOLEAN,
@@ -44,6 +49,7 @@ CREATE TABLE IF NOT EXISTS cama_ardente (
     cavalete BOOLEAN
 );
 
+-- 💄 Necromaquiagem
 CREATE TABLE IF NOT EXISTS necromaquiagem (
     id INT AUTO_INCREMENT PRIMARY KEY,
     roupa VARCHAR(100),
@@ -55,6 +61,7 @@ CREATE TABLE IF NOT EXISTS necromaquiagem (
     cabelo INT
 );
 
+-- 🧪 Laboratório
 CREATE TABLE IF NOT EXISTS laboratorio (
     id INT AUTO_INCREMENT PRIMARY KEY,
     embacamento BOOLEAN,
@@ -65,6 +72,7 @@ CREATE TABLE IF NOT EXISTS laboratorio (
     higienizacao BOOLEAN
 );
 
+-- 🏠 Endereço
 CREATE TABLE IF NOT EXISTS endereco (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT NOT NULL,
@@ -75,6 +83,20 @@ CREATE TABLE IF NOT EXISTS endereco (
     pais VARCHAR(15) NOT NULL
 );
 
+-- 🪦 Falecido (nova tabela)
+CREATE TABLE IF NOT EXISTS falecido (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    rg VARCHAR(20) NOT NULL,
+    comprovante_residencia VARCHAR(255), -- caminho do arquivo enviado
+    foto VARCHAR(255),                    -- caminho da foto do falecido
+    data_falecimento DATE,
+    idade INT,
+    local_falecimento VARCHAR(255)
+);
+
+-- 📋 Formulário (agora com relação ao falecido)
 CREATE TABLE IF NOT EXISTS formulario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
@@ -86,14 +108,19 @@ CREATE TABLE IF NOT EXISTS formulario (
     laboratorio INT,
     cama_ardente INT,
     endereco_id INT,
+    falecido_id INT, -- nova coluna
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
     FOREIGN KEY (usuario_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (necromaquiagem) REFERENCES necromaquiagem(id),
     FOREIGN KEY (laboratorio) REFERENCES laboratorio(id),
     FOREIGN KEY (cama_ardente) REFERENCES cama_ardente(id),
-    FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id),
+    FOREIGN KEY (falecido_id) REFERENCES falecido(id)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 
+-- 🔗 Produtos do pedido
 CREATE TABLE IF NOT EXISTS pedido_produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT NOT NULL,
@@ -103,6 +130,7 @@ CREATE TABLE IF NOT EXISTS pedido_produtos (
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
 
+-- 📝 Contrato
 CREATE TABLE IF NOT EXISTS contrata (
     id INT AUTO_INCREMENT PRIMARY KEY,
     valor DECIMAL(10,2) NOT NULL,
@@ -115,6 +143,7 @@ CREATE TABLE IF NOT EXISTS contrata (
     FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
 );
 
+-- 📦 Arquivados
 CREATE TABLE IF NOT EXISTS arquivados (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,

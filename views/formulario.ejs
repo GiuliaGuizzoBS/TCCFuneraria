@@ -1,304 +1,219 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário Funerária</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulário Funerária</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <style>
-        html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-          overflow-x: hidden;
-        }
+  <style>
+    body {
+      background-color: #d9c8b8;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: #4b2e1e;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #d9c8b8;
-            color: #4b2e1e;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    .form-container {
+      background-color: #fff8eb;
+      border: 1px solid #d9c8b8;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
 
-        main, .container-body {
-            flex: 1; /* ocupa o espaço restante */
-        }
+    .titulo-centralizado {
+      text-align: center;
+      color: #57330f;
+      margin-bottom: 1.5rem;
+    }
 
-        .titulo-centralizado {
-            text-align: center;
-            color: #57330f; /* marrom suave */
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
+    label {
+      color: #57330f;
+      font-weight: 500;
+      margin-top: 0.5rem;
+      display: block;
+    }
 
-        .form-control {
-            border-radius: 25px;
-            background-color: #fff8eb;
-            border: 1px solid #d9c8b8;
-            color: #57330f;
-        }
+    input.form-control,
+    select.form-control,
+    textarea.form-control {
+      border: 1px solid #d9c8b8;
+      border-radius: 8px;
+      padding: 0.6rem;
+      background-color: #fffdf8;
+      color: #57330f;
+      margin-bottom: 1rem;
+      width: 100%;
+      font-size: 1rem;
+    }
 
-        .form-control:focus {
-            background-color: #fff8eb;
-            border-color: #57330f;
-            box-shadow: none;
-        }
+    input.form-control:focus,
+    select.form-control:focus,
+    textarea.form-control:focus {
+      border-color: #bfa68a;
+      outline: none;
+    }
 
-        .btn-custom {
-            background-color: #57330f;
-            color: white;
-            border-radius: 25px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
-            margin-top: 1rem;
-            transition: background-color 0.3s ease;
-        }
+    textarea.form-control {
+      resize: none;
+      height: 80px;
+    }
 
-        .btn-custom:hover {
-            background-color: #291605;
-            color: white;
-        }
+    .btn-marrom {
+      background-color: #57330f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      text-decoration: none;
+      width: 140px;
+      display: inline-block;
+      text-align: center;
+      transition: background-color 0.2s;
+      margin-top: 0.5rem;
+    }
 
-        .bg-marrom-claro {
-            background-color: #d9c8b8;
-        }
+    .btn-marrom:hover {
+      background-color: #6a3d13;
+      color: #fff;
+    }
 
-        .bg-marrom-clarinho {
-            background-color: #fff8eb;
-            color: #57330f;
-        }
-
-        .texto-marrom {
-            color: #57330f;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .navbar-nav .nav-link {
-            color: #57330f !important;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #291605 !important;
-        }
-
-        .navbar {
-            border-bottom: #4b2e1e 1px solid;
-        }
-    </style>
+    .form-group {
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <%- include('partials/navbarCliente') %>
-    <main class="container-body">
-        <div class="container mt-5">
-            <h2 class="titulo-centralizado">Cadastro - Serviços Funerários</h2>
+  <%- include('partials/navbarCliente') %>
 
-            <form action="/formulario" method="POST" class="bg-marrom-clarinho p-4 rounded">
-                <!-- Endereço -->
-                <h4 class="texto-marrom">Endereço</h4>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="numero">Número</label>
-                        <input type="number" class="form-control" name="numero" placeholder="Ex: 123" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="rua">Rua</label>
-                        <input type="text" class="form-control" name="rua" placeholder="Ex: Rua das Flores" required maxlength="40">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="bairro">Bairro</label>
-                        <input type="text" class="form-control" name="bairro" placeholder="Ex: Centro" required maxlength="15">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="cidade">Cidade</label>
-                        <input type="text" class="form-control" name="cidade" placeholder="Ex: São Paulo" required maxlength="15">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="estado">Estado</label>
-                        <input type="text" class="form-control" name="estado" placeholder="Ex: SP" required maxlength="20">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="pais">País</label>
-                        <input type="text" class="form-control" name="pais" placeholder="Ex: Brasil" required maxlength="15">
-                    </div>
-                </div>
+  <div class="form-container">
+    <h2 class="titulo-centralizado"><strong>Formulário de Contratação</strong></h2>
 
-                <hr>
+    <form action="/formulario" method="POST" enctype="multipart/form-data">
 
-                <!-- Necromaquiagem -->
-                <h4 class="texto-marrom">Necromaquiagem</h4>
-                <div class="form-group">
-                    <label for="roupa">Roupa</label>
-                    <input type="text" class="form-control" name="roupa" placeholder="Ex: Traje de velório" maxlength="100">
-                </div>
-                <div class="form-group">
-                    <label for="r_intimas">Roupas Íntimas</label>
-                    <select class="form-control" name="r_intimas">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="batom">Batom</label>
-                        <input type="text" class="form-control" name="batom" placeholder="Ex: Vermelho" maxlength="10">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="unha">Unha</label>
-                        <input type="text" class="form-control" name="unha" placeholder="Ex: Curta" maxlength="20">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="observacao">Observação</label>
-                        <input type="text" class="form-control" name="observacao" placeholder="Ex: Maquiagem leve" maxlength="100">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="intensidade">Intensidade</label>
-                    <select class="form-control" name="intensidade">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
+      <!-- Dados do Cliente -->
+      <h4 class="texto-marrom">Dados do Cliente</h4>
+      <div class="form-group">
+        <label>Nome do Cliente:</label>
+        <input type="text" name="cliente" placeholder="Nome completo do contratante" class="form-control" required>
+      </div>
 
-                <hr>
+      <!-- Endereço -->
+      <h4 class="texto-marrom">Endereço do Cliente</h4>
+      <div class="form-group">
+        <label>Número:</label>
+        <input type="text" name="numero" placeholder="Número da residência" class="form-control" required>
+        <label>Rua:</label>
+        <input type="text" name="rua" placeholder="Nome da rua" class="form-control" required>
+        <label>Bairro:</label>
+        <input type="text" name="bairro" placeholder="Bairro" class="form-control" required>
+        <label>Cidade:</label>
+        <input type="text" name="cidade" placeholder="Cidade" class="form-control" required>
+        <label>Estado:</label>
+        <input type="text" name="estado" placeholder="Estado" class="form-control" required>
+        <label>País:</label>
+        <input type="text" name="pais" placeholder="País" class="form-control" required>
+      </div>
 
-                <!-- Laboratório -->
-                <h4 class="texto-marrom">Laboratório</h4>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="embacamento">Embalçamento</label>
-                        <select class="form-control" name="embacamento">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="tanatopraxia">Tanatopraxia</label>
-                        <select class="form-control" name="tanatopraxia">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="aspiracao">Aspiração</label>
-                        <select class="form-control" name="aspiracao">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="restauracao">Restauração</label>
-                        <select class="form-control" name="restauracao">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="mumificacao">Mumificação</label>
-                        <select class="form-control" name="mumificacao">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="higienizacao">Higienização</label>
-                        <select class="form-control" name="higienizacao">
-                            <option value="1">Sim</option>
-                            <option value="0">Não</option>
-                        </select>
-                    </div>
-                </div>
-
-                <hr>
-
-                <!-- Cama Ardente -->
-                <h4 class="texto-marrom">Cama Ardente</h4>
-<div class="form-row">
-    <div class="form-group col-md-2">
-        <label for="cortina">Cortina</label>
-        <select class="form-control" name="cortina">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
+      <!-- Informações do Serviço -->
+      <h4 class="texto-marrom">Informações do Serviço</h4>
+      <div class="form-group">
+        <label>Cremar?</label>
+        <select name="cremacao" class="form-control" required>
+          <option value="0">Não</option>
+          <option value="1">Sim</option>
         </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="tapete">Tapete</label>
-        <select class="form-control" name="tapete">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="livropre">Livro de Presença</label>
-        <select class="form-control" name="livropre">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="veleiro">Veleiro</label>
-        <select class="form-control" name="veleiro">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="cristo">Cristo</label>
-        <select class="form-control" name="cristo">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="biblia">Bíblia</label>
-        <select class="form-control" name="biblia">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-    <div class="form-group col-md-2">
-        <label for="cavalete">Cavalete</label>
-        <select class="form-control" name="cavalete">
-            <option value="1">Sim</option>
-            <option value="0">Não</option>
-        </select>
-    </div>
-</div>
+        <label>Translado:</label>
+        <input type="text" name="translado" placeholder="Local de translado do falecido, se houver" class="form-control">
+      </div>
 
+      <!-- Necromaquiagem -->
+      <h4 class="texto-marrom">Necromaquiagem</h4>
+      <div class="form-group">
+        <label>Roupas:</label>
+        <input name="roupa" placeholder="Peças de roupa do falecido" class="form-control">
+        <label>Roupas íntimas?</label>
+        <select name="r_intimas" class="form-control">
+          <option value="0">Não</option>
+          <option value="1">Sim</option>
+        </select>
+        <label>Batom:</label>
+        <input name="batom" placeholder="Ex.: Rosa claro" class="form-control">
+        <label>Cor da unha:</label>
+        <input name="unha" placeholder="Ex.: Apenas uma base" class="form-control">
+        <label>Intensidade da maquiagem</label>
+        <select name="intensidade" class="form-control">
+          <option value="0">Fraca</option>
+          <option value="1">Média</option>
+          <option value="2">Forte</option>
+        </select>
+        <label>Observação:</label>
+        <textarea name="observacao" placeholder="Ex.: Fazer um coração na bochecha" class="form-control"></textarea>
+      </div>
 
-                <hr>
+      <!-- Laboratório -->
+      <h4 class="texto-marrom">Laboratório</h4>
+      <div class="form-group">
+        <label><input type="checkbox" name="embalsamamento" value="1"> Embalsamamento</label>
+        <label><input type="checkbox" name="tanatopraxia" value="1"> Tanatopraxia</label>
+        <label><input type="checkbox" name="aspiracao" value="1"> Aspiração</label>
+        <label><input type="checkbox" name="restauracao" value="1"> Restauração</label>
+        <label><input type="checkbox" name="mumificacao" value="1"> Mumificação</label>
+        <label><input type="checkbox" name="higienizacao" value="1"> Higienização</label>
+      </div>
 
-                <!-- Contrato -->
-                <h4 class="texto-marrom">Contrato</h4>
-                
-                
-                <div class="form-group">
-                    <label for="forma_de_pagamento">Forma de Pagamento</label>
-                    <input type="text" class="form-control" name="forma_de_pagamento" placeholder="Ex: Dinheiro, Cartão, Pix..." required>
-                </div>
+      <!-- Cama Ardente -->
+      <h4 class="texto-marrom">Cama Ardente</h4>
+      <div class="form-group">
+        <label><input type="checkbox" name="cortina" value="1"> Cortina</label>
+        <label><input type="checkbox" name="tapete" value="1"> Tapete</label>
+        <label><input type="checkbox" name="livropre" value="1"> Livro de Presenças</label>
+        <label><input type="checkbox" name="veleiro" value="1"> Veleiro</label>
+        <label><input type="checkbox" name="cristo" value="1"> Cristo</label>
+        <label><input type="checkbox" name="biblia" value="1"> Bíblia</label>
+        <label><input type="checkbox" name="cavalete" value="1"> Cavalete</label>
+      </div>
 
-                <div class="form-group">
-                    <label for="cliente">Nome completo do cliente</label>
-                    <input type="text" class="form-control" name="cliente" placeholder="Ex: João da Silva" required>
-                </div>
+      <!-- Dados do Falecido -->
+      <h4 class="texto-marrom">Dados do Falecido</h4>
+      <div class="form-group">
+        <label>Nome completo:</label>
+        <input name="falecido_nome" placeholder="Nome completo do falecido" class="form-control" required>
+        <label>Idade:</label>
+        <input name="falecido_idade" type="number" placeholder="Idade do falecido" class="form-control">
+        <label>CPF:</label>
+        <input name="falecido_cpf" placeholder="CPF do falecido" class="form-control">
+        <label>RG:</label>
+        <input name="falecido_rg" placeholder="RG do falecido" class="form-control">
+        <label>Data do falecimento:</label>
+        <input name="falecido_data_falecimento" type="date" class="form-control">
+        <label>Local do falecimento:</label>
+        <input name="falecido_local_falecimento" placeholder="Local do falecimento" class="form-control">
+        <label>Foto do Falecido:</label>
+        <input type="file" name="foto_falecido" accept="image/*" class="form-control">
+        <label>Comprovante de Residência:</label>
+        <input type="file" name="comprovante_residencia" accept="image/*" class="form-control">
+      </div>
 
-                <div class="form-group">
-                    <label for="observacoes">Observações</label>
-                    <textarea class="form-control" name="observacoes" rows="3" placeholder="Observações adicionais..." maxlength="200"></textarea>
-                </div>
+      <!-- Pagamento -->
+      <h4 class="texto-marrom">Pagamento</h4>
+      <div class="form-group">
+        <label>Forma de pagamento:</label>
+        <select name="forma_de_pagamento" class="form-control" required>
+          <option value="dinheiro">Dinheiro</option>
+          <option value="cartao">Cartão</option>
+          <option value="pix">Pix</option>
+        </select>
+      </div>
 
-                <button type="submit" class="btn btn-custom">Salvar</button>
-            </form>
-        </div>
-    </main>
+      <div class="text-center">
+        <button type="submit" class="btn-marrom">Enviar</button>
+      </div>
+    </form>
+  </div>
 </body>
 </html>

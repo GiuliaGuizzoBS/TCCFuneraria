@@ -157,5 +157,92 @@ static getConfirmados(usuario_id, callback) {
   }
 }
 
+Pedido.getById = (pedidoId, userId, callback) => {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
+      
+      c.cliente,
+      c.data AS contrato_data,
+      c.valor,
+      c.forma_de_pagamento,
+      
+      f.cremacao,
+      f.horario,
+      f.translado,
+      
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
+      
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
+      
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
+      
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
+      
+      fal.nome AS falecido_nome,
+      fal.idade AS falecido_idade,
+      fal.cpf AS falecido_cpf,
+      fal.rg AS falecido_rg,
+      fal.data_falecimento AS falecido_data_falecimento,
+      fal.local_falecimento AS falecido_local_falecimento,
+      fal.foto AS falecido_foto,
+      fal.comprovante_residencia AS falecido_comprovante,
+
+      GROUP_CONCAT(DISTINCT CONCAT(p.nome, ' (', pp.quantidade, ')') SEPARATOR ', ') AS produtos
+
+    FROM pedidos pe
+    LEFT JOIN contrata c ON c.pedido_id = pe.id
+    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
+    LEFT JOIN falecido fal ON fal.id = f.falecido_id
+    LEFT JOIN pedido_produtos pp ON pp.pedido_id = pe.id
+    LEFT JOIN produtos p ON p.id = pp.produto_id
+    WHERE pe.id = ? AND pe.usuario_id = ?
+    GROUP BY pe.id, pe.status, pe.criado_em, c.cliente, c.data, c.valor, c.forma_de_pagamento,
+             f.cremacao, f.horario, f.translado,
+             n.roupa, n.r_intimas, n.batom, n.unha, n.observacao, n.intensidade, n.cabelo,
+             l.embacamento, l.tanatopraxia, l.aspiracao, l.restauracao, l.mumificacao, l.higienizacao,
+             ca.cortina, ca.tapete, ca.livropre, ca.veleiro, ca.cristo, ca.biblia, ca.cavalete,
+             e.numero, e.rua, e.bairro, e.cidade, e.estado, e.pais,
+             fal.nome, fal.idade, fal.cpf, fal.rg, fal.data_falecimento, fal.local_falecimento, fal.foto, fal.comprovante_residencia
+  `;
+  
+  db.query(sql, [pedidoId, userId], (err, results) => {
+    if (err) return callback(err);
+    if (results.length === 0) return callback(null, null);
+
+    const pedido = results[0];
+    callback(null, pedido);
+  });
+};
+
+
 
 module.exports = Pedido;

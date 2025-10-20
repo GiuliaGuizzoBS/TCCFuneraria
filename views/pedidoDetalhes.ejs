@@ -1,0 +1,120 @@
+<%- include('partials/navbarCliente') %>
+
+<style>
+/* === ESTILO DE CARDS E TEXTO === */
+.container-detalhes {
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.card-detalhes {
+  background-color: #fff8eb;
+  border: 1px solid #d9c8b8;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-detalhes:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.card-detalhes h5 {
+  color: #57330f;
+  margin-bottom: 0.8rem;
+}
+
+.card-detalhes p {
+  color: #4b2e1e;
+  margin-bottom: 0.5rem;
+}
+
+.titulo-centralizado {
+  text-align: center;
+  color: #57330f;
+  margin-bottom: 1.5rem;
+}
+</style>
+
+<h2 class="mt-4 titulo-centralizado"><strong>Detalhes do Pedido</strong></h2>
+
+<div class="container container-detalhes">
+
+  <div class="card-detalhes">
+    <h5>Informações do Pedido</h5>
+    <p><strong>ID do Pedido:</strong> <%= pedido.pedido_id %></p>
+    <p><strong>Data do Pedido:</strong> <%= new Date(pedido.criado_em).toLocaleDateString() %></p>
+    <p><strong>Status:</strong> <%= pedido.status %></p>
+    <p><strong>Cliente:</strong> <%= pedido.cliente %></p>
+    <p><strong>Forma de Pagamento:</strong> <%= pedido.forma_de_pagamento %></p>
+    <p><strong>Valor:</strong> R$ <%= Number(pedido.valor).toFixed(2) %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Produtos</h5>
+    <p><%= pedido.produtos %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Serviço Funerário</h5>
+    <p><strong>Cremacao:</strong> <%= pedido.cremacao ? "Sim" : "Não" %></p>
+    <p><strong>Horário:</strong> <%= pedido.horario %></p>
+    <p><strong>Translado:</strong> <%= pedido.translado %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Necromaquiagem</h5>
+    <p><strong>Roupas:</strong> <%= pedido.roupa %></p>
+    <p><strong>Roupas íntimas:</strong> <%= pedido.r_intimas ? "Sim" : "Não" %></p>
+    <p><strong>Batom:</strong> <%= pedido.batom %></p>
+    <p><strong>Cor da unha:</strong> <%= pedido.unha %></p>
+    <p><strong>Intensidade:</strong> <%= ["Fraca","Média","Forte"][pedido.intensidade] %></p>
+    <p><strong>Observação:</strong> <%= pedido.observacao %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Laboratório</h5>
+    <p><strong>Embalsamamento:</strong> <%= pedido.embacamento ? "Sim" : "Não" %></p>
+    <p><strong>Tanatopraxia:</strong> <%= pedido.tanatopraxia ? "Sim" : "Não" %></p>
+    <p><strong>Aspiração:</strong> <%= pedido.aspiracao ? "Sim" : "Não" %></p>
+    <p><strong>Restauração:</strong> <%= pedido.restauracao ? "Sim" : "Não" %></p>
+    <p><strong>Mumificação:</strong> <%= pedido.mumificacao ? "Sim" : "Não" %></p>
+    <p><strong>Higienização:</strong> <%= pedido.higienizacao ? "Sim" : "Não" %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Cama Ardente</h5>
+    <p><strong>Cortina:</strong> <%= pedido.cortina ? "Sim" : "Não" %></p>
+    <p><strong>Tapete:</strong> <%= pedido.tapete ? "Sim" : "Não" %></p>
+    <p><strong>Livro de Presenças:</strong> <%= pedido.livropre ? "Sim" : "Não" %></p>
+    <p><strong>Veleiro:</strong> <%= pedido.veleiro ? "Sim" : "Não" %></p>
+    <p><strong>Cristo:</strong> <%= pedido.cristo ? "Sim" : "Não" %></p>
+    <p><strong>Bíblia:</strong> <%= pedido.biblia ? "Sim" : "Não" %></p>
+    <p><strong>Cavalete:</strong> <%= pedido.cavalete ? "Sim" : "Não" %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Endereço do Cliente</h5>
+    <p><%= pedido.rua %>, <%= pedido.numero %> - <%= pedido.bairro %> - <%= pedido.cidade %> / <%= pedido.estado %> - <%= pedido.pais %></p>
+  </div>
+
+  <div class="card-detalhes">
+    <h5>Falecido</h5>
+    <p><strong>Nome:</strong> <%= pedido.falecido_nome %></p>
+    <p><strong>Idade:</strong> <%= pedido.falecido_idade %></p>
+    <p><strong>CPF:</strong> <%= pedido.falecido_cpf %></p>
+    <p><strong>RG:</strong> <%= pedido.falecido_rg %></p>
+    <p><strong>Data Falecimento:</strong> <%= pedido.falecido_data_falecimento %></p>
+    <p><strong>Local Falecimento:</strong> <%= pedido.falecido_local_falecimento %></p>
+    <% if(pedido.falecido_foto){ %>
+      <p><strong>Foto:</strong> <img src="/uploads/<%= pedido.falecido_foto %>" width="150"></p>
+    <% } %>
+    <% if(pedido.falecido_comprovante){ %>
+      <p><strong>Comprovante Residência:</strong> <a href="/uploads/<%= pedido.falecido_comprovante %>" target="_blank">Ver arquivo</a></p>
+    <% } %>
+  </div>
+
+</div>
