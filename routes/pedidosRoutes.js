@@ -7,7 +7,8 @@ router.use(verificarLogin);
 
 // Mostrar produtos em aberto e pedidos confirmados
 router.get('/', (req, res) => {
-  const userId = req.session.user.id;
+  const user = req.session.user;
+  const userId = user.role === 'admin' ? null : user.id; // admin vê todos
 
   Pedido.getEmAberto(userId, (err, produtos) => {
     if (err) {
@@ -70,9 +71,13 @@ router.post('/finalizar', (req, res) => {
 // Mostrar detalhes de um pedido específico
 router.get('/:id', (req, res) => {
   const pedidoId = req.params.id;
-  const userId = req.session.user.id;
+  const user = req.session.user;
 
-  Pedido.getById(pedidoId, userId, (err, pedido) => {
+  // admin pode ver qualquer pedido, usuário comum só o seu
+  const userId = user.role === 'admin' ? null : user.id;
+
+Pedido.getById(pedidoId, req.session.user.role, req.session.user.id, (err, pedido) => {
+
     if (err) {
       console.error('Erro ao buscar pedido:', err);
       return res.status(500).send('Erro ao buscar pedido.');
@@ -85,6 +90,5 @@ router.get('/:id', (req, res) => {
     res.render('pedidoDetalhes', { pedido });
   });
 });
-
 
 module.exports = router;
