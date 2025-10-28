@@ -14,7 +14,12 @@
       /* bg-marrom-claro */
       margin: 0;
       padding: 0;
+       font-family: 'Arial', sans-serif;
     }
+    .navbar, .navbar * {
+  font-family: inherit; /* ou 'Arial, sans-serif' se quiser definir explicitamente */
+}
+
 
     .servico-section {
       text-align: center;
@@ -226,6 +231,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   </body>
-    <link href="views/layout.ejs" rel="stylesheet">
-  <link href="stylesheets/style.css" rel="stylesheet">
+    
 </html>

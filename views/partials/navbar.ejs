@@ -1,5 +1,25 @@
 <style>
 
+/* Quando passa o mouse (hover) */
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: #ffeede !important;
+    color: #291605 !important;
+  }
+
+  /* Quando clica (active) */
+  .dropdown-item:active {
+    background-color: #291605 !important;
+    color: #fff8eb !important;
+  }
+
+  /* Remove o azul padrão do Bootstrap */
+  .nav-link:focus,
+  .dropdown-item:focus,
+  .dropdown-item:active:focus {
+    box-shadow: none !important;
+    outline: none !important;
+  }
 
 </style>
 
