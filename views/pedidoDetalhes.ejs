@@ -1,4 +1,9 @@
-<%- include('partials/navbarCliente') %>
+<% if (user && user.role === 'admin') { %>
+  <%- include('partials/navbar') %>
+<% } else { %>
+  <%- include('partials/navbarCliente') %>
+<% } %>
+
 
 <style>
 /* === ESTILO DE CARDS E TEXTO === */

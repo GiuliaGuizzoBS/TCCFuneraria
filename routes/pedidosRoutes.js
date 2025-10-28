@@ -87,7 +87,8 @@ Pedido.getById(pedidoId, req.session.user.role, req.session.user.id, (err, pedid
       return res.status(404).send('Pedido não encontrado.');
     }
 
-    res.render('pedidoDetalhes', { pedido });
+  res.render('pedidoDetalhes', { pedido, user });
+
   });
 });
 

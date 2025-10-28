@@ -72,6 +72,75 @@
     form {
       display: inline;
     }
+/* ====== RESPONSIVIDADE ====== */
+@media (max-width: 768px) {
+  .container-form,
+  .usuarios-container,
+  .detalhes-container {
+    padding: 1.2rem;
+    margin: 1rem;
+    max-width: 95%;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+  }
+
+  th, td {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem; /* espaçamento maior entre botões */
+  }
+
+  .btn-marrom,
+  .btn-voltar,
+  .btn-danger,
+  .btn-warning {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 0.5rem; /* adiciona espaço extra */
+  }
+
+  form {
+    width: 100%;
+  }
+
+  input, select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 480px) {
+  h2.titulo-centralizado {
+    font-size: 1.3rem;
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .btn-marrom,
+  .btn-voltar,
+  .btn-danger,
+  .btn-warning {
+    max-width: 100%;
+  }
+}
+
   </style>
 </head>
 

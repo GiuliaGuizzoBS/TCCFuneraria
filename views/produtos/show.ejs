@@ -48,11 +48,11 @@
       padding: 0.6rem 1.2rem;
       font-weight: 500;
       text-decoration: none;
-      width: 120px; /* tamanho padronizado */
-      display: inline-block;
+      width: 120px;
       text-align: center;
       transition: background-color 0.2s;
-      margin: 0 0.3rem;
+      margin: 0.3rem;
+      display: inline-block;
     }
 
     .btn-marrom {
@@ -62,7 +62,6 @@
 
     .btn-marrom:hover {
       background-color: #6a3d13;
-      color: #fff;
     }
 
     .btn-danger {
@@ -81,8 +80,37 @@
     form {
       display: inline;
     }
+
+    /* ===== RESPONSIVIDADE ===== */
+    @media (max-width: 768px) {
+      .detalhes-container {
+        padding: 1.2rem;
+        margin: 1rem;
+      }
+
+      .titulo-centralizado {
+        font-size: 1.3rem;
+      }
+
+      .btn-marrom, .btn-danger {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      p {
+        font-size: 0.95rem;
+      }
+
+      .btn-marrom, .btn-danger {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
+
 
 <%- include('../partials/navbar') %>
 

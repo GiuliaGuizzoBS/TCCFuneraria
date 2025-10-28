@@ -284,9 +284,24 @@ hr{
       color: #2d1a10;
     } */
 
-    
+      /* Remove sublinhado de todos os links e botões do site */
+  a, a:hover, a:focus, a:active {
+    text-decoration: none !important;
+  }
 
-    
+  /* Garante que o cursor de link apareça normal */
+  a, button {
+    cursor: pointer;
+  }
+
+      /* Padroniza todos os botões admin com mesmo tamanho */
+  .btn, button, a.btn {
+    min-width: 130px;   /* largura mínima */
+    height: 40px;       /* altura fixa */
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box; /* garante que padding não quebre a largura */
+  }
   </style>
 </head>
 

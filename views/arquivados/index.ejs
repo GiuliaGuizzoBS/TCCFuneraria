@@ -16,6 +16,53 @@
     td, th { vertical-align:middle !important; color:#57330f; text-align:center; }
     tr:nth-child(even) { background-color:#f3e7d8; }
     tr:hover { background-color:#eeddcc; }
+     /* ====== RESPONSIVIDADE ====== */
+    @media (max-width: 768px) {
+      .arquivados-container {
+        padding: 1.2rem;
+        margin: 1rem;
+        max-width: 95%;
+      }
+
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 10px;
+      }
+
+      th, td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+
+      button, .btn {
+        width: 100%;
+        max-width: 220px;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2.titulo-centralizado {
+        font-size: 1.2rem;
+      }
+
+      th, td {
+        font-size: 0.8rem;
+      }
+
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
   </style>
 </head>
 
