@@ -184,7 +184,8 @@ router.post(
                                   try { await gerarPdfPedido(pedidoId); } 
                                   catch (pdfErr) { console.error("Erro ao gerar PDF:", pdfErr); }
                                   req.session.pedido_id = null;
-                                  res.redirect("/pedidos");
+                                  res.redirect("/pedidos?sucesso=1");
+
                                 });
                               }
                             );

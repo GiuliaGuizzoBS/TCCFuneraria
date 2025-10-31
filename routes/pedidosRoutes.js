@@ -10,6 +10,8 @@ router.get('/', (req, res) => {
   const user = req.session.user;
   const userId = user.role === 'admin' ? null : user.id; // admin vê todos
 
+  const sucesso = req.query.sucesso === '1' ? true : false; // 👈 variável para notificação
+
   Pedido.getEmAberto(userId, (err, produtos) => {
     if (err) {
       console.error('Erro ao carregar pedidos abertos:', err);
@@ -22,7 +24,7 @@ router.get('/', (req, res) => {
         return res.status(500).send('Erro ao carregar pedidos confirmados.');
       }
 
-      res.render('pedidos', { produtos, confirmados });
+      res.render('pedidos', { produtos, confirmados, sucesso }); // 👈 envia pro EJS
     });
   });
 });
@@ -66,30 +68,6 @@ router.post('/remover', (req, res) => {
 // Finalizar pedido → redireciona para o formulário
 router.post('/finalizar', (req, res) => {
   res.redirect('/formulario');
-});
-
-// Mostrar detalhes de um pedido específico
-router.get('/:id', (req, res) => {
-  const pedidoId = req.params.id;
-  const user = req.session.user;
-
-  // admin pode ver qualquer pedido, usuário comum só o seu
-  const userId = user.role === 'admin' ? null : user.id;
-
-Pedido.getById(pedidoId, req.session.user.role, req.session.user.id, (err, pedido) => {
-
-    if (err) {
-      console.error('Erro ao buscar pedido:', err);
-      return res.status(500).send('Erro ao buscar pedido.');
-    }
-
-    if (!pedido) {
-      return res.status(404).send('Pedido não encontrado.');
-    }
-
-  res.render('pedidoDetalhes', { pedido, user });
-
-  });
 });
 
 module.exports = router;
