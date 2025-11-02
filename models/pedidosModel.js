@@ -77,90 +77,95 @@ class Pedido {
   }
 
   // 🔹 Buscar pedidos confirmados com todos os detalhes
-  static getConfirmados(usuario_id, callback) {
-    const sql = `
-      SELECT 
-        pe.id AS pedido_id,
-        pe.status,
-        pe.criado_em,
-        c.cliente,
-        c.data,
-        c.valor,
-        c.forma_de_pagamento,
+static getConfirmados(callback) {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
 
-        f.cremacao,
-        f.horario,
-        f.translado,
+      c.cliente,
+      c.data,
+      c.valor,
+      c.forma_de_pagamento,
 
-        n.roupa,
-        n.r_intimas,
-        n.batom,
-        n.unha,
-        n.observacao,
-        n.intensidade,
-        n.cabelo,
+      f.cremacao,
+      f.horario,
+      f.translado,
 
-        l.embacamento,
-        l.tanatopraxia,
-        l.aspiracao,
-        l.restauracao,
-        l.mumificacao,
-        l.higienizacao,
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
 
-        ca.cortina,
-        ca.tapete,
-        ca.livropre,
-        ca.veleiro,
-        ca.cristo,
-        ca.biblia,
-        ca.cavalete,
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
 
-        e.numero,
-        e.rua,
-        e.bairro,
-        e.cidade,
-        e.estado,
-        e.pais,
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
 
-        GROUP_CONCAT(DISTINCT CONCAT(p.nome, ' (', pp.quantidade, ')') SEPARATOR ', ') AS produtos
-      FROM pedidos pe
-      LEFT JOIN contrata c ON c.pedido_id = pe.id
-      LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
-      LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
-      LEFT JOIN laboratorio l ON l.id = f.laboratorio
-      LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
-      LEFT JOIN endereco e ON e.id = f.endereco_id
-      LEFT JOIN pedido_produtos pp ON pp.pedido_id = pe.id
-      LEFT JOIN produtos p ON p.id = pp.produto_id
-      WHERE pe.usuario_id = ? AND pe.status = 'finalizado'
-      GROUP BY 
-        pe.id, pe.status, pe.criado_em, 
-        c.cliente, c.data, c.valor, c.forma_de_pagamento,
-        f.cremacao, f.horario, f.translado,
-        n.roupa, n.r_intimas, n.batom, n.unha, n.observacao, n.intensidade, n.cabelo,
-        l.embacamento, l.tanatopraxia, l.aspiracao, l.restauracao, l.mumificacao, l.higienizacao,
-        ca.cortina, ca.tapete, ca.livropre, ca.veleiro, ca.cristo, ca.biblia, ca.cavalete,
-        e.numero, e.rua, e.bairro, e.cidade, e.estado, e.pais
-      ORDER BY pe.criado_em DESC
-    `;
-    db.query(sql, [usuario_id], callback);
-  }
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
 
-  // 🔹 Atualizar status do pedido
-  static atualizarStatus(pedido_id, status, callback) {
-    db.query(
-      'UPDATE pedidos SET status = ? WHERE id = ?',
-      [status, pedido_id],
-      callback
-    );
-  }
+      fa.nome AS falecido_nome,
+      fa.idade AS falecido_idade,
+      fa.cpf AS falecido_cpf,
+      fa.rg AS falecido_rg,
+      fa.data_falecimento AS falecido_data,
+      fa.local_falecimento AS falecido_local,
+      fa.foto AS falecido_foto,
+      fa.comprovante_residencia AS falecido_comprovante,
+
+      -- produtos via subquery
+      (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS produtos,
+
+      -- valor total via subquery
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS valor_total
+
+    FROM pedidos pe
+    LEFT JOIN contrata c ON c.pedido_id = pe.id
+    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
+    LEFT JOIN falecido fa ON fa.id = f.falecido_id
+    WHERE pe.status = 'finalizado'
+    ORDER BY pe.criado_em DESC
+  `;
+  db.query(sql, callback);
+}
+
+
+
 
   // 🔹 Buscar um pedido específico (usuário normal ou admin)
 static getById(pedidoId, userRole, userId, callback) {
   const params = [pedidoId];
   let userFilter = '';
 
-  // Se não for admin, limita ao usuário logado
   if (userRole !== 'admin') {
     userFilter = 'AND pe.usuario_id = ?';
     params.push(userId);
@@ -172,7 +177,7 @@ static getById(pedidoId, userRole, userId, callback) {
       pe.status,
       pe.criado_em,
 
-      -- Dados do contrato (se houver)
+      -- Dados do contrato
       c.cliente,
       c.data,
       c.valor,
@@ -183,7 +188,41 @@ static getById(pedidoId, userRole, userId, callback) {
       f.horario,
       f.translado,
 
-      -- Dados do falecido
+      -- Necromaquiagem
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
+
+      -- Laboratório
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
+
+      -- Cama Ardente
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
+
+      -- Endereço
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
+
+      -- Falecido
       fa.id AS falecido_id,
       fa.nome AS falecido_nome,
       fa.idade AS falecido_idade,
@@ -194,25 +233,28 @@ static getById(pedidoId, userRole, userId, callback) {
       fa.foto AS falecido_foto,
       fa.comprovante_residencia AS falecido_comprovante,
 
-      -- Lista de produtos do pedido
+      -- Produtos concatenados
       (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
        FROM pedido_produtos pp2
-       JOIN produtos p2 ON p2.id = pp2.produto_id
+       JOIN produtos p2 ON pp2.produto_id = p2.id
        WHERE pp2.pedido_id = pe.id
       ) AS produtos,
 
-      -- Valor total = soma de todos os produtos + 1000
-      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco), 0) + 1000
+      -- Valor total
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + IFNULL(c.valor,0)
        FROM pedido_produtos pp2
-       JOIN produtos p2 ON p2.id = pp2.produto_id
+       JOIN produtos p2 ON pp2.produto_id = p2.id
        WHERE pp2.pedido_id = pe.id
       ) AS valor_total
 
     FROM pedidos pe
     LEFT JOIN contrata c ON c.pedido_id = pe.id
     LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
     LEFT JOIN falecido fa ON fa.id = f.falecido_id
-
     WHERE pe.id = ? ${userFilter};
   `;
 
@@ -226,126 +268,173 @@ static getById(pedidoId, userRole, userId, callback) {
 
 
 
-  // 🔹 Retorna todos os pedidos finalizados (admin)
-  static getTodos(callback) {
-    const sql = `
-      SELECT 
-        pe.id AS pedido_id,
-        pe.status,
-        pe.criado_em,
-        c.cliente,
-        c.data,
-        c.valor,
-        c.forma_de_pagamento,
-        f.cremacao,
-        f.horario,
-        f.translado,
-        n.roupa,
-        n.r_intimas,
-        n.batom,
-        n.unha,
-        n.observacao,
-        n.intensidade,
-        n.cabelo,
-        l.embacamento,
-        l.tanatopraxia,
-        l.aspiracao,
-        l.restauracao,
-        l.mumificacao,
-        l.higienizacao,
-        ca.cortina,
-        ca.tapete,
-        ca.livropre,
-        ca.veleiro,
-        ca.cristo,
-        ca.biblia,
-        ca.cavalete,
-        e.numero,
-        e.rua,
-        e.bairro,
-        e.cidade,
-        e.estado,
-        e.pais
-      FROM pedidos pe
-      LEFT JOIN contrata c ON c.pedido_id = pe.id
-      LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
-      LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
-      LEFT JOIN laboratorio l ON l.id = f.laboratorio
-      LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
-      LEFT JOIN endereco e ON e.id = f.endereco_id
-      WHERE pe.status = 'finalizado'
-      ORDER BY pe.criado_em DESC
-    `;
 
-    db.query(sql, (err, results) => {
-      if (err) {
-        console.error('Erro SQL em getTodos:', err);
-        return callback(err);
-      }
-      callback(null, results);
-    });
-  }
+  // 🔹 Retorna todos os pedidos finalizados (admin) sem duplicação
+static getTodos(callback) {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
+      c.cliente,
+      c.data,
+      c.valor,
+      c.forma_de_pagamento,
+      f.cremacao,
+      f.horario,
+      f.translado,
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
+      fa.nome AS falecido_nome,
+      fa.idade AS falecido_idade,
+      fa.cpf AS falecido_cpf,
+      fa.rg AS falecido_rg,
+      fa.data_falecimento AS falecido_data,
+      fa.local_falecimento AS falecido_local,
+      fa.foto AS falecido_foto,
+      fa.comprovante_residencia AS falecido_comprovante,
+      -- subquery produtos
+      (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS produtos,
+      -- subquery valor total
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS valor_total
+    FROM pedidos pe
+    LEFT JOIN contrata c ON c.pedido_id = pe.id
+    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
+    LEFT JOIN falecido fa ON fa.id = f.falecido_id
+    WHERE pe.status = 'finalizado'
+    ORDER BY pe.criado_em DESC
+  `;
+  db.query(sql, callback);
+}
 
-  // 🔹 Retorna todos os detalhes de um pedido específico (admin)
-  static getByIdAdmin(pedidoId, callback) {
-    const sql = `
-      SELECT 
-        pe.id AS pedido_id,
-        pe.status,
-        pe.criado_em,
-        c.cliente,
-        c.data,
-        c.valor,
-        c.forma_de_pagamento,
-        f.cremacao,
-        f.horario,
-        f.translado,
-        n.roupa,
-        n.r_intimas,
-        n.batom,
-        n.unha,
-        n.observacao,
-        n.intensidade,
-        n.cabelo,
-        l.embacamento,
-        l.tanatopraxia,
-        l.aspiracao,
-        l.restauracao,
-        l.mumificacao,
-        l.higienizacao,
-        ca.cortina,
-        ca.tapete,
-        ca.livropre,
-        ca.veleiro,
-        ca.cristo,
-        ca.biblia,
-        ca.cavalete,
-        e.numero,
-        e.rua,
-        e.bairro,
-        e.cidade,
-        e.estado,
-        e.pais,
-        f.falecido_id
-      FROM pedidos pe
-      LEFT JOIN contrata c ON c.pedido_id = pe.id
-      LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
-      LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
-      LEFT JOIN laboratorio l ON l.id = f.laboratorio
-      LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
-      LEFT JOIN endereco e ON e.id = f.endereco_id
-      WHERE pe.id = ?
-    `;
 
-    db.query(sql, [pedidoId], (err, results) => {
-      if (err) {
-        console.error('Erro SQL em getByIdAdmin:', err);
-        return callback(err);
-      }
-      if (results.length === 0) return callback(null, null);
-      callback(null, results[0]);
-    });
-  }
+  // 🔹 Retorna detalhes de um pedido específico (admin) sem duplicação
+static getByIdAdmin(pedidoId, callback) {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
+
+      -- Contrata
+      c.cliente,
+      c.data,
+      c.valor,
+      c.forma_de_pagamento,
+
+      -- Formulário
+      f.cremacao,
+      f.horario,
+      f.translado,
+
+      -- Necromaquiagem
+      n.roupa,
+      n.r_intimas,
+      n.batom,
+      n.unha,
+      n.observacao,
+      n.intensidade,
+      n.cabelo,
+
+      -- Laboratório
+      l.embacamento,
+      l.tanatopraxia,
+      l.aspiracao,
+      l.restauracao,
+      l.mumificacao,
+      l.higienizacao,
+
+      -- Cama Ardente
+      ca.cortina,
+      ca.tapete,
+      ca.livropre,
+      ca.veleiro,
+      ca.cristo,
+      ca.biblia,
+      ca.cavalete,
+
+      -- Endereço
+      e.numero,
+      e.rua,
+      e.bairro,
+      e.cidade,
+      e.estado,
+      e.pais,
+
+      -- Falecido
+      fa.nome AS falecido_nome,
+      fa.idade AS falecido_idade,
+      fa.cpf AS falecido_cpf,
+      fa.rg AS falecido_rg,
+      fa.data_falecimento AS falecido_data,
+      fa.local_falecimento AS falecido_local,
+      fa.foto AS falecido_foto,
+      fa.comprovante_residencia AS falecido_comprovante,
+
+      -- Produtos (concatena todos os produtos em uma linha)
+      (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON p2.id = pp2.produto_id
+       WHERE pp2.pedido_id = pe.id
+      ) AS produtos,
+
+      -- Valor total = soma de todos os produtos + 1000
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON p2.id = pp2.produto_id
+       WHERE pp2.pedido_id = pe.id
+      ) AS valor_total
+
+    FROM pedidos pe
+    LEFT JOIN contrata c ON c.pedido_id = pe.id
+    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
+    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
+    LEFT JOIN laboratorio l ON l.id = f.laboratorio
+    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
+    LEFT JOIN endereco e ON e.id = f.endereco_id
+    LEFT JOIN falecido fa ON fa.id = f.falecido_id
+    WHERE pe.id = ?
+  `;
+  db.query(sql, [pedidoId], (err, results) => {
+    if (err) return callback(err);
+    if (results.length === 0) return callback(null, null);
+    callback(null, results[0]);
+  });
+}
 }
 
 module.exports = Pedido;

@@ -50,9 +50,9 @@
 
   <div class="card-detalhes">
     <h5>Informações do Pedido</h5>
-    <p><strong>ID do Pedido:</strong> <%= pedido.pedido_id %></p>
+   
     <p><strong>Data do Pedido:</strong> <%= new Date(pedido.criado_em).toLocaleDateString() %></p>
-    <p><strong>Status:</strong> <%= pedido.status %></p>
+    
     <p><strong>Cliente:</strong> <%= pedido.cliente %></p>
     <p><strong>Forma de Pagamento:</strong> <%= pedido.forma_de_pagamento %></p>
     <p><strong>Valor:</strong> R$ <%= Number(pedido.valor_total).toFixed(2) %></p>
@@ -67,7 +67,7 @@
   <div class="card-detalhes">
     <h5>Serviço Funerário</h5>
     <p><strong>Cremacao:</strong> <%= pedido.cremacao ? "Sim" : "Não" %></p>
-    <p><strong>Horário:</strong> <%= pedido.horario %></p>
+   
     <p><strong>Translado:</strong> <%= pedido.translado %></p>
   </div>
 

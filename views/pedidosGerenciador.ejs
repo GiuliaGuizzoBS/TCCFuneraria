@@ -32,8 +32,8 @@
         <h5 class="texto-marrom">
           <%= new Date(p.criado_em).toLocaleDateString() %> — <%= p.cliente %>
         </h5>
-        <p><strong>Status:</strong> <%= p.status %></p>
-       <a href="/pedidos/<%= p.pedido_id %>" class="btn btn-marrom">Vizualizar</a>
+       
+       <a href="/pedidos/<%= p.pedido_id %>" class="btn btn-marrom">Visualizar</a>
       </div>
     <% }) %>
   <% } else { %>
