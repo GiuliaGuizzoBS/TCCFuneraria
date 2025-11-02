@@ -77,6 +77,7 @@ class Pedido {
   }
 
   // 🔹 Buscar pedidos confirmados com todos os detalhes
+// 🔹 Buscar pedidos confirmados com todos os detalhes (sem duplicação)
 static getConfirmados(callback) {
   const sql = `
     SELECT 
@@ -84,53 +85,53 @@ static getConfirmados(callback) {
       pe.status,
       pe.criado_em,
 
-      c.cliente,
-      c.data,
-      c.valor,
-      c.forma_de_pagamento,
+      MAX(c.cliente) AS cliente,
+      MAX(c.data) AS data,
+      MAX(c.valor) AS valor,
+      MAX(c.forma_de_pagamento) AS forma_de_pagamento,
 
-      f.cremacao,
-      f.horario,
-      f.translado,
+      MAX(f.cremacao) AS cremacao,
+      MAX(f.horario) AS horario,
+      MAX(f.translado) AS translado,
 
-      n.roupa,
-      n.r_intimas,
-      n.batom,
-      n.unha,
-      n.observacao,
-      n.intensidade,
-      n.cabelo,
+      MAX(n.roupa) AS roupa,
+      MAX(n.r_intimas) AS r_intimas,
+      MAX(n.batom) AS batom,
+      MAX(n.unha) AS unha,
+      MAX(n.observacao) AS observacao,
+      MAX(n.intensidade) AS intensidade,
+      MAX(n.cabelo) AS cabelo,
 
-      l.embacamento,
-      l.tanatopraxia,
-      l.aspiracao,
-      l.restauracao,
-      l.mumificacao,
-      l.higienizacao,
+      MAX(l.embacamento) AS embacamento,
+      MAX(l.tanatopraxia) AS tanatopraxia,
+      MAX(l.aspiracao) AS aspiracao,
+      MAX(l.restauracao) AS restauracao,
+      MAX(l.mumificacao) AS mumificacao,
+      MAX(l.higienizacao) AS higienizacao,
 
-      ca.cortina,
-      ca.tapete,
-      ca.livropre,
-      ca.veleiro,
-      ca.cristo,
-      ca.biblia,
-      ca.cavalete,
+      MAX(ca.cortina) AS cortina,
+      MAX(ca.tapete) AS tapete,
+      MAX(ca.livropre) AS livropre,
+      MAX(ca.veleiro) AS veleiro,
+      MAX(ca.cristo) AS cristo,
+      MAX(ca.biblia) AS biblia,
+      MAX(ca.cavalete) AS cavalete,
 
-      e.numero,
-      e.rua,
-      e.bairro,
-      e.cidade,
-      e.estado,
-      e.pais,
+      MAX(e.numero) AS numero,
+      MAX(e.rua) AS rua,
+      MAX(e.bairro) AS bairro,
+      MAX(e.cidade) AS cidade,
+      MAX(e.estado) AS estado,
+      MAX(e.pais) AS pais,
 
-      fa.nome AS falecido_nome,
-      fa.idade AS falecido_idade,
-      fa.cpf AS falecido_cpf,
-      fa.rg AS falecido_rg,
-      fa.data_falecimento AS falecido_data,
-      fa.local_falecimento AS falecido_local,
-      fa.foto AS falecido_foto,
-      fa.comprovante_residencia AS falecido_comprovante,
+      MAX(fa.nome) AS falecido_nome,
+      MAX(fa.idade) AS falecido_idade,
+      MAX(fa.cpf) AS falecido_cpf,
+      MAX(fa.rg) AS falecido_rg,
+      MAX(fa.data_falecimento) AS falecido_data,
+      MAX(fa.local_falecimento) AS falecido_local,
+      MAX(fa.foto) AS falecido_foto,
+      MAX(fa.comprovante_residencia) AS falecido_comprovante,
 
       -- produtos via subquery
       (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
@@ -139,7 +140,7 @@ static getConfirmados(callback) {
        WHERE pp2.pedido_id = pe.id) AS produtos,
 
       -- valor total via subquery
-      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + MAX(c.valor)
        FROM pedido_produtos pp2
        JOIN produtos p2 ON pp2.produto_id = p2.id
        WHERE pp2.pedido_id = pe.id) AS valor_total
@@ -153,9 +154,15 @@ static getConfirmados(callback) {
     LEFT JOIN endereco e ON e.id = f.endereco_id
     LEFT JOIN falecido fa ON fa.id = f.falecido_id
     WHERE pe.status = 'finalizado'
+    GROUP BY pe.id
     ORDER BY pe.criado_em DESC
   `;
   db.query(sql, callback);
+}
+
+// 🔹 Retorna todos os pedidos finalizados (admin) sem duplicação
+static getTodos(callback) {
+  return this.getConfirmados(callback); // podemos reutilizar o mesmo SQL, evita duplicação de código
 }
 
 
@@ -270,79 +277,16 @@ static getById(pedidoId, userRole, userId, callback) {
 
 
   // 🔹 Retorna todos os pedidos finalizados (admin) sem duplicação
+// 🔹 Retorna todos os pedidos finalizados (admin) sem duplicação
 static getTodos(callback) {
-  const sql = `
-    SELECT 
-      pe.id AS pedido_id,
-      pe.status,
-      pe.criado_em,
-      c.cliente,
-      c.data,
-      c.valor,
-      c.forma_de_pagamento,
-      f.cremacao,
-      f.horario,
-      f.translado,
-      n.roupa,
-      n.r_intimas,
-      n.batom,
-      n.unha,
-      n.observacao,
-      n.intensidade,
-      n.cabelo,
-      l.embacamento,
-      l.tanatopraxia,
-      l.aspiracao,
-      l.restauracao,
-      l.mumificacao,
-      l.higienizacao,
-      ca.cortina,
-      ca.tapete,
-      ca.livropre,
-      ca.veleiro,
-      ca.cristo,
-      ca.biblia,
-      ca.cavalete,
-      e.numero,
-      e.rua,
-      e.bairro,
-      e.cidade,
-      e.estado,
-      e.pais,
-      fa.nome AS falecido_nome,
-      fa.idade AS falecido_idade,
-      fa.cpf AS falecido_cpf,
-      fa.rg AS falecido_rg,
-      fa.data_falecimento AS falecido_data,
-      fa.local_falecimento AS falecido_local,
-      fa.foto AS falecido_foto,
-      fa.comprovante_residencia AS falecido_comprovante,
-      -- subquery produtos
-      (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
-       FROM pedido_produtos pp2
-       JOIN produtos p2 ON pp2.produto_id = p2.id
-       WHERE pp2.pedido_id = pe.id) AS produtos,
-      -- subquery valor total
-      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
-       FROM pedido_produtos pp2
-       JOIN produtos p2 ON pp2.produto_id = p2.id
-       WHERE pp2.pedido_id = pe.id) AS valor_total
-    FROM pedidos pe
-    LEFT JOIN contrata c ON c.pedido_id = pe.id
-    LEFT JOIN formulario f ON f.usuario_id = pe.usuario_id
-    LEFT JOIN necromaquiagem n ON n.id = f.necromaquiagem
-    LEFT JOIN laboratorio l ON l.id = f.laboratorio
-    LEFT JOIN cama_ardente ca ON ca.id = f.cama_ardente
-    LEFT JOIN endereco e ON e.id = f.endereco_id
-    LEFT JOIN falecido fa ON fa.id = f.falecido_id
-    WHERE pe.status = 'finalizado'
-    ORDER BY pe.criado_em DESC
-  `;
-  db.query(sql, callback);
+  // Reutiliza o mesmo SQL de getConfirmados para evitar duplicação de código
+  this.getConfirmados(callback);
 }
 
 
+
   // 🔹 Retorna detalhes de um pedido específico (admin) sem duplicação
+// 🔹 Retorna detalhes de um pedido específico (admin) sem duplicação
 static getByIdAdmin(pedidoId, callback) {
   const sql = `
     SELECT 
@@ -350,74 +294,65 @@ static getByIdAdmin(pedidoId, callback) {
       pe.status,
       pe.criado_em,
 
-      -- Contrata
-      c.cliente,
-      c.data,
-      c.valor,
-      c.forma_de_pagamento,
+      MAX(c.cliente) AS cliente,
+      MAX(c.data) AS data,
+      MAX(c.valor) AS valor,
+      MAX(c.forma_de_pagamento) AS forma_de_pagamento,
 
-      -- Formulário
-      f.cremacao,
-      f.horario,
-      f.translado,
+      MAX(f.cremacao) AS cremacao,
+      MAX(f.horario) AS horario,
+      MAX(f.translado) AS translado,
 
-      -- Necromaquiagem
-      n.roupa,
-      n.r_intimas,
-      n.batom,
-      n.unha,
-      n.observacao,
-      n.intensidade,
-      n.cabelo,
+      MAX(n.roupa) AS roupa,
+      MAX(n.r_intimas) AS r_intimas,
+      MAX(n.batom) AS batom,
+      MAX(n.unha) AS unha,
+      MAX(n.observacao) AS observacao,
+      MAX(n.intensidade) AS intensidade,
+      MAX(n.cabelo) AS cabelo,
 
-      -- Laboratório
-      l.embacamento,
-      l.tanatopraxia,
-      l.aspiracao,
-      l.restauracao,
-      l.mumificacao,
-      l.higienizacao,
+      MAX(l.embacamento) AS embacamento,
+      MAX(l.tanatopraxia) AS tanatopraxia,
+      MAX(l.aspiracao) AS aspiracao,
+      MAX(l.restauracao) AS restauracao,
+      MAX(l.mumificacao) AS mumificacao,
+      MAX(l.higienizacao) AS higienizacao,
 
-      -- Cama Ardente
-      ca.cortina,
-      ca.tapete,
-      ca.livropre,
-      ca.veleiro,
-      ca.cristo,
-      ca.biblia,
-      ca.cavalete,
+      MAX(ca.cortina) AS cortina,
+      MAX(ca.tapete) AS tapete,
+      MAX(ca.livropre) AS livropre,
+      MAX(ca.veleiro) AS veleiro,
+      MAX(ca.cristo) AS cristo,
+      MAX(ca.biblia) AS biblia,
+      MAX(ca.cavalete) AS cavalete,
 
-      -- Endereço
-      e.numero,
-      e.rua,
-      e.bairro,
-      e.cidade,
-      e.estado,
-      e.pais,
+      MAX(e.numero) AS numero,
+      MAX(e.rua) AS rua,
+      MAX(e.bairro) AS bairro,
+      MAX(e.cidade) AS cidade,
+      MAX(e.estado) AS estado,
+      MAX(e.pais) AS pais,
 
-      -- Falecido
-      fa.nome AS falecido_nome,
-      fa.idade AS falecido_idade,
-      fa.cpf AS falecido_cpf,
-      fa.rg AS falecido_rg,
-      fa.data_falecimento AS falecido_data,
-      fa.local_falecimento AS falecido_local,
-      fa.foto AS falecido_foto,
-      fa.comprovante_residencia AS falecido_comprovante,
+      MAX(fa.nome) AS falecido_nome,
+      MAX(fa.idade) AS falecido_idade,
+      MAX(fa.cpf) AS falecido_cpf,
+      MAX(fa.rg) AS falecido_rg,
+      MAX(fa.data_falecimento) AS falecido_data,
+      MAX(fa.local_falecimento) AS falecido_local,
+      MAX(fa.foto) AS falecido_foto,
+      MAX(fa.comprovante_residencia) AS falecido_comprovante,
 
-      -- Produtos (concatena todos os produtos em uma linha)
+      -- produtos concatenados
       (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')
        FROM pedido_produtos pp2
-       JOIN produtos p2 ON p2.id = pp2.produto_id
-       WHERE pp2.pedido_id = pe.id
-      ) AS produtos,
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS produtos,
 
-      -- Valor total = soma de todos os produtos + 1000
-      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + 1000
+      -- valor total
+      (SELECT IFNULL(SUM(pp2.quantidade * p2.preco),0) + MAX(c.valor)
        FROM pedido_produtos pp2
-       JOIN produtos p2 ON p2.id = pp2.produto_id
-       WHERE pp2.pedido_id = pe.id
-      ) AS valor_total
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id) AS valor_total
 
     FROM pedidos pe
     LEFT JOIN contrata c ON c.pedido_id = pe.id
@@ -428,6 +363,7 @@ static getByIdAdmin(pedidoId, callback) {
     LEFT JOIN endereco e ON e.id = f.endereco_id
     LEFT JOIN falecido fa ON fa.id = f.falecido_id
     WHERE pe.id = ?
+    GROUP BY pe.id
   `;
   db.query(sql, [pedidoId], (err, results) => {
     if (err) return callback(err);
