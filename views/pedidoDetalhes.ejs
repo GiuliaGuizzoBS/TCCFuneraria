@@ -55,7 +55,8 @@
     <p><strong>Status:</strong> <%= pedido.status %></p>
     <p><strong>Cliente:</strong> <%= pedido.cliente %></p>
     <p><strong>Forma de Pagamento:</strong> <%= pedido.forma_de_pagamento %></p>
-    <p><strong>Valor:</strong> R$ <%= Number(pedido.valor).toFixed(2) %></p>
+    <p><strong>Valor:</strong> R$ <%= Number(pedido.valor_total).toFixed(2) %></p>
+
   </div>
 
   <div class="card-detalhes">
@@ -112,14 +113,22 @@
     <p><strong>Idade:</strong> <%= pedido.falecido_idade %></p>
     <p><strong>CPF:</strong> <%= pedido.falecido_cpf %></p>
     <p><strong>RG:</strong> <%= pedido.falecido_rg %></p>
-    <p><strong>Data Falecimento:</strong> <%= pedido.falecido_data_falecimento %></p>
-    <p><strong>Local Falecimento:</strong> <%= pedido.falecido_local_falecimento %></p>
-    <% if(pedido.falecido_foto){ %>
-      <p><strong>Foto:</strong> <img src="/uploads/<%= pedido.falecido_foto %>" width="150"></p>
-    <% } %>
-    <% if(pedido.falecido_comprovante){ %>
-      <p><strong>Comprovante Residência:</strong> <a href="/uploads/<%= pedido.falecido_comprovante %>" target="_blank">Ver arquivo</a></p>
-    <% } %>
+    <p><strong>Data Falecimento:</strong> 
+  <%= pedido.falecido_data_falecimento 
+      ? new Date(pedido.falecido_data_falecimento).toLocaleDateString('pt-BR') 
+      : 'Não informada' %>
+</p>
+
+<p><strong>Local Falecimento:</strong> <%= pedido.falecido_local %></p>
+
+    <% if (pedido.falecido_foto) { %>
+  <p><strong>Foto:</strong> <img src="/uploads/<%= pedido.falecido_foto %>" width="150"></p>
+<% } %>
+
+<% if (pedido.falecido_comprovante) { %>
+  <p><strong>Comprovante Residência:</strong> <a href="/uploads/<%= pedido.falecido_comprovante %>" target="_blank">Ver arquivo</a></p>
+<% } %>
+
   </div>
 
 </div>
