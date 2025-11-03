@@ -341,6 +341,10 @@ static getByIdAdmin(pedidoId, callback) {
       MAX(fa.local_falecimento) AS falecido_local,
       MAX(fa.foto) AS falecido_foto,
       MAX(fa.comprovante_residencia) AS falecido_comprovante,
+      MAX(c.numero_cliente) AS numero_cliente,
+MAX(c.cpf_cliente) AS cpf_cliente,
+MAX(c.rg_cliente) AS rg_cliente,
+
 
       -- produtos concatenados
       (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')') SEPARATOR ', ')

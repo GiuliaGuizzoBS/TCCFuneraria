@@ -54,7 +54,12 @@
     <p><strong>Data do Pedido:</strong> <%= new Date(pedido.criado_em).toLocaleDateString() %></p>
     
     <p><strong>Cliente:</strong> <%= pedido.cliente %></p>
-    <p><strong>Forma de Pagamento:</strong> <%= pedido.forma_de_pagamento %></p>
+
+
+<p><strong>Número:</strong> <%= pedido.numero_cliente %></p>
+<p><strong>CPF:</strong> <%= pedido.cpf_cliente %></p>
+<p><strong>RG:</strong> <%= pedido.rg_cliente %></p>
+<p><strong>Forma de Pagamento:</strong> <%= pedido.forma_de_pagamento %></p>
     <p><strong>Valor:</strong> R$ <%= Number(pedido.valor_total).toFixed(2) %></p>
 
   </div>
