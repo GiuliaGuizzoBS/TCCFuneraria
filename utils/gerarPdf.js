@@ -42,7 +42,7 @@ async function gerarPdfPedido(pedidoId) {
       // Cabeçalho
       doc.fontSize(20).text("Comprovante de Pedido", { align: "center" });
       doc.moveDown(1);
-      doc.fontSize(14).text("Funerária Elolia", { align: "center" });
+      doc.fontSize(14).text("Funerária Menino Deus", { align: "center" });
       doc.moveDown(2);
 
       // Dados do pedido

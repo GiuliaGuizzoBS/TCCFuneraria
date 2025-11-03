@@ -41,13 +41,21 @@ const User = {
         });
     },
 
-    getAll: (callback) => {
-        const query = 'SELECT * FROM users';
-        db.query(query, (err, results) => {
-            if (err) return callback(err);
-            callback(null, results);
-        });
-    }
+   getAll: (callback) => {
+    const query = `
+      SELECT u.*
+      FROM users u
+      LEFT JOIN arquivados a 
+        ON a.alvo_id = u.id AND a.tipo = 'usuario'
+      WHERE a.id IS NULL
+      ORDER BY u.id DESC
+    `;
+    db.query(query, (err, results) => {
+        if (err) return callback(err);
+        callback(null, results);
+    });
+},
+
 };
         findById: (id, callback) => {
     const query = 'SELECT * FROM users WHERE id = ?';

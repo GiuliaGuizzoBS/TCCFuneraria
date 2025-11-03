@@ -1,5 +1,44 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
+// controllers/usersController.js
+const db = require('../config/db');
+
+
+exports.index = (req, res) => {
+  const sql = `
+    SELECT * FROM users
+    WHERE id NOT IN (
+      SELECT alvo_id FROM arquivados WHERE tipo = 'usuario'
+    )
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Erro ao listar usuários:', err);
+      return res.status(500).send('Erro ao listar usuários');
+    }
+
+    res.render('users/index', { users: results });
+  });
+};
+exports.listar = (req, res) => {
+  const sql = `
+    SELECT *
+    FROM users
+    WHERE id NOT IN (
+      SELECT alvo_id FROM arquivados WHERE tipo = 'usuario'
+    )
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Erro ao listar usuários:', err);
+      return res.status(500).send('Erro ao listar usuários');
+    }
+    res.render('users/index', { users: results });
+  });
+};
+
 
 const userController = {
   createUser: async (req, res) => {
@@ -21,6 +60,8 @@ const userController = {
     }
   },
 
+  
+
   getUserById: (req, res) => {
     const userId = req.params.id;
     User.findById(userId, (err, user) => {
@@ -29,6 +70,8 @@ const userController = {
       res.render('users/show', { user });
     });
   },
+
+  
 
   getAllUsers: (req, res) => {
     User.getAll((err, users) => {
@@ -69,6 +112,7 @@ const userController = {
       res.status(500).json({ error: 'Erro ao atualizar usuário' });
     }
   },
+  
 
   deleteUser: (req, res) => {
     const userId = req.params.id;

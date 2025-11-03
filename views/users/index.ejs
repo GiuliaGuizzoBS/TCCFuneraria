@@ -65,7 +65,7 @@
       padding: 0.6rem 1.2rem;
       font-weight: 500;
       text-decoration: none;
-      width: 120px; /* tamanho padronizado */
+      width: 120px;
       display: inline-block;
       text-align: center;
       transition: background-color 0.2s;
@@ -97,76 +97,75 @@
     .text-center {
       text-align: center;
     }
-/* ====== RESPONSIVIDADE ====== */
-@media (max-width: 768px) {
-  .container-form,
-  .usuarios-container,
-  .detalhes-container {
-    padding: 1.2rem;
-    margin: 1rem;
-    max-width: 95%;
-  }
 
-  table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 10px;
-  }
+    /* ====== RESPONSIVIDADE ====== */
+    @media (max-width: 768px) {
+      .container-form,
+      .usuarios-container,
+      .detalhes-container {
+        padding: 1.2rem;
+        margin: 1rem;
+        max-width: 95%;
+      }
 
-  th, td {
-    padding: 0.6rem;
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
+      table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 10px;
+      }
 
-  .button-group {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.8rem; /* espaçamento maior entre botões */
-  }
+      th, td {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
 
-  .btn-marrom,
-  .btn-voltar,
-  .btn-danger,
-  .btn-warning {
-    width: 100%;
-    max-width: 250px;
-    margin-bottom: 0.5rem; /* adiciona espaço extra */
-  }
+      .button-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
 
-  form {
-    width: 100%;
-  }
+      .btn-marrom,
+      .btn-voltar,
+      .btn-danger,
+      .btn-warning {
+        width: 100%;
+        max-width: 250px;
+        margin-bottom: 0.5rem;
+      }
 
-  input, select {
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
+      form {
+        width: 100%;
+      }
 
-@media (max-width: 480px) {
-  h2.titulo-centralizado {
-    font-size: 1.3rem;
-  }
+      input, select {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
 
-  label {
-    font-size: 0.9rem;
-  }
+    @media (max-width: 480px) {
+      h2.titulo-centralizado {
+        font-size: 1.3rem;
+      }
 
-  p {
-    font-size: 0.9rem;
-  }
+      label {
+        font-size: 0.9rem;
+      }
 
-  .btn-marrom,
-  .btn-voltar,
-  .btn-danger,
-  .btn-warning {
-    max-width: 100%;
-  }
-}
+      p {
+        font-size: 0.9rem;
+      }
 
-
+      .btn-marrom,
+      .btn-voltar,
+      .btn-danger,
+      .btn-warning {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 
@@ -192,8 +191,12 @@
             <div class="button-group">
               <a href="/users/<%= user.id %>" class="btn-marrom">View</a>
               <a href="/users/<%= user.id %>/edit" class="btn-marrom">Edit</a>
-              
-             
+
+              <!-- ✅ Botão Arquivar (exatamente igual ao de produtos) -->
+              <form action="/arquivados/arquivar" method="POST">
+                <input type="hidden" name="tipo" value="usuario">
+                <input type="hidden" name="alvo_id" value="<%= user.id %>">
+                <button type="submit" class="btn-danger">Arquivar</button>
               </form>
             </div>
           </td>
@@ -220,7 +223,7 @@
               <div class="button-group">
                 <a href="/users/${user.id}" class="btn-marrom">View</a>
                 <a href="/users/${user.id}/edit" class="btn-marrom">Edit</a>
-                <form action="/arquivados/arquivar" method="POST" style="display:inline;">
+                <form action="/arquivados/arquivar" method="POST">
                   <input type="hidden" name="tipo" value="usuario">
                   <input type="hidden" name="alvo_id" value="${user.id}">
                   <button type="submit" class="btn-danger">Arquivar</button>

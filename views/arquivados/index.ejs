@@ -69,7 +69,7 @@
 <%- include('../partials/navbar') %>
 
 <div class="arquivados-container">
-  <h2 class="titulo-centralizado"><strong>Itens Arquivados</strong></h2>
+  <h2 class="titulo-centralizado"><strong> Produtos Arquivados</strong></h2>
 <table class="table">
   </thead>
 <thead>
@@ -118,4 +118,40 @@
 
 </table>
 
+</div>
+<!-- 🔹 USUÁRIOS ARQUIVADOS -->
+<div class="arquivados-container">
+  <h2 class="titulo-centralizado"><strong>Usuários Arquivados</strong></h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Regra</th>
+        <th>Arquivado Por</th>
+        <th>Data</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (usuariosArquivados && usuariosArquivados.length > 0) { %>
+        <% usuariosArquivados.forEach(user => { %>
+          <tr>
+            <td><%= user.usuario_nome %></td>
+            <td><%= user.usuario_role %></td>
+            <td><%= user.arquivador_nome ?? 'N/A' %></td>
+            <td><%= new Date(user.data_arquivado).toLocaleString('pt-BR') %></td>
+            <td>
+              <form action="/arquivados/desarquivar" method="POST">
+                <input type="hidden" name="id" value="<%= user.id %>">
+                <button type="submit" class="btn-marrom">Desarquivar</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="5">Nenhum usuário arquivado.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
 </div>
