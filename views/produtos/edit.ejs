@@ -160,7 +160,12 @@
     <% if (produto.imagem) { %>
       <div class="form-group">
         <p>Imagem atual:</p>
-        <img src="<%= produto.imagem %>" alt="Imagem do produto" style="max-width: 200px; border-radius: 8px;">
+       <img 
+  src="<%= produto.imagem %>" 
+  alt="Imagem do produto" 
+  style="width: 180px; height: 180px; object-fit: cover; border-radius: 8px; display: block; margin-top: 0.5rem;"
+>
+
       </div>
     <% } %>
 

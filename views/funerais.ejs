@@ -1,4 +1,53 @@
-<%- include('partials/navbarCliente') %> 
+<%- include('partials/navbarCliente') %>
+
+<style>
+/* CARD */
+.feature-card {
+  width: 220px;
+  height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.02);
+}
+
+/* IMAGEM */
+.produto-imagem {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* BOTÃO - mantém a cor original, mas reduzido e alinhado */
+.feature-card .btn-marrom {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  width: 100%; /* ocupa o espaço do card */
+  margin-top: auto; /* alinha no fim do card */
+}
+
+/* GRID - tudo alinhado à esquerda */
+.row {
+  justify-content: flex-start !important;
+  margin-left: 0;
+}
+
+/* Ajusta espaçamento entre cards */
+.col-md-3 {
+  margin-right: 15px;
+}
+</style>
+
 <h2 class="mt-4 titulo-centralizado"><strong>Funerais</strong></h2>
 
 <div class="container mt-4">
@@ -6,7 +55,7 @@
     <%
       const lista = Array.isArray(produtos) ? produtos : [];
 
-     const getImg = (p) => (p?.imagem ?? '/img/placeholder.jpg');
+      const getImg = (p) => (p?.imagem ?? '/img/placeholder.jpg');
       const getNome = (p) => (p?.nome ?? p?.titulo ?? p?.name ?? 'Produto');
       const getDesc = (p) => (p?.descricao ?? p?.descr ?? p?.description ?? '');
       const getPreco = (p) => {
@@ -14,30 +63,29 @@
         return isNaN(v) ? 0 : v;
       };
 
-      // Filtra por categoria do ENUM
-const itens = lista.filter(p => (p.categoria ?? '').toLowerCase() === 'funerais');
+      const itens = lista.filter(p => (p.categoria ?? '').toLowerCase() === 'funerais');
     %>
 
     <% if (itens.length > 0) { %>
       <% itens.forEach(produto => { %>
-        <div class="col-md-4 mb-4">
-          <div class="feature-card h-100 d-flex flex-column justify-content-between">
-    <img src="<%= produto.imagem ?? '/img/placeholder.jpg' %>" alt="<%= produto.nome %>" class="produto-imagem">
+        <div class="col-md-3 mb-4"> <!-- use col-md-3 pra respeitar o grid -->
+          <div class="feature-card">
+            <img src="<%= getImg(produto) %>" alt="<%= getNome(produto) %>" class="produto-imagem">
 
-
-            <div class="mt-3">
-              <h5 class="card-title text-capitalize texto-marrom"><%= getNome(produto) %></h5>
+            <div class="mt-2">
+              <h6 class="text-capitalize texto-marrom mb-1"><%= getNome(produto) %></h6>
               <% if (getDesc(produto)) { %>
-                <p class="card-text text-muted"><%= getDesc(produto) %></p>
+                <p class="text-muted mb-1" style="font-size: 0.8rem;"><%= getDesc(produto) %></p>
               <% } %>
-              <p class="card-text fw-bold texto-marrom">R$ <%= getPreco(produto).toFixed(2).replace('.', ',') %></p>
+              <p class="fw-bold texto-marrom" style="font-size: 0.9rem;">
+                R$ <%= getPreco(produto).toFixed(2).replace('.', ',') %>
+              </p>
             </div>
 
-            <!-- Form para adicionar ao carrinho -->
-            <form action="/pedidos/adicionar" method="POST" class="mt-3 w-100">
+            <form action="/pedidos/adicionar" method="POST">
               <input type="hidden" name="produto_id" value="<%= produto.id %>">
               <input type="hidden" name="quantidade" value="1">
-              <button type="submit" class="btn btn-marrom w-100">Adicionar ao pedido</button>
+              <button type="submit" class="btn btn-marrom">Adicionar</button>
             </form>
           </div>
         </div>

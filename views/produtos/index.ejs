@@ -187,8 +187,8 @@
             <td><%= produto.categoria_nome ?? produto.categoria %></td>
             <td>
               <div class="button-group">
-                <a href="/produtos/<%= produto.id %>" class="btn-marrom">View</a>
-                <a href="/produtos/<%= produto.id %>/edit" class="btn-marrom">Edit</a>
+                <a href="/produtos/<%= produto.id %>" class="btn-marrom">Ver</a>
+                <a href="/produtos/<%= produto.id %>/edit" class="btn-marrom">Editar</a>
                 <form action="/arquivados/arquivar" method="POST">
                   <input type="hidden" name="tipo" value="produto">
                   <input type="hidden" name="alvo_id" value="<%= produto.id %>">
