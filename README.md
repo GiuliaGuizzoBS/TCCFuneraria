@@ -1,15 +1,16 @@
 Sistema de Gerenciamento Administrativo da Funerária Menino Deus
 Sobre o Projeto
 
-Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) com o objetivo de propor e implementar um sistema web para auxiliar na gestão administrativa da Funerária Menino Deus. A proposta busca otimizar os processos internos, melhorar a organização e tornar o atendimento aos clientes mais eficiente e ágil.
+Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) com o objetivo de propor e implementar um sistema web para auxiliar na gestão administrativa da Funerária Menino Deus.
+A proposta busca otimizar os processos internos, melhorar a organização e tornar o atendimento aos clientes mais eficiente e ágil.
 
 Objetivos
 
-Digitalizar e organizar os processos de atendimento funerário.
+Digitalizar e organizar os processos de atendimento funerário;
 
-Permitir o cadastro e gerenciamento de falecidos, clientes e serviços contratados.
+Permitir o cadastro e gerenciamento de falecidos, clientes e serviços contratados;
 
-Disponibilizar um painel administrativo para controle interno da empresa.
+Disponibilizar um painel administrativo para controle interno da empresa;
 
 Garantir usabilidade e responsividade em diferentes dispositivos.
 
@@ -39,33 +40,42 @@ Como Executar o Projeto
 
 Clonar o repositório:
 
-git clone https://github.com/seu-usuario/funeraria-menino-deus.git
+git clone https://github.com/GiuliaGuizzoBS/TCCFuneraria.git
 
 
 Acessar a pasta do projeto:
 
-cd funeraria-menino-deus
+cd TCCFuneraria
 
 
-Instalar as dependências:
+Instalar as dependências principais:
 
 npm install
+npm install express
+npm install pdfkit
 
 
-Configurar o banco de dados:
+Executar a configuração inicial do projeto:
 
-Criar um banco de dados no MySQL.
+npm run setup
 
-Editar o arquivo config/db.js com as credenciais de acesso.
 
-Iniciar o servidor:
+Iniciar o servidor de desenvolvimento:
 
-npm start
+npm run dev
 
 
 Acessar no navegador:
 
 http://localhost:3000
+
+Configuração do Banco de Dados
+
+Crie um banco de dados no MySQL;
+
+Edite o arquivo config/db.js e insira suas credenciais de acesso (usuário, senha e nome do banco);
+
+Execute o script de inicialização, caso necessário, para criar as tabelas.
 
 Autenticação e Níveis de Acesso
 
@@ -75,17 +85,21 @@ Funcionário: possui acesso restrito às funções de cadastro e atendimento.
 
 Funcionalidades
 
-Sistema de login com autenticação e diferentes níveis de acesso.
+Sistema de login com autenticação e diferentes níveis de acesso;
 
-Cadastro e gerenciamento de clientes e falecidos.
+Cadastro e gerenciamento de clientes e falecidos;
 
-Registro e acompanhamento de serviços contratados.
+Registro e acompanhamento de serviços contratados;
 
-Painel administrativo responsivo e de fácil utilização.
+Painel administrativo responsivo e de fácil utilização;
 
-Integração com banco de dados MySQL.
+Integração completa com o banco de dados MySQL;
+
 
 Autores
-Eloá Brizeis Costa Santana e Giulia Guizzo Baladão Santos
-Trabalho de Conclusão de Curso – Instituto Federal Catarinense 
+
+Eloá Brizeis Costa Santana
+Giulia Guizzo Baladão Santos
+
+Trabalho de Conclusão de Curso – Instituto Federal Catarinense
 Sombrio – SC, 2025

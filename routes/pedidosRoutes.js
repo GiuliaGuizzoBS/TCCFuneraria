@@ -112,16 +112,14 @@ router.post('/finalizar', (req, res) => {
   res.redirect('/formulario');
 });
 
-// ====================
-// GET /pedidos/:id
-// ====================
 router.get('/:id', async (req, res) => {
   try {
     const pedidoId = req.params.id;
     const user = req.session.user;
 
+    // Busca todos os detalhes do pedido, incluindo cpf, rg e número
     const pedido = await new Promise((resolve, reject) => {
-      Pedido.getById(pedidoId, user.role, user.id, (err, result) => {
+      Pedido.getByIdAdmin(pedidoId, (err, result) => {
         if (err) return reject(err);
         resolve(result);
       });
@@ -134,5 +132,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).send('Erro ao buscar detalhes do pedido.');
   }
 });
+
 
 module.exports = router;
