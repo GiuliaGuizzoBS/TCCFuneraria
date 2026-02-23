@@ -54,6 +54,24 @@ class Pedido {
       callback
     );
   }
+  static getConfirmadosByUsuario(usuario_id, callback) {
+  const sql = `
+    SELECT 
+      pe.id AS pedido_id,
+      pe.status,
+      pe.criado_em,
+      (SELECT GROUP_CONCAT(CONCAT(p2.nome, ' (', pp2.quantidade, ')'))
+       FROM pedido_produtos pp2
+       JOIN produtos p2 ON pp2.produto_id = p2.id
+       WHERE pp2.pedido_id = pe.id
+      ) AS produtos
+    FROM pedidos pe
+    WHERE pe.status = 'finalizado' AND pe.usuario_id = ?
+    ORDER BY pe.criado_em DESC
+  `;
+  db.query(sql, [usuario_id], callback);
+}
+
 
   // 🔹 Finalizar pedido
   static finalizar(pedido_id, callback) {
@@ -62,6 +80,16 @@ class Pedido {
       [pedido_id],
       callback
     );
+  }
+
+static atualizarStatusAsync(id, novoStatus) {
+    return new Promise((resolve, reject) => {
+      const sql = "UPDATE pedidos SET status = ? WHERE id = ?";
+      db.query(sql, [novoStatus, id], (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
+    });
   }
 
   // 🔹 Buscar produtos do pedido em aberto (para a tela principal)
@@ -128,7 +156,7 @@ static getConfirmados(callback) {
       MAX(fa.idade) AS falecido_idade,
       MAX(fa.cpf) AS falecido_cpf,
       MAX(fa.rg) AS falecido_rg,
-      MAX(fa.data_falecimento) AS falecido_data,
+     MAX(fa.data_falecimento) AS falecido_data_falecimento,
       MAX(fa.local_falecimento) AS falecido_local,
       MAX(fa.foto) AS falecido_foto,
       MAX(fa.comprovante_residencia) AS falecido_comprovante,
@@ -337,7 +365,8 @@ static getByIdAdmin(pedidoId, callback) {
       MAX(fa.idade) AS falecido_idade,
       MAX(fa.cpf) AS falecido_cpf,
       MAX(fa.rg) AS falecido_rg,
-      MAX(fa.data_falecimento) AS falecido_data,
+     MAX(fa.data_falecimento) AS falecido_data_falecimento,
+
       MAX(fa.local_falecimento) AS falecido_local,
       MAX(fa.foto) AS falecido_foto,
       MAX(fa.comprovante_residencia) AS falecido_comprovante,

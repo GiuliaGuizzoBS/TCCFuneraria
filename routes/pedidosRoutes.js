@@ -23,12 +23,23 @@ router.get('/', async (req, res) => {
     });
 
     // Carrega pedidos finalizados
-    const confirmados = await new Promise((resolve, reject) => {
-      Pedido.getConfirmados((err, result) => {
-        if (err) return reject(err);
-        resolve(result || []);
-      });
+   // Carrega pedidos finalizados
+const confirmados = await new Promise((resolve, reject) => {
+
+  if (user.role === 'admin') {
+    Pedido.getConfirmados((err, result) => {
+      if (err) return reject(err);
+      resolve(result || []);
     });
+  } else {
+    Pedido.getConfirmadosByUsuario(user.id, (err, result) => {
+      if (err) return reject(err);
+      resolve(result || []);
+    });
+  }
+
+});
+
 
     res.render('pedidos', { produtos, confirmados, sucesso });
   } catch (err) {
